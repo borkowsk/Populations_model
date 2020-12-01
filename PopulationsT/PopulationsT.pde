@@ -42,7 +42,7 @@ int     console=0;
 boolean simulationRun=true;
 boolean mutantConnVis=false;
 boolean VISTRANSFERS=true;
-
+/*
 class aSpecies //Informacja o gatunku
 {
   int suscepBits;//susceptibility bits (maska "obrony")
@@ -68,8 +68,8 @@ class aSpecies //Informacja o gatunku
      }
      return _key;
    }
-}
-
+}*/
+/*
 HashMap<String,aSpecies> speciesDictionary=new HashMap<String,aSpecies>();
 
 class aPopulation //Informacja o populacji jakiegoś gatunku
@@ -148,7 +148,7 @@ class anArea //Obszar z wieloma populacjami
   //void createnewspecies(anArea self);//Powstawanie populacji przez mutację któregoś z bitów
   //void timeStep(anArea self) //Upływ czasy dla obszaru z populacjami
 }
-
+*/
 anArea island=new anArea(); //Pojemnik na zbiór populacji - na razie pojedynczy
 
 void setup()
@@ -232,11 +232,12 @@ void draw()
   println();
 }
 
+/*
 double sqr(double a)
 {
   return a*a;
 }
-
+*/
 int searchedX=-1;
 int searchedY=-1;
 aPopulation theSelected=null;
@@ -370,7 +371,7 @@ void drawTransfers(anArea is)
       }
   }
 }
-
+/*
 double StepCounter=0;
 void runSteps(int NofS)
 {
@@ -591,7 +592,7 @@ void makeConnections(anArea self,aPopulation what)
   strokeWeight(1);
   if(console>1) println('+',self.trophNet.size()-ileBylo," links");
 }
-
+*/
 /*
 class aPopLink
 {
@@ -604,7 +605,7 @@ class aPopLink
   }
 }
 */
-
+/*
 double maxTransfer=0;
 void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
 {  
@@ -683,7 +684,8 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   else
     print('/');
 }
-
+*/
+/*
 //pomocnicza funkcja do mutowania bitów
 int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
 {
@@ -697,7 +699,7 @@ int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
   if(console>3) print(":"+bit+" ");
   return sou^bit;//xor should do the job?
 }
-
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////
 //  https://www.researchgate.net/profile/WOJCIECH_BORKOWSKI
 ///////////////////////////////////////////////////////////////////////////////////////////

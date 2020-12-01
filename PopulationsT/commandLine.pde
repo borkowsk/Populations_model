@@ -8,8 +8,8 @@ void checkCommnadLine()
     for(int a=0;a<args.length;a++)
     {
       print(args[a]);
-      int pom=unhex(args[a]);
-      FIDBITS=pom & MASK;
-      println("-->"+hex(FIDBITS));
+      //int pom=unhex(args[a]);
+      //FIDBITS=pom & MASK;
+      //println("-->"+hex(FIDBITS));
     }
 }

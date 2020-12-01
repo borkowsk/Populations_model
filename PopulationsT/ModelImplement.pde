@@ -3,8 +3,8 @@ void write(anArea self,String Filename)
 //Zapis populacji do pliku
 {
   output = createWriter(Filename+".txt"); // Create a new file in the sketch directory
-  String desc=descriptionOfModel('\t','\n','\n');
-  output.println(desc);
+  //String desc=descriptionOfModel('\t','\n','\n');
+  output.println("desccription");
   output.println("key\tsuscepBits\tactiveBits\tmaxsize\tpopBiomas\tcurrincome\tcurrloss");
   for(aPopulation popul:self.populations)
   {
@@ -251,7 +251,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     if(VIRTENVSIZE>1) //Jeśli istotny jest współczynnik kontaktu populacji ze sobą
     {
       transfer*=lnk.source.biomas/VIRTENVSIZE;
-      if(QUADRATICINTERACTIONS)
+      //if(QUADRATICINTERACTIONS)??
       transfer*=lnk.target.biomas/VIRTENVSIZE;
     }
     if(transfer>maxTransfer) 
@@ -275,7 +275,8 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     popul.biomas-=popul.currloss;
   }
   
-  for(int i=0;i<=LASTSOURCE;i++) //Jeśli zródła zewnetrzne spadną poniżej zera nie giną tylko moga się odbudowac
+  int i=0;
+  //for(;i<=LASTSOURCE;i++) //WIECEJ? Jeśli zródła zewnetrzne spadną poniżej zera nie giną tylko moga się odbudowac
   if(self.populations.get(i).biomas<=0)
   {
     aPopulation popul=self.populations.get(i);
@@ -299,7 +300,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     && popul.biomas>VIRTENVSIZE) //NIE ZA DUŻE!
       popul.biomas=VIRTENVSIZE;
   }
-  
+  /* ???
   if(CLEAN)//Mniejsza lub równa zero!?
   for(int i=LASTSOURCE+1;i<self.populations.size();i++)//POMIJAMY ŹRÓDŁA POKARMU!
   {
@@ -310,7 +311,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
         i--;
     }
   }
-  
+  */
   if(console>2) 
     println(" Source biomas B:",self.populations.get(0).biomas);
   else
