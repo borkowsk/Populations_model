@@ -1,3 +1,25 @@
+PrintWriter output;//For writing statistics into disk drive
+void write(anArea self,String Filename)
+//Zapis populacji do pliku
+{
+  output = createWriter(Filename+".txt"); // Create a new file in the sketch directory
+  String desc=descriptionOfModel('\t','\n','\n');
+  output.println(desc);
+  output.println("key\tsuscepBits\tactiveBits\tmaxsize\tpopBiomas\tcurrincome\tcurrloss");
+  for(aPopulation popul:self.populations)
+  {
+    output.print(popul.species.Key()+"\t");
+    output.print(popul.species.suscepBits+"\t");
+    output.print(popul.species.activeBits+"\t");
+    output.print(popul.species.maxsize+"\t");
+    output.print(popul.biomas+"\t");
+    output.print(popul.currincome+"\t");
+    output.print(popul.currloss+"\t");
+    output.println();
+  }
+  output.println();
+  output.close();
+}
 
 void trytokillspecies(anArea self)
 {
@@ -241,9 +263,11 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   }
   
   //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
-  //Najprostrza wersja - jedno źródło podstawowe
-  self.populations.get(0).currincome=random(FEEDPORTION);//Samo się doda za chwilę
-  if(console>1) print(self.populations.get(0).currincome);//Jak z wykożystaniem pokarmu
+  for(int fb=0;fb<=LASTSOURCE;fb++) //Wiele zrodel
+  {  
+    self.populations.get(fb).currincome=random(FEEDPORTION);//Samo się doda za chwilę
+    if(console>1) print(self.populations.get(fb).currincome);//Jak z wykożystaniem pokarmu
+  }
   
   //Podsumowanie interakcji 
   for(aPopulation popul: self.populations)
@@ -253,10 +277,10 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     popul.biomas-=popul.currloss;
   }
   
-  for(int i=0;i<=LASTSOURCE;i++) //Jeśli zródła zewnetrzne spadną poniżej zera nie giną tylko moga się odbudowac
-  if(self.populations.get(i).biomas<=0)
+  for(int fb=0;fb<=LASTSOURCE;fb++)  //Jeśli zródła zewnetrzne spadną poniżej zera nie giną tylko moga się odbudowac
+  if(self.populations.get(fb).biomas<=0)
   {
-    aPopulation popul=self.populations.get(i);
+    aPopulation popul=self.populations.get(fb);
     popul.biomas+=popul.currincome;
     if(console>=0) println("    "+popul.species.Key()+" !!! "+popul.biomas);
   }
