@@ -1,4 +1,5 @@
 PrintWriter output;//For writing statistics into disk drive
+
 void write(anArea self,String Filename)
 //Zapis populacji do pliku
 {
