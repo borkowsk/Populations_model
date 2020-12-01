@@ -13,10 +13,10 @@ final boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost bio
 final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 final float  TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
 
-/*PARAM*/int FIDBITS=0xff;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-final int    LASTSOURCE=0;//Tylko jedno zródło o indeksie 0        
+/*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11};//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+         int    LASTSOURCE=FIDBITS.length-1;//Tylko jedno zródło o indeksie 0        
 final float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
-final float   FEEDPORTION=350000*TIMEQUANT; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
+      float   FEEDPORTION=15000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane) 
 final float CATACLISMRATE=0.001*TIMEQUANT;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
 final float MUTATIONRATE=0.001*TIMEQUANT;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
 
@@ -35,7 +35,10 @@ String nameOfModel()
     name="BMLVN"+MASKBITS+(allowSizeSyn?"x3":"x2");
     name+="met"+nf(TIMEDUMP,0,7)+"mut"+nf(MUTATIONRATE/TIMEQUANT,0,7)+"cat"+nf(CATACLISMRATE/TIMEQUANT,0,7);
     name+="minW"+LINKMINWEIGHT+"S"+MINSTART+(FORCEMINSTART?"t":"_");
-    name+="env"+VIRTENVSIZE+"fH"+hex(FIDBITS,MASKBITS/4)+"x"+(FEEDPORTION/TIMEQUANT);
+    name+="env"+VIRTENVSIZE;
+    for(int fb=0;fb<=LASTSOURCE;fb++)
+        name+="fH"+hex(FIDBITS[fb],(MASKBITS+3)/4);
+    name+="x"+(FEEDPORTION/TIMEQUANT);
     name+="tq"+TIMEQUANT;
     name+="dt"+year()+'.'+nf(month(),2)+'.'+nf(day(),2)+'.'+nf(hour(),2)+'.'+nf(minute(),2)+'.'+nf(second(),2)+'.'+millis();
     //Nazwa hosta na koncu nazwy populacji
@@ -51,7 +54,10 @@ String descriptionOfModel(char fsep,char bsep,char lsep)
   String description="BMLVN"+fsep+MASKBITS+fsep+(allowSizeSyn?"x3":"x2")+lsep;
   description+="metabolism"+fsep+nf(TIMEDUMP,0,7)+bsep+"mutations"+fsep+nf(MUTATIONRATE/TIMEQUANT,0,7)+bsep+"catastrofic"+fsep+nf(CATACLISMRATE/TIMEQUANT,0,7)+lsep;
   description+="minWeight"+fsep+LINKMINWEIGHT+bsep+"start biomas"+fsep+MINSTART+fsep+(FORCEMINSTART?"t":"_")+lsep;
-  description+="env.size"+fsep+VIRTENVSIZE+bsep+(QUADRATICINTERACTIONS?"":"nQ-")+"feedSourceH"+fsep+hex(FIDBITS,MASKBITS/4)+bsep+"feed port max"+fsep+(FEEDPORTION/TIMEQUANT)+lsep;
+  description+="env.size"+fsep+VIRTENVSIZE+bsep+(QUADRATICINTERACTIONS?"":"nQ-")+"feedSourceH"+fsep;
+  for(int fb=0;fb<=LASTSOURCE;fb++)
+     description+=hex(FIDBITS[fb],(MASKBITS+3)/4)+bsep;
+  description+="feed port max"+fsep+(FEEDPORTION/TIMEQUANT)+lsep;
   description+="timeQuant"+fsep+TIMEQUANT+lsep;
   return description;
 }
