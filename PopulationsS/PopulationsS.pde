@@ -1,5 +1,8 @@
 // BMLVN - Binary Masks Lotka-Voltera Network
 //////////////////////////////////////////////////////////////////////////////////////////////////
+// v6 - włącznik zabezpieczenia małych populacji przed mutowaniem
+//    - katastrofy: wymuszenie optymalizacji przez losowe uszkadzanie - zmniejszanie biomasy węzłów, 
+//      co powinno bardziej szkodzić małym
 // v5 - umożliwienie trybu populacji zależnych od rozmiaru środowiska
 //    - wprowadzenie inspekcji populacji
 //    - możliwość zatrzymywania symulacji bez zatrzymywania wizualizacji
@@ -13,9 +16,11 @@ final int MASKBITS=8;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest zn
 final boolean allowSizeSyn=false;//Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
 
 final int FIDBITS=0x70;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-final float MUTATIONRATE=0.0001;//Jak czesto na krok powstaje mutant w populacji - 
+final float CATACLISMRATE=0.0001;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
+final float MUTATIONRATE=0.0001;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
 final float LINKMINWEIGHT=0.05;//Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
 final float MINSTART=2; //Startowy zasób "biomasy" populacji mutanta
+final boolean FORCEMINSTART=false;//Czy zbyt małe populacje mogą mutować czy po prostu zmieniają się całe
 final float FEEDPORTION=5000; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
 final float TIMEQUANT=0.01; //Ile czasu modelu upływa w każdym kroku
 final float TIMEDUMP=0.999; //Ile zasobów zostaje na skutek zużycia czasowego w każdym kroku
@@ -23,7 +28,7 @@ final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?)
 final boolean CLEAN=true;    //Czy czyścić sieć z martwych populacji?
 
 //Parametry wizualizacji
-final int STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
+final int STEPperFRAME=20; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=20;
 final int startX=100;
 final int startY=100;
@@ -234,7 +239,8 @@ double sqr(double a)
 int searchedX=-1;
 int searchedY=-1;
 aPopulation theSelected=null;
-double minDist2=MAX_INT;
+double minDist2Selec=MAX_INT;
+double maxTransSelec=-MAX_INT;
 boolean Clicked=false;
 
 void mouseClicked()
@@ -248,7 +254,8 @@ void drawArea(anArea is)
 {
   if(Clicked)//Żądanie zmiany wybranego
   {
-     minDist2=MAX_INT;
+     minDist2Selec=MAX_INT;
+     maxTransSelec=-MAX_INT;
      println("  Looking for ",searchedX,searchedY);
      Clicked=false;
   }
@@ -286,9 +293,9 @@ void drawArea(anArea is)
       if(searchedX>0 && searchedY>0)
       {
         double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY));//Szukanie print(dist2,", ");
-        if(dist2 < minDist2)
+        if(dist2 < minDist2Selec)
         {
-          minDist2=dist2;        //print(" ? ");
+          minDist2Selec=dist2;        //print(" ? ");
           theSelected=popul;
         }
       }
@@ -338,8 +345,10 @@ void drawTransfers(anArea is)
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
         if(lnk.target==theSelected)//Trzeba (?) niestety powtórzyć sprawdzanie warunku
         {
-          int inten=(int)(255*(lnk.lasttransfer/maxTransfer));
-          stroke(inten,inten,inten);
+          if(maxTransSelec>lnk.lasttransfer)
+             maxTransSelec=lnk.lasttransfer;//Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
+          int inten=(int)(255*(lnk.lasttransfer/maxTransSelec));
+          stroke(255,inten);
           line(x1,y1,x2,y2);
           println("   ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
         }
@@ -367,22 +376,34 @@ void runSteps(int NofS)
   for(int sc=0;sc<NofS;sc++)//odlicza kroki symulacji
   {
     StepCounter++;
+    if(CATACLISMRATE>0) trytokillspecies(island);  
     if(MUTATIONRATE>0) createnewspecies(island);
     timeStep(island); //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
   }
 }
 
-int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
+void trytokillspecies(anArea self)
 {
-  if(pos>=MASKBITS)
+  for(aPopulation popul:self.populations)
   {
-    println(" Mutation autside BITMASK");
-    return sou;
+    if(VIRTENVSIZE>1)
+    {
+      if(random((float)(popul.biomas/popul.species.maxsize)) > CATACLISMRATE )//Liczba osobników w populacji zmniejsza szanse wymarcia
+      {
+        //println("Skipedd");
+           continue;
+      }
+    }
+    else //w przeciwnym wypadku ignorujemy wielkośc populacji
+    {
+      if(random(1.0)>CATACLISMRATE)
+      {
+        //println("Skipedd");
+           continue;
+      }
+    }
+    popul.biomas*=1-random(1)*random(1)*random(1)*random(1)*random(1)*random(1);//Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
   }
-  //Jest poprawny
-  int bit=0x1<<pos;
-  if(console>3) print(":"+bit+" ");
-  return sou^bit;//xor should do the job?
 }
 
 void createnewspecies(anArea self)
@@ -391,7 +412,7 @@ void createnewspecies(anArea self)
   {
     aPopulation popul=self.populations.get(i);//Kolejna
     
-    if(popul.biomas<=MINSTART //Zbyt małe populacje nie mutują
+    if((popul.biomas<=MINSTART && FORCEMINSTART) //Zbyt małe populacje nie mutują jeśli chcemy to zabezpieczyć
     || popul.species.suscepBits==0 
     || popul.species.activeBits==0)
     continue; //jeśli gdzieś jest 0 to nie jest prawdziwa populacja - nie może mutować
@@ -443,12 +464,13 @@ void createnewspecies(anArea self)
     }
     
     //WSTAWIANIE NOWEJ POPULACJI
+    //popul.currloss+=MINSTART;//Czy to będzie efektywne? TODO NIE!!!
+    popul.biomas-=MINSTART; //KOSZT POTOMNEJ POPULACJI
+      
     String newKey=newSpec.Key();
     aSpecies test=speciesDictionary.get(newKey);//Czy już jest ten "gatunek"?
     if(test==null)
     {
-      //popul.currloss+=MINSTART;//Czy to będzie efektywne? TODO NIE!!!
-      popul.biomas-=MINSTART;
       speciesDictionary.put(newKey,newSpec);
       if(console>1) println("+"+newKey+" "+newSpec.sizelog+' ');
       else 
@@ -508,7 +530,7 @@ void makeConnections(anArea self,aPopulation what)
   aSpecies mySpec=what.species;
   
   int susceptibility=mySpec.suscepBits & MASK;//Dla pewności ;-)
-  int activity=mySpec.activeBits & MASK;
+  int activity=      mySpec.activeBits & MASK;
   float ofs=what.species.sizelog;
   
   aSpecies othSpec;
@@ -516,19 +538,21 @@ void makeConnections(anArea self,aPopulation what)
   if((othSpec=popul.species)!=mySpec)//Interakcje populacji samej ze sobą są bez sensu merytorycznego
   {
       int othsusceptibility=othSpec.suscepBits & MASK;//MASK dla pewności ;-)
-      int othactivity=othSpec.activeBits & MASK;
+      int othactivity=      othSpec.activeBits & MASK;
       //Waga związku danej populacji do nowej (what)
-      double Wd=(othsusceptibility & activity)/((double)(activity))*((othsusceptibility & activity)/((double)(othsusceptibility)));
+      double Wd=((othsusceptibility & activity)/((double)activity))   *((othsusceptibility & activity)/((double)othsusceptibility));
       //Waga związku nowej populacji do danej
-      double Wr=(susceptibility & othactivity)/((double)(othactivity))*((susceptibility & othactivity)/((double)(susceptibility)));
+      double Wr=((susceptibility & othactivity)/((double)othactivity))*((susceptibility & othactivity)/((double)susceptibility));
       if(Wd>LINKMINWEIGHT) 
       {
-          //println("Add ",Wd,mySpec.Key(),"->",popul.species.Key() );
+          if(othsusceptibility == activity)
+            println("!!!Add ",Wd,mySpec.Key(),"->",popul.species.Key(),binary(othsusceptibility,MASKBITS)," exp.by ",binary(activity,MASKBITS));
           self.trophNet.add(  new aPopLink(popul,what,Wd) );//związek danej populacji do nowej (what)
       }
       if(Wr>LINKMINWEIGHT) 
       {
-          //println("Add ",Wr,mySpec.Key(),"<-",popul.species.Key() );
+         if(susceptibility == othactivity)
+            println("!!!Add ",Wr,mySpec.Key(),"<-",popul.species.Key() ,binary(susceptibility,MASKBITS)," exp.by ",binary(othactivity,MASKBITS) );
           self.trophNet.add(  new aPopLink(what,popul,Wr) );//związek nowej populacji do danej
       }
       //New mutant relations visualisation
@@ -653,6 +677,20 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   
   if(console>2) 
     println(" Source biomas B:",self.populations.get(0).biomas);
+}
+
+//pomocnicza funkcja do mutowania bitów
+int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
+{
+  if(pos>=MASKBITS)
+  {
+    println(" Mutation autside BITMASK");
+    return sou;
+  }
+  //Jest poprawny
+  int bit=0x1<<pos;
+  if(console>3) print(":"+bit+" ");
+  return sou^bit;//xor should do the job?
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
