@@ -6,11 +6,16 @@ void initializeModel()
   //Simple feeding source. 
   /////////////////////////////////////////////////////////////
   //Zero oznacza że nie jest pełnoprawną częścią sieci
-  aSpecies FID=new aSpecies( FIDBITS, 0 ,1);
-  aPopulation FP=new aPopulation(FID,FEEDPORTION);
-  println("Feed is ",FID.Key()," ofs:",FID.sizelog);
-  island.addPopulation(FP,false);
-  
+  aSpecies[] FID=new aSpecies[LASTSOURCE+1];
+  for(int fb=0;fb<=LASTSOURCE;fb++)
+    FID[fb]=new aSpecies( FIDBITS[fb], 0 ,1);
+    
+  for(int fb=0;fb<=LASTSOURCE;fb++)
+  {
+    aPopulation FP=new aPopulation(FID[fb],FEEDPORTION);
+    println("Feed #",fb," is ",FID[fb].Key()," ofs:",FID[fb].sizelog);
+    island.addPopulation(FP,false);
+  }
   
   //Przodek czyli LUA. Nie może mieć żadnego zera
   //////////////////////////////////////////////////////
