@@ -13,7 +13,7 @@ final boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost bio
 final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 final float  TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
 
-/*PARAM*/int FIDBITS=0xFF;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+/*PARAM*/int FIDBITS=0x77;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
 final int    LASTSOURCE=0;//Tylko jedno zródło o indeksie 0        
 final float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
 final float   FEEDPORTION=100000*TIMEQUANT; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
