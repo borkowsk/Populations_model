@@ -1,24 +1,29 @@
 // BMLVN - Binary Masks Lotka-Voltera Network
 //////////////////////////////////////////////////////////////////////////////////////////////////
-// v4 - poprawione kolorowanie
+// v5 - umożliwienie trybu populacji zależnych od rozmiaru środowiska
+//    - wprowadzenie inspekcji populacji
+//    - możliwość zatrzymywania symulacji bez zatrzymywania wizualizacji
+//    - wizualizacja wybranego węzła i jego połączeń wchodzących
+// v4 - poprawione kolorowanie i rozmiarowanie blobów
 //    - wprowadzone wyłączanie czerwonej składowej (synonimiczne ekologicznie)
 //    - POCZĄTEK wprowadzania zalezności od pojemności środowiska
 import java.util.Map;
-final int MASK=0x3f;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
-final int MASKBITS=6;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
+final int MASK=0xff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
+final int MASKBITS=8;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
 final boolean allowSizeSyn=false;//Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
-final int FIDBITS=0x3f;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-final float MUTATIONRATE=0.001;//Jak czesto na krok powstaje mutant w populacji - 
-final float LINKMINWEIGHT=0.001;//Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
-final float MINSTART=10; //Startowy zasób "biomasy" populacji mutanta
-final float FEEDPORTION=50000; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
+
+final int FIDBITS=0x70;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+final float MUTATIONRATE=0.0001;//Jak czesto na krok powstaje mutant w populacji - 
+final float LINKMINWEIGHT=0.05;//Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
+final float MINSTART=2; //Startowy zasób "biomasy" populacji mutanta
+final float FEEDPORTION=5000; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
 final float TIMEQUANT=0.01; //Ile czasu modelu upływa w każdym kroku
-final float TIMEDUMP=0.99; //Ile zasobów zostaje na skutek zużycia czasowego w każdym kroku
-final double  VIRTENVSIZE=1;//00000;//1024*1024; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
+final float TIMEDUMP=0.999; //Ile zasobów zostaje na skutek zużycia czasowego w każdym kroku
+final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 final boolean CLEAN=true;    //Czy czyścić sieć z martwych populacji?
 
 //Parametry wizualizacji
-final int   STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
+final int STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=20;
 final int startX=100;
 final int startY=100;
@@ -28,7 +33,8 @@ float      VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
 float     DENSITYDIV=5;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
 float   bubleRad=2;//Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
-boolean mutantConnVis=true;
+boolean simulationRun=true;
+boolean mutantConnVis=false;
 boolean VISTRANSFERS=true;
 
 class aSpecies //Informacja o gatunku
@@ -50,7 +56,9 @@ class aSpecies //Informacja o gatunku
      if(_key==null) 
      {
      int form=(MASKBITS+3)/4;
-     _key=hex(suscepBits,form)+":"+hex(activeBits,form)+":"+hex(maxsize,form);
+     _key=hex(suscepBits,form)+":"+hex(activeBits,form);
+     if(allowSizeSyn)
+         _key+=":"+hex(maxsize,form);
      }
      return _key;
    }
@@ -170,6 +178,8 @@ void keyPressed()
 {
   switch(key)
   {
+  case 's': simulationRun=false; break;
+  case 'r': simulationRun=true; break;
   case 'm': mutantConnVis=!mutantConnVis; break;
   case 'M': mutantConnVis=false; break;
   case ' ': VISTRANSFERS=!VISTRANSFERS; break;
@@ -183,7 +193,9 @@ void keyPressed()
 
 void draw()
 {
-  if(island.alivePopulations<2) return;//Model się skończył
+  if(island.alivePopulations<2) return;//Model się skończył przedwczesnie
+  println(" Step: ",StepCounter, ": ");
+  
   noStroke(); 
   fill(128,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste
   rect(0,0,width,height-20);
@@ -193,7 +205,8 @@ void draw()
       println("first draw");
   }
   
-  runSteps(STEPperFRAME);
+  if(simulationRun)
+    runSteps(STEPperFRAME);
   if(VISTRANSFERS) 
       drawTransfers(island);
   drawArea(island);
@@ -201,16 +214,44 @@ void draw()
   noStroke();
   fill(255);
   rect(0,height-20,width,20);//STATUS LINE
-  fill(255,0,0);
+  if(simulationRun)
+      fill(255,0,0);
+  else
+      fill(0);
   text(StepCounter+", NofSpec: "+speciesDictionary.size(),3,height-2);
   fill(0,255,0);
   text("AlivePop:"+island.alivePopulations+" NofLinks: "+island.trophNet.size()+" MaxTr:"+maxTransfer,width/3,height-2);
   fill(0,0,128);
   text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,700,height-2); 
+  println();
+}
+
+double sqr(double a)
+{
+  return a*a;
+}
+
+int searchedX=-1;
+int searchedY=-1;
+aPopulation theSelected=null;
+double minDist2=MAX_INT;
+boolean Clicked=false;
+
+void mouseClicked()
+{
+  Clicked=true;
+  searchedX=mouseX;
+  searchedY=mouseY;
 }
 
 void drawArea(anArea is)
 {
+  if(Clicked)//Żądanie zmiany wybranego
+  {
+     minDist2=MAX_INT;
+     println("  Looking for ",searchedX,searchedY);
+     Clicked=false;
+  }
   noStroke();
   for(aPopulation popul: is.populations)
   {
@@ -223,8 +264,7 @@ void drawArea(anArea is)
       float ofs=popul.species.sizelog;
       
       float x=(float)(startX+size*fSusc/MASK+ofs);
-      float y=(float)(startY+size*fActi/MASK+ofs);
-     
+      float y=(float)(startY+size*fActi/MASK+ofs); 
       float SINT=255.0*((float)popul.species.maxsize/MASK);
       float XINT=255.0*(fSusc/MASK);
       float YINT=255.0*(fActi/MASK);
@@ -241,6 +281,27 @@ void drawArea(anArea is)
       else
         stroke(255,0,0);
       point(x,y);//"serce" 
+      
+      
+      if(searchedX>0 && searchedY>0)
+      {
+        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY));//Szukanie print(dist2,", ");
+        if(dist2 < minDist2)
+        {
+          minDist2=dist2;        //print(" ? ");
+          theSelected=popul;
+        }
+      }
+      else //Jak już znalezione poprzednio
+      if(popul==theSelected)
+      {
+        noFill(); stroke(255);
+        ellipse(x,y,R+1,R+1);
+        fill(128); noStroke();
+        rect(0,0,400,25);
+        fill(255);
+        text(popul.species.Key()+" Bio: "+popul.biomas+"  "+binary(popul.species.suscepBits,MASKBITS)+":"+binary(popul.species.activeBits,MASKBITS),1,20);
+      }
     }
     else
     {
@@ -252,6 +313,10 @@ void drawArea(anArea is)
       noStroke();
     }
   }
+  
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  searchedX=-1;
+  searchedY=-1;
 }
 
 void drawTransfers(anArea is)
@@ -261,8 +326,9 @@ void drawTransfers(anArea is)
   && lnk.target.biomas>0 )//link jest istotny
   {
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
-      if(intensity>VDENSITY/DENSITYDIV //)
-      && intensity/DENSITYDIV>0)//Jak za dużo jest 
+      if(lnk.target==theSelected
+      || intensity>VDENSITY/DENSITYDIV )
+      //&& intensity/DENSITYDIV>0)//Jak za dużo jest 
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -270,8 +336,24 @@ void drawTransfers(anArea is)
         float of2=lnk.target.species.sizelog;
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
-        intensity/=DENSITYDIV;
-        stroke(0,200,0,intensity);
+        if(lnk.target==theSelected)//Trzeba (?) niestety powtórzyć sprawdzanie warunku
+        {
+          int inten=(int)(255*(lnk.lasttransfer/maxTransfer));
+          stroke(inten,inten,inten);
+          line(x1,y1,x2,y2);
+          println("   ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
+        }
+        if(lnk.lasttransfer>=maxTransfer)
+        {
+          intensity=255;
+          stroke(intensity,intensity,0);
+          println(" M ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
+        }
+        else
+        {
+          //intensity/=DENSITYDIV;//Czy to konieczne?
+          stroke(0,200,0,intensity);
+        }
         line(x1,y1,x2,y2);
         stroke(0,100,0,intensity);
         line(x2,y2,(x1+x2)/2,(y1+y2)/2);
@@ -317,6 +399,11 @@ void createnewspecies(anArea self)
     
     if(VIRTENVSIZE>1)
     {
+      if(random(1.0) > MUTATIONRATE * popul.biomas/popul.species.maxsize)//Liczba osobników w populacji zwiększa szanse mutacji
+      {
+        //println("Skipedd");
+           continue;
+      }
     }
     else //w przeciwnym wypadku ignorujemy wielkośc populacji
     {
@@ -363,9 +450,9 @@ void createnewspecies(anArea self)
       //popul.currloss+=MINSTART;//Czy to będzie efektywne? TODO NIE!!!
       popul.biomas-=MINSTART;
       speciesDictionary.put(newKey,newSpec);
-      if(console>=0) println("+"+newKey+" "+newSpec.sizelog+' ');
+      if(console>1) println("+"+newKey+" "+newSpec.sizelog+' ');
       else 
-      if(console>1) print("+");
+      if(console>=0) print("+");
       self.addPopulation(new aPopulation(newSpec,MINSTART),false);//już sprawdziliśmy że jest to nowy gatunek
     }
     else
@@ -386,7 +473,9 @@ void createnewspecies(anArea self)
       else
       {
         self.addPopulation(new aPopulation(test,MINSTART),false);//Dodajemy (ponownie) populacje do tego obszaru/wyspy
-        println("->Recreaction of population!!!");
+        if(console>1) println("->Recreaction of population!!!");
+        else
+        if(console>=0) print('R');
       }
     }
   }
@@ -407,7 +496,7 @@ void removeConnections(anArea self,aPopulation what)
       i--;
     }
   }
-  println(' ',self.trophNet.size()-ileBylo," links");
+  if(console>1) println(' ',self.trophNet.size()-ileBylo," links");
 }
 
 void makeConnections(anArea self,aPopulation what)
@@ -473,7 +562,7 @@ void makeConnections(anArea self,aPopulation what)
       }
   }
   strokeWeight(1);
-  println('+',self.trophNet.size()-ileBylo," links");
+  if(console>1) println('+',self.trophNet.size()-ileBylo," links");
 }
 
 /*
