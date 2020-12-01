@@ -4,6 +4,7 @@
 //       bo bez niej małe klasy są nadmiernie preferowane
 //     - wizualizacja ORB
 //     - sterowanie szybkościa symulacji z klawiszy 1-0
+//     - wersja F - zapis danych do pliku out i obrazka razem ze stanem ekosystemu
 // v9 - Szansa mutacji jest zawsze zalezna od liczebności populacji (niezaleznie od VIRTSIZE)
 //    - \n do przelączania widocznosci transferów (linków) a SPC do zrzutów ekranu
 //    - 9b zródła nie odzyskują "życia" od razu tylko muszą spłacić deficyt
@@ -26,7 +27,7 @@
 import java.util.Map;
 
 //Parametry wizualizacji
-final boolean GENERATEMOVIE=true;//Czy wogóle tworzyć film?
+final boolean GENERATEMOVIE=false;//Czy wogóle tworzyć film?
       int STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=20;
 final int VFRAMES=10;//Co ile klatek obrazu zapisujemy klatke filmu
@@ -39,14 +40,21 @@ float BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawa
 float      VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
 float     DENSITYDIV=15;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
 float   bubleRad=2;//Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
-int     console=0;
-boolean simulationRun=true;
-boolean mutantConnVis=false;
-boolean VISTRANSFERS=false;
 
-anArea island=new anArea(); //Pojemnik na zbiór populacji - na razie pojedynczy
+int     console=0;//Poziom szczegółowości zapisu na konsole
+
+boolean simulationRun=true;//Czy symulacja działa czy już przerwana
+boolean saveEcosState=true;//Czy zapisywany jest stan ekosystemu co XXXX pełnych kroków czasu?
+boolean savePictures=true; //Czy zapisywany obrazek ekosystemu co XXXX pełnych kroków czasu?
+boolean mutantConnVis=false;//Czy wizualizowane są połączenia nowych mutantów
+boolean VISTRANSFERS=false;//Czy wizualizowane są połączenia transferujące "biomasę"
+
+//Pomocnicze stringi opisujące użyty model
 String modelName;
 String lastDescr;
+
+//Właściwy model jest obiektem obszaru/lokalnego ekosystemu/wyspy
+anArea island=new anArea(); //Pojemnik na zbiór populacji - na razie pojedynczy
 
 void setup()
 {
@@ -57,21 +65,22 @@ void setup()
   noStroke();
   noFill();
   frameRate(FRAMES); //frames per second
-  initializeModel(); // inicjalizacja modelu może się różnic w różnych sytuacjach mimo że model się nie zmienia
-  initStats();
+
   modelName=nameOfModel();
-  println(modelName);
-  //text(modelName,10,height-40);
+  println(modelName);//text(modelName,10,height-40);
+  
   lastDescr=descriptionOfModel(':','\n','\n');
   text(lastDescr,10,32);
+  initializeModel(); // inicjalizacja modelu może się różnic w różnych sytuacjach mimo że model się nie zmienia
+  initStats();
   
-  if(GENERATEMOVIE)
+  if(GENERATEMOVIE) //Jeśli ma powstawać film to trzeba go tu zainicjalizować
   {
     videoExportEnabled=true;
     println("Start video export");
     initVideoExport(this,modelName+".mp4",FRAMES*2);//x2 przyśpieszone
   }
-  else videoExportEnabled=false;
+  else videoExportEnabled=false;//Albo zablokować użycie funkcji filmotwórczych
 }
 
 void draw()
@@ -135,7 +144,10 @@ void draw()
     if(SC%1000==0)
     {
       println(" -------------------------------------------------------------->writing populations");
-      write(island,modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      if(saveEcosState)
+            write(island,modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      if(savePictures) 
+            save(modelName+"."+nf((float)StepCounter,5,5)+".PNG");
     }
   }
 }
