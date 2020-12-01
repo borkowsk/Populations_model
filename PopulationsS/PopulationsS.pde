@@ -2,15 +2,16 @@
 import java.util.Map;
 final int MASK=0xff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
 final int MASKBITS=8;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
-final int FIDBITS=0xf;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+final int FIDBITS=0xaf;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
 final float MUTATIONRATE=0.01;//Jak czesto na krok powstaje mutant - troche marne bo niezalezne od rozmiaru populacji
 final float MINSTART=10; //Startowy zasób "biomasy" mutanta
-final float FEEDPORTION=250; //Ile biomasy zródła maksyymalnie przypływa na krok (jest random) 
+final float FEEDPORTION=500; //Ile biomasy zródła maksyymalnie przypływa na krok (jest random) 
 final float TIMEQUANT=0.005; //Ile czasu modelu upływa w każdym kroku
 final float TIMEDUMP=0.90;   //Ile zasobów zostaje na skutek zużycia czasowego w każdym kroku
+final boolean CLEAN=true;    //Czy czyścić sieć z martwych populacji?
 
 //Parametry wizualizacji
-final int   STEPperFRAME=1; //Ile kroków symulacji pomiędzy wizualizacjami
+final int   STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=100;
 final int startX=100;
 final int startY=100;
@@ -19,7 +20,7 @@ final float VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
 float     DENSITYDIV=2;//Ponizej jakiej intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
 float   bubleRad=10;
 int     console=0;
-boolean mutantConnVis=false;
+boolean mutantConnVis=true;
 boolean VISTRANSFERS=true;
 
 class aSpecies //Informacja o gatunku
@@ -96,8 +97,27 @@ class anArea //Obszar z wieloma populacjami
     populations.add(what);//Dodajemy nową.
     makeConnections(this,what);//Funkcja tworząca połączenia troficzne dla nowej populacji 
   }
+  boolean delPopulation(aPopulation what)
+  {
+    if(console>=0) println("Removing ",what.species.Key());
+    removeConnections(this,what);
+    return populations.remove(what);//SUKCES or FAIL TODO CHECK
+  }
+  boolean delPopulation(int iwhat)
+  {
+    aPopulation what=populations.get(iwhat);
+    if(what!=null)
+    {
+      if(console>=0) println("Removing ",what.species.Key());
+      removeConnections(this,what);
+      populations.remove(iwhat);
+      return true;//SUKCES
+    }
+    return false;//FAIL
+  }
   //"Friends"
   //void makeConnections(anArea self,aPopulation what);
+  //void removeConnections(anArea self,aPopulation what);
   //void createnewspecies(anArea self);//Powstawanie populacji przez mutację któregoś z bitów
   //void timeStep(anArea self) //Upływ czasy dla obszaru z populacjami
 }
@@ -137,6 +157,8 @@ void keyPressed()
 {
   switch(key)
   {
+  case 'm': mutantConnVis=!mutantConnVis; break;
+  case 'M': mutantConnVis=false; break;
   case ' ': VISTRANSFERS=!VISTRANSFERS; break;
   case '.':
   case '>': DENSITYDIV++;break;
@@ -214,7 +236,8 @@ void drawTransfers(anArea is)
   && lnk.target.biomas>0 )//link jest istotny
   {
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
-      if(intensity>VDENSITY/DENSITYDIV)
+      if(intensity>VDENSITY/DENSITYDIV //)
+      && intensity/DENSITYDIV>0)//Jak za dużo jest 
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -223,9 +246,9 @@ void drawTransfers(anArea is)
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
         
-        stroke(0,200,0,intensity);
+        stroke(0,200,0,intensity/DENSITYDIV);
         line(x1,y1,x2,y2);
-        stroke(0,100,0,intensity);
+        stroke(0,100,0,intensity/DENSITYDIV);
         line(x2,y2,(x1+x2)/2,(y1+y2)/2);
       }
   }
@@ -328,19 +351,33 @@ void createnewspecies(anArea self)
   }
 }
 
-/*
-int suscepBits;//susceptibility bits (maska "obrony")
-int activeBits;//activity bits (maska "ataku")
-*/
+void removeConnections(anArea self,aPopulation what)
+//Funkcja usuwająca wszystkie powiązania danej populacji przed jej usunięciem z listy
+{
+  for(int i=0;i<self.trophNet.size();i++)
+  {
+    aPopLink lnk=self.trophNet.get(i);
+    if(lnk.source==what
+    || lnk.target==what)
+    {
+      if(console>1) println("Remove ",lnk.source.species.Key(),"->",lnk.target.species.Key() );
+      self.trophNet.remove(lnk);
+      i--;
+    }
+  }
+}
 
 void makeConnections(anArea self,aPopulation what)
 //Funkcja tworząca połączenia troficzne dla nowej populacji 
 {
-  strokeWeight(2);
+  strokeWeight(2); 
+  int ileBylo=self.trophNet.size();
+  print("Bio:",what.biomas,' ');
   aSpecies mySpec=what.species;
   
   int susceptibility=mySpec.suscepBits & MASK;//Dla pewności ;-)
   int activity=mySpec.activeBits & MASK;
+  float ofs=what.species.sizelog;
   
   aSpecies othSpec;
   for(aPopulation popul: self.populations)
@@ -352,18 +389,21 @@ void makeConnections(anArea self,aPopulation what)
       double Wd=(othsusceptibility & activity)/((double)(activity))*((othsusceptibility & activity)/((double)(othsusceptibility)));
       //Waga związku nowej populacji do danej
       double Wr=(susceptibility & othactivity)/((double)(othactivity))*((susceptibility & othactivity)/((double)(susceptibility)));
-      if(Wd>0) self.trophNet.add(  new aPopLink(popul,what,Wd) );//związek danej populacji do nowej (what)
-      if(Wr>0) self.trophNet.add(  new aPopLink(what,popul,Wr) );//związek nowej populacji do danej
+      if(Wd>0) 
+          self.trophNet.add(  new aPopLink(popul,what,Wd) );//związek danej populacji do nowej (what)
+      if(Wr>0) 
+          self.trophNet.add(  new aPopLink(what,popul,Wr) );//związek nowej populacji do danej
       //New mutant relations visualisation
       if(mutantConnVis
       && popul.biomas>0)
       {
-        float x1=startX+(float)(size*float(susceptibility)/MASK);
-        float y1=startY+(float)(size*float(activity)/MASK);
-        float x2=startX+(float)(size*float(othsusceptibility)/MASK);
-        float y2=startY+(float)(size*float(othactivity)/MASK);
-        if(Wd!=0 || Wr!=0)//Wstępny test
+        if(Wd>0 || Wr>0)//Wstępny test
         {
+          float x1=startX+(float)(size*float(susceptibility)/MASK+ofs);
+          float y1=startY+(float)(size*float(activity)/MASK+ofs);
+          float ofo=othSpec.sizelog;
+          float x2=startX+(float)(size*float(othsusceptibility)/MASK+ofo);
+          float y2=startY+(float)(size*float(othactivity)/MASK+ofo);
           //String mark=(Wd>Wr*10?">>":(Wr>Wd*10?"<<":"~~"));
           //println(x1,y1,x2,y2,Wd,mark,Wr);
           if(Wd*VDENSITY>VDENSITY/DENSITYDIV)//Sterowanie dokładnościa prezentacji linków
@@ -380,6 +420,7 @@ void makeConnections(anArea self,aPopulation what)
       }
   }
   strokeWeight(1);
+  println('+',self.trophNet.size()-ileBylo," links");
 }
 
 /*
@@ -435,7 +476,8 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     popul.biomas-=popul.currloss;
   }
   
-  if(console>1) print(" ",self.populations.get(0).biomas);
+  if(console>1) 
+     print(" ",self.populations.get(0).biomas);
   
   //...i upływu czasu
   self.alivePopulations=0;
@@ -449,7 +491,16 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
         self.alivePopulations++;
   }
   
-  if(console>0) println(" ",self.populations.get(0).biomas);
+  if(CLEAN)//Mniejsza lub równa zero!?
+  for(int i=1;i<self.populations.size();i++)
+  {
+    if(self.populations.get(i).biomas<=0
+    && self.delPopulation(i) )
+        i--;
+  }
+  
+  if(console>0) 
+    println(" ",self.populations.get(0).biomas);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
