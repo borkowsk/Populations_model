@@ -14,21 +14,22 @@ import java.util.Map;
 final int MASK=0xff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
 final int MASKBITS=8;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
 final boolean allowSizeSyn=false;//Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
+final int FIDBITS=0x81;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+final float   FEEDPORTION=5000; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
+final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 
-final int FIDBITS=0x70;//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-final float CATACLISMRATE=0.0001;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
-final float MUTATIONRATE=0.0001;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
+final float  TIMEQUANT=0.01; //Ile czasu modelu upływa w każdym kroku
+final float CATACLISMRATE=0.00002*TIMEQUANT;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
+final float MUTATIONRATE=0.01*TIMEQUANT;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
+final float   TIMEDUMP=0.999; //Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
+
 final float LINKMINWEIGHT=0.05;//Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
 final float MINSTART=2; //Startowy zasób "biomasy" populacji mutanta
 final boolean FORCEMINSTART=false;//Czy zbyt małe populacje mogą mutować czy po prostu zmieniają się całe
-final float FEEDPORTION=5000; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
-final float TIMEQUANT=0.01; //Ile czasu modelu upływa w każdym kroku
-final float TIMEDUMP=0.999; //Ile zasobów zostaje na skutek zużycia czasowego w każdym kroku
-final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 final boolean CLEAN=true;    //Czy czyścić sieć z martwych populacji?
 
 //Parametry wizualizacji
-final int STEPperFRAME=20; //Ile kroków symulacji pomiędzy wizualizacjami
+final int STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=20;
 final int startX=100;
 final int startY=100;
@@ -175,7 +176,7 @@ void setup()
   String luaKey=LUA.Key();
   println("LUA is ",luaKey," ofs:",LUA.sizelog);
   speciesDictionary.put(luaKey,LUA);
-  island.addPopulation(new aPopulation(LUA,MINSTART),false);
+  island.addPopulation(new aPopulation(LUA,MINSTART*100),false);//Dużo żeby zawsze wystartował, potem jak jest więcej populacji to nie taki problem
   island.alivePopulations=2;
 }
 
@@ -224,7 +225,7 @@ void draw()
   else
       fill(0);
   text(StepCounter+", NofSpec: "+speciesDictionary.size(),3,height-2);
-  fill(0,255,0);
+  fill(0,200,0);
   text("AlivePop:"+island.alivePopulations+" NofLinks: "+island.trophNet.size()+" MaxTr:"+maxTransfer,width/3,height-2);
   fill(0,0,128);
   text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,700,height-2); 
@@ -345,7 +346,7 @@ void drawTransfers(anArea is)
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
         if(lnk.target==theSelected)//Trzeba (?) niestety powtórzyć sprawdzanie warunku
         {
-          if(maxTransSelec>lnk.lasttransfer)
+          if(maxTransSelec<lnk.lasttransfer)
              maxTransSelec=lnk.lasttransfer;//Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
           int inten=(int)(255*(lnk.lasttransfer/maxTransSelec));
           stroke(255,inten);
@@ -370,12 +371,12 @@ void drawTransfers(anArea is)
   }
 }
 
-int StepCounter=0;
+double StepCounter=0;
 void runSteps(int NofS)
 {
   for(int sc=0;sc<NofS;sc++)//odlicza kroki symulacji
   {
-    StepCounter++;
+    StepCounter+=TIMEQUANT;
     if(CATACLISMRATE>0) trytokillspecies(island);  
     if(MUTATIONRATE>0) createnewspecies(island);
     timeStep(island); //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
@@ -388,7 +389,7 @@ void trytokillspecies(anArea self)
   {
     if(VIRTENVSIZE>1)
     {
-      if(random((float)(popul.biomas/popul.species.maxsize)) > CATACLISMRATE )//Liczba osobników w populacji zmniejsza szanse wymarcia
+      if(random((float)(popul.biomas/VIRTENVSIZE)) > CATACLISMRATE )//Liczba osobników w populacji zmniejsza szanse wymarcia
       {
         //println("Skipedd");
            continue;
@@ -402,8 +403,10 @@ void trytokillspecies(anArea self)
            continue;
       }
     }
-    popul.biomas*=1-random(1)*random(1)*random(1)*random(1)*random(1)*random(1);//Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
-  }
+    //print(" CATASTR.: ",popul.biomas);
+    popul.biomas*=1-random(1)*random(1)*random(1);//*random(1)*random(1)*random(1);//Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
+    //if(popul.biomas<1) println(" --> ",popul.biomas,"   !!!");  
+}
 }
 
 void createnewspecies(anArea self)
@@ -545,14 +548,14 @@ void makeConnections(anArea self,aPopulation what)
       double Wr=((susceptibility & othactivity)/((double)othactivity))*((susceptibility & othactivity)/((double)susceptibility));
       if(Wd>LINKMINWEIGHT) 
       {
-          if(othsusceptibility == activity)
-            println("!!!Add ",Wd,mySpec.Key(),"->",popul.species.Key(),binary(othsusceptibility,MASKBITS)," exp.by ",binary(activity,MASKBITS));
+          //if(othsusceptibility == activity)
+          //  println("!!!Add ",Wd,mySpec.Key(),"->",popul.species.Key(),binary(othsusceptibility,MASKBITS)," exp.by ",binary(activity,MASKBITS));
           self.trophNet.add(  new aPopLink(popul,what,Wd) );//związek danej populacji do nowej (what)
       }
       if(Wr>LINKMINWEIGHT) 
       {
-         if(susceptibility == othactivity)
-            println("!!!Add ",Wr,mySpec.Key(),"<-",popul.species.Key() ,binary(susceptibility,MASKBITS)," exp.by ",binary(othactivity,MASKBITS) );
+          //if(susceptibility == othactivity)
+          //  println("!!!Add ",Wr,mySpec.Key(),"<-",popul.species.Key() ,binary(susceptibility,MASKBITS)," exp.by ",binary(othactivity,MASKBITS) );
           self.trophNet.add(  new aPopLink(what,popul,Wr) );//związek nowej populacji do danej
       }
       //New mutant relations visualisation
@@ -677,6 +680,8 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   
   if(console>2) 
     println(" Source biomas B:",self.populations.get(0).biomas);
+  else
+    print('/');
 }
 
 //pomocnicza funkcja do mutowania bitów
