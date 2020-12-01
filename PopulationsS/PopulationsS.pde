@@ -1,22 +1,26 @@
   
 import java.util.Map;
-final int MASK=0xff;//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
-final int MASKBITS=8;//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
-final float MUTATIONRATE=0.01;
-
-final int   STEPperFRAME=50; //Ile kroków symulacji pomiędzy wizualizacjami
+final int MASK=0xfff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
+final int MASKBITS=12;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
+final int FIDBITS=0xf00;//*MAX_INT & MASK*/
+final float MUTATIONRATE=0.01;//Jak czesto na krok powstaje mutant - troche marne bo niezalezne od populacji
+final float MINSTART=10; //Startowy zasób "biomasy" mutanta
+final float FEEDPORTION=250; //Ile biomasy zródła maksyymalni eprzypływa na krok (jest random) 
 final float TIMEQUANT=0.005; //Ile czasu modelu upływa w każdym kroku
 final float TIMEDUMP=0.90; //Ile zasobów zostaje na skutek zużycia czasowego
-final float MINSTART=10;
-final float FEEDPORTION=250;
+
 
 //Parametry wizualizacji
+final int   STEPperFRAME=50; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=10;
 final int startX=100;
 final int startY=100;
 final float size=800;
-final int VDENSITY=20;
-int     console=0;
+final float VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
+float     DENSITYDIV=2;//Ponizej jakiej intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+float   bubleRad=10;
+int     console=1;
+boolean mutantConnVis=true;
 boolean VISTRANSFERS=true;
 
 class aSpecies //Informacja o gatunku
@@ -25,17 +29,17 @@ class aSpecies //Informacja o gatunku
   int activeBits;//activity bits (maska "ataku")
   int maxsize;
   aSpecies(int tB,int sB,int ms)
-  { suscepBits=tB;activeBits=sB;maxsize=ms;}
+   { suscepBits=tB;activeBits=sB;maxsize=ms;}
   aSpecies(aSpecies p)
-  { suscepBits=p.suscepBits;activeBits=p.activeBits;maxsize=p.maxsize;}
+   { suscepBits=p.suscepBits;activeBits=p.activeBits;maxsize=p.maxsize;}
   aSpecies()
-  {suscepBits=0;activeBits=0;maxsize=0;}
- String Key()
- {
-   int form=(MASKBITS+3)/4;
-   String out=hex(suscepBits,form)+":"+hex(activeBits,form)+":"+hex(maxsize,form);
-   return out;
- }
+   {suscepBits=0;activeBits=0;maxsize=0;}
+  String Key()
+   {
+     int form=(MASKBITS+3)/4;
+     String out=hex(suscepBits,form)+":"+hex(activeBits,form)+":"+hex(maxsize,form);
+     return out;
+   }
 }
 
 HashMap<String,aSpecies> speciesDictionary=new HashMap<String,aSpecies>();
@@ -112,7 +116,7 @@ void setup()
   //Simple feeding source. 
   /////////////////////////////////////////////////////////////
   //Zero oznacza że nie jest pełnoprawną częścią sieci
-  aSpecies FID=new aSpecies( 127/*MAX_INT & MASK*/, 0 ,1);
+  aSpecies FID=new aSpecies( FIDBITS, 0 ,1);
   aPopulation FP=new aPopulation(FID,FEEDPORTION);
   island.addPopulation(FP,false);
   
@@ -160,16 +164,18 @@ void drawArea(anArea is)
   for(aPopulation popul: is.populations)
  // if(popul.biomas>0)//jeszcze jest istotny
   {
-    int x=popul.species.suscepBits;
-    int y=popul.species.activeBits;
+    float x=popul.species.suscepBits;
+    float y=popul.species.activeBits;
     double b=popul.biomas;
-    //stroke(255*popul.species.maxsize/MASK,0,0,VDENSITY);//255*x/MASK,255*y/MASK,10);
-    x=int(startX+size*x/MASK);
-    y=int(startY+size*y/MASK);
+    //stroke(255*popul.species.maxsize/MASK,0,0,VDENSITY);//255*x/MASK,255*y/MASK,VDENSITY);
+    x=(float)(startX+size*x/MASK);
+    y=(float)(startY+size*y/MASK);
     if(b>0)
     {
+      float R=(float)(1+Math.log(1.0+b)*bubleRad);
+      if(R<1) R=1;//Musi być choc slad
       fill(255*popul.species.maxsize/MASK,255*x/MASK,255*y/MASK,VDENSITY);
-      ellipse(x,y,(int)(1+Math.log(1.0+b)*3),(int)(1+Math.log(1.0+b)*3));
+      ellipse(x,y,R,R);
     }
     else
     {
@@ -192,7 +198,7 @@ void runSteps(int NofS)
   }
 }
 
-int swithbit(int sou,int pos)//flip flopuje bit na pozycji
+int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
 {
   if(pos>=MASKBITS)
   {
@@ -304,25 +310,26 @@ void makeConnections(anArea self,aPopulation what)
       double Wr=(susceptibility & othactivity)/((double)(othactivity))*((susceptibility & othactivity)/((double)(susceptibility)));
       if(Wd>0) self.trophNet.add(  new aPopLink(popul,what,Wd) );//związek danej populacji do nowej (what)
       if(Wr>0) self.trophNet.add(  new aPopLink(what,popul,Wr) );//związek nowej populacji do danej
-      //Tmp? visualisation
-      if(false)
+      //New mutant relations visualisation
+      if(mutantConnVis
+      && popul.biomas>0)
       {
-        int x1=startX+(int)(size*float(susceptibility)/MASK);
-        int y1=startY+(int)(size*float(activity)/MASK);
-        int x2=startX+(int)(size*float(othsusceptibility)/MASK);
-        int y2=startY+(int)(size*float(othactivity)/MASK);
-        if(Wd!=0 || Wr!=0)
+        float x1=startX+(float)(size*float(susceptibility)/MASK);
+        float y1=startY+(float)(size*float(activity)/MASK);
+        float x2=startX+(float)(size*float(othsusceptibility)/MASK);
+        float y2=startY+(float)(size*float(othactivity)/MASK);
+        if(Wd!=0 || Wr!=0)//Wstępny test
         {
           //String mark=(Wd>Wr*10?">>":(Wr>Wd*10?"<<":"~~"));
           //println(x1,y1,x2,y2,Wd,mark,Wr);
-          if(Wd>0)
+          if(Wd*VDENSITY>VDENSITY/DENSITYDIV)//Sterowanie dokładnościa prezentacji linków
           {
-            stroke(255,0,0,(int)(Wd*VDENSITY*2));
+            stroke(255,0,0,(float)(Wd*VDENSITY));
             line(x1+1,y1+1,x2,y2);
           }
-          if(Wr>0)
+          if(Wr*VDENSITY>VDENSITY/DENSITYDIV)
           {
-            stroke(0,0,255,(int)(Wr*VDENSITY*2));
+            stroke(0,0,255,(float)(Wr*VDENSITY));
             line(x2+1,y2+1,x1,y1);
           }
         }
@@ -359,7 +366,8 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   && lnk.target.biomas>0 )//link jest istotny
   { //TIMEQUANT!
     double transfer=lnk.weight*lnk.source.biomas*TIMEQUANT;
-    if(transfer>maxTransfer) maxTransfer=transfer;
+    if(transfer>maxTransfer) 
+            maxTransfer=transfer;
     lnk.lasttransfer=transfer;
     lnk.target.currincome+=transfer;
     lnk.source.currloss+=transfer;
@@ -370,16 +378,16 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 )//link jest istotny
   {
-      int intensity=(int)(VDENSITY*lnk.lasttransfer/maxTransfer);  
-      if(intensity>0)//VDENSITY/10)
+      float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
+      if(intensity>VDENSITY/DENSITYDIV)
       {
-        int x1=startX+(int)(size*float(lnk.source.species.suscepBits)/MASK);
-        int y1=startY+(int)(size*float(lnk.source.species.activeBits)/MASK);
-        int x2=startX+(int)(size*float(lnk.target.species.suscepBits)/MASK);
-        int y2=startY+(int)(size*float(lnk.target.species.activeBits)/MASK);
+        float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK);
+        float y1=startY+(float)(size*float(lnk.source.species.activeBits)/MASK);
+        float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK);
+        float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK);
         stroke(0,200,0,intensity);
         line(x1,y1,x2,y2);
-        stroke(0,100,intensity);
+        stroke(0,100,0,intensity);
         line(x2,y2,(x1+x2)/2,(y1+y2)/2);
       }
   }
@@ -387,7 +395,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
   //Najprostrza wersja - jedno źródło podstawowe
   self.populations.get(0).currincome=random(FEEDPORTION);//Samo się doda za chwilę
-  print(self.populations.get(0).currloss,self.populations.get(0).currincome);//Jak z wykożystaniem pokarmu
+  if(console>1) print(self.populations.get(0).currloss,self.populations.get(0).currincome);//Jak z wykożystaniem pokarmu
   if(self.populations.get(0).biomas<=0)
   {
     self.populations.get(0).biomas=1;
@@ -402,7 +410,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     popul.biomas-=popul.currloss;
   }
   
-  print(" ",self.populations.get(0).biomas);
+  if(console>1) print(" ",self.populations.get(0).biomas);
   
   //...i upływu czasu
   self.alivePopulations=0;
@@ -416,7 +424,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
         self.alivePopulations++;
   }
   
-  println(" ",self.populations.get(0).biomas);
+  if(console>0) println(" ",self.populations.get(0).biomas);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
