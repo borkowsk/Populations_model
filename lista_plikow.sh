@@ -485,93 +485,133 @@
 #exit 
 
 
-cp	../Population12bw/commandLine.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Population12bw/ModelInit.pde	                ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Population12bw/ModelRun.pde	                ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Population12bw/Statystyka.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Population12bw/Video.pde	                ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Population12bw/commandLine.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Population12bw/ModelInit.pde	                ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Population12bw/ModelRun.pde	                ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Population12bw/Statystyka.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Population12bw/Video.pde	                ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_2018-10-02_09:40:42"
+
+#cp	../Populations12_filmyBW/Population12bw/commandLine.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw/ModelInit.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw/ModelRun.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw/Statystyka.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY_2018-10-02_09:40:42"
+
+#cp	../Populations12_filmyBW/Population12bw_66000/commandLine.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_66000/ModelInit.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_66000/ModelRun.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_66000/Statystyka.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_66000/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_09:40:42"
+
+#cp	../Populations12_filmyBW/Population12bw_99000/commandLine.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_99000/ModelInit.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_99000/ModelRun.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_99000/Statystyka.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw_99000/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_09:40:42"
+
+
+#cp	../Populations12_filmyBW/Population12bw150000/commandLine.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw150000/ModelInit.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw150000/ModelRun.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw150000/Statystyka.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
+#cp	../Populations12_filmyBW/Population12bw150000/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_09:40:42"
+
+
+#cp	../Populations12_filmyBW/Population12bw/Events.pde	        ./PopulationsT		#	2018-10-02	12:38:53.000000000
+#cp	../Populations12_filmyBW/Population12bw/Pomocnicze.pde	        ./PopulationsT		#	2018-10-02	12:38:53.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY_2018-10-02_12:38:53"
+
+#cp	../Populations12_filmyBW/Population12bw_66000/Events.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
+#cp	../Populations12_filmyBW/Population12bw_66000/Pomocnicze.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_12:38:53"
+
+#cp	../Populations12_filmyBW/Population12bw_99000/Events.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
+#cp	../Populations12_filmyBW/Population12bw_99000/Pomocnicze.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_12:38:53"
+
+
+#cp	../Populations12_filmyBW/Population12bw150000/Events.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
+#cp	../Populations12_filmyBW/Population12bw150000/Pomocnicze.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_12:38:53"
+
+#exit
+
+
+cp	../Population12bw/Model.pde	                                ./PopulationsT		#	2018-10-02	12:48:04.000000000
 git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_2018-10-02_09:40:42"
+git commit -a -m "Version_1.2bw_2018-10-02_12:48:04"
 
-cp	../Populations12_filmyBW/Population12bw/commandLine.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw/ModelInit.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw/ModelRun.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw/Statystyka.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
+cp	../Populations12_filmyBW/Population12bw/Model.pde	        ./PopulationsT		#	2018-10-02	12:48:04.000000000
+git commit -a -m "Version_1.2bw_FILMY_2018-10-02_12:48:04"
+
+cp	../Populations12_filmyBW/Population12bw_66000/Model.pde	        ./PopulationsT		#	2018-10-02	12:48:04.000000000
+git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_12:48:04"
+
+cp	../Populations12_filmyBW/Population12bw_99000/Model.pde	        ./PopulationsT		#	2018-10-02	12:48:04.000000000
+git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_12:48:04"
+
+cp	../Populations12_filmyBW/Population12bw150000/Model.pde	        ./PopulationsT		#	2018-10-02	12:48:04.000000000
+git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_12:48:04"
+
+
+cp	../Population12bw/ModelImplement.pde	                        ./PopulationsT		#	2018-10-02	12:52:44.000000000
 git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY_2018-10-02_09:40:42"
+git commit -a -m "Version_1.2bw_2018-10-02_12:52:44"
 
-cp	../Populations12_filmyBW/Population12bw_66000/commandLine.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/ModelInit.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/ModelRun.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/Statystyka.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_09:40:42"
-
-cp	../Populations12_filmyBW/Population12bw_99000/commandLine.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/ModelInit.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/ModelRun.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/Statystyka.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_09:40:42"
+cp	../Populations12_filmyBW/Population12bw/ModelImplement.pde	        ./PopulationsT		#	2018-10-02	12:52:44.000000000
+git commit -a -m "Version_1.2bw_FILMY_2018-10-02_12:52:44"
 
 
-cp	../Populations12_filmyBW/Population12bw150000/commandLine.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw150000/ModelInit.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw150000/ModelRun.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw150000/Statystyka.pde	./PopulationsT		#	2018-10-02	09:40:42.000000000
-cp	../Populations12_filmyBW/Population12bw150000/Video.pde	        ./PopulationsT		#	2018-10-02	09:40:42.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_09:40:42"
+cp	../Populations12_filmyBW/Population12bw_66000/ModelImplement.pde	./PopulationsT		#	2018-10-02	12:52:44.000000000
+git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_12:52:44"
+
+cp	../Populations12_filmyBW/Population12bw_99000/ModelImplement.pde	./PopulationsT		#	2018-10-02	12:52:44.000000000
+git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_12:52:44"
+
+cp	../Populations12_filmyBW/Population12bw150000/ModelImplement.pde	./PopulationsT		#	2018-10-02	12:52:44.000000000
+git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_12:52:44"
+
+cp	../Populations12_filmyBW/Population12bw/ModelBaseParams.pde	        ./PopulationsT		#	2018-10-02	15:13:53.000000000
+cp	../Populations12_filmyBW/Population12bw/Population12bw.pde	        ./PopulationsT/PopulationsT.pde		#	2018-10-02	15:13:53.000000000
+git commit -a -m "Version_1.2bw_FILMY_2018-10-02_15:13:53"
 
 
-cp	../Populations12_filmyBW/Population12bw/Events.pde	        ./PopulationsT		#	2018-10-02	12:38:53.000000000
-cp	../Populations12_filmyBW/Population12bw/Pomocnicze.pde	        ./PopulationsT		#	2018-10-02	12:38:53.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY_2018-10-02_12:38:53"
+cp	../Populations12_filmyBW/Population12bw_99000/ModelBaseParams.pde	./PopulationsT		#	2018-10-02	15:14:55.000000000
+git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_15:14:55"
 
-cp	../Populations12_filmyBW/Population12bw_66000/Events.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/Pomocnicze.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_12:38:53"
-
-cp	../Populations12_filmyBW/Population12bw_99000/Events.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/Pomocnicze.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_12:38:53"
+cp	../Populations12_filmyBW/Population12bw150000/ModelBaseParams.pde	./PopulationsT		#	2018-10-02	15:14:55.000000000
+git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_15:14:55"
 
 
-cp	../Populations12_filmyBW/Population12bw150000/Events.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
-cp	../Populations12_filmyBW/Population12bw150000/Pomocnicze.pde	./PopulationsT		#	2018-10-02	12:38:53.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_12:38:53"
+cp	../Populations12_filmyBW/Population12bw_66000/ModelBaseParams.pde	./PopulationsT		#	2018-10-02	15:20:27.000000000
+git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_15:20:27"
 
+
+cp	../Populations12_filmyBW/Population12bw_66000/Population12bw_66000.pde	./PopulationsT/PopulationsT.pde		#	2018-10-02	15:39:24.000000000
+git commit -a -m "Version_1.2bw_FILMY66000_2018-10-02_15:39:24"
+
+cp	../Populations12_filmyBW/Population12bw_99000/Population12bw_99000.pde	./PopulationsT/PopulationsT.pde		#	2018-10-02	15:40:11.000000000
+git commit -a -m "Version_1.2bw_FILMY99000_2018-10-02_15:40:11"
+
+cp	../Populations12_filmyBW/Population12bw150000/Population12bw150000.pde	./PopulationsT/PopulationsT.pde		#	2018-10-02	15:40:11.000000000
+git commit -a -m "Version_1.2bw_FILMY150000_2018-10-02_15:40:11"
 exit
 
 
-cp	../Population12bw/Model.pde	./		#	2018-10-02	12:48:04.000000000
-
-cp	../Populations12_filmyBW/Population12bw_66000/Model.pde	./		#	2018-10-02	12:48:04.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/Model.pde	./		#	2018-10-02	12:48:04.000000000
-cp	../Populations12_filmyBW/Population12bw/Model.pde	./		#	2018-10-02	12:48:04.000000000
-cp	../Populations12_filmyBW/Population12bw150000/Model.pde	./		#	2018-10-02	12:48:04.000000000
-
-cp	../Population12bw/ModelImplement.pde	./		#	2018-10-02	12:52:44.000000000
-
-cp	../Populations12_filmyBW/Population12bw_66000/ModelImplement.pde	./		#	2018-10-02	12:52:44.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/ModelImplement.pde	./		#	2018-10-02	12:52:44.000000000
-cp	../Populations12_filmyBW/Population12bw/ModelImplement.pde	./		#	2018-10-02	12:52:44.000000000
-cp	../Populations12_filmyBW/Population12bw150000/ModelImplement.pde	./		#	2018-10-02	12:52:44.000000000
-cp	../Populations12_filmyBW/Population12bw/ModelBaseParams.pde	./		#	2018-10-02	15:13:53.000000000
-cp	../Populations12_filmyBW/Population12bw/Population12bw.pde	./		#	2018-10-02	15:13:53.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/ModelBaseParams.pde	./		#	2018-10-02	15:14:55.000000000
-cp	../Populations12_filmyBW/Population12bw150000/ModelBaseParams.pde	./		#	2018-10-02	15:14:55.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/ModelBaseParams.pde	./		#	2018-10-02	15:20:27.000000000
-cp	../Populations12_filmyBW/Population12bw_66000/Population12bw_66000.pde	./		#	2018-10-02	15:39:24.000000000
-cp	../Populations12_filmyBW/Population12bw_99000/Population12bw_99000.pde	./		#	2018-10-02	15:40:11.000000000
-cp	../Populations12_filmyBW/Population12bw150000/Population12bw150000.pde	./		#	2018-10-02	15:40:11.000000000
 
 cp	../Population12bw/ModelBaseParams.pde	./		#	2018-10-03	13:15:46.000000000
 cp	../Population12bw/Events.pde	./		#	2018-10-04	18:02:32.000000000

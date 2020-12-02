@@ -12,15 +12,19 @@ class aSpecies //Informacja o gatunku
   int suscepBits;//susceptibility bits (maska "obrony")
   int activeBits;//activity bits (maska "ataku")
   int maxsize;
+  int countBits;//Suma bitów - czyli poziom specjalizacji
   float sizelog;//logarytm z maxsize przydatny do wizualizacji
   String _key=null;
   
   aSpecies(int tB,int sB,int ms)
-   { suscepBits=tB;activeBits=sB;maxsize=ms;sizelog=log(1+ms);}
+   { suscepBits=tB;activeBits=sB;maxsize=ms;sizelog=log(1+ms);countBits=countbits(suscepBits)+countbits(activeBits);}
+   
   aSpecies(aSpecies p)
-   { suscepBits=p.suscepBits;activeBits=p.activeBits;maxsize=p.maxsize;sizelog=p.sizelog;}
+   { suscepBits=p.suscepBits;activeBits=p.activeBits;maxsize=p.maxsize;sizelog=p.sizelog;countBits=p.countBits;}
+ 
   aSpecies()
-   {suscepBits=0;activeBits=0;maxsize=0;sizelog=0;}
+   {suscepBits=0;activeBits=0;maxsize=0;sizelog=0;countBits=0;}
+  
   String Key()
    {
      if(_key==null) 
