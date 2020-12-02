@@ -6,17 +6,17 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-final int MASK=0xfff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
-final int MASKBITS=12;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
+final int MASK=0xffff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
+final int MASKBITS=16;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
 final boolean allowSizeSyn=false;//Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
 final boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
 final double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 final float  TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
 
-/*PARAM*/int[] FIDBITS={0x800,0x400,0x200,0x0F0,0x01};//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+/*PARAM*/int[] FIDBITS={0x8000,0x4000,0x2000,0x0F00,0x010};//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
          int    LASTSOURCE=FIDBITS.length-1;//Tylko jedno zródło o indeksie 0        
 final float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
-      float   FEEDPORTION=10000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane) 
+      float   FEEDPORTION=15000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane) 
 final float CATACLISMRATE=0.001*TIMEQUANT;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
 final float MUTATIONRATE=0.001*TIMEQUANT;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
 
