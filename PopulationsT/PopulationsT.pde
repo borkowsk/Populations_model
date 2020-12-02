@@ -183,7 +183,7 @@ void drawArea(anArea is)
      // float XINT=255.0*(fSusc/MASK);
      // float YINT=255.0*(fActi/MASK);
       float SPEC=popul.species.countBits/float(MASKBITS*2);
-      print(SPEC,",");//Poziom omnipotencji genetycznej - im mniej tym mniej bitów czyli większa specjalizacja
+      //print(SPEC,",");//Poziom omnipotencji genetycznej - im mniej tym mniej bitów czyli większa specjalizacja
       SPEC*=255;
       
       float R;
