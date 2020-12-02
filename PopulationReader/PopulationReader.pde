@@ -30,11 +30,12 @@ anArea island=new anArea(); //Pojemnik na zbiór populacji - na razie pojedynczy
 String foldSelection=//"/data/wb/SCC/PROCESSING/Populations";
   //"/home/borkowsk/data/wb/Dokumenty/Moje dokumenty/2018_Memetyka-nieSczyrk/";
   //"/data/wb/_DANE/MemetykaSieciEkologiczneKultur/Population10fff/"
-  "/data/wb/_DANE/MemetykaSieciEkologiczneKultur/Population10fff/"
+  //"/data/wb/_DANE/MemetykaSieciEkologiczneKultur/Population10fff/"
+  "../nets/"
   ;
 File   foldSelectorF=null;
-String modelName=null;
-      //"BMLVN12x2MULTImet0.9970000mut0.0000100cat0.0010000minW0.1S2.0_env25000.0fH0FFfH0C7fH0B5fH023fH011x50000.0tq0.01dt2018.02.13.12.55.11.386.00031.19000.txt"
+String modelName=//null;
+      "../nets/BMLVN12x2MULTImet0.9970000mut0.0000100cat0.0010000minW0.1S2.0_env25000.0fH0FFfH0C7fH0B5fH023fH011x50000.0tq0.01dt2018.02.13.12.55.11.386.00031.19000.txt"
       //"BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fH800fH400fH200fH0F0fH001x35000.0tq0.01dt2018.02.13.12.51.37.267.21650.98047.txt"
       //"BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fH800fH400fH200fH0F0fH001x25000.0tq0.01dt2018.02.13.12.23.03.228.12483.59961.txt"
       //"BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.20.34.314.00013.00000.txt"
@@ -50,6 +51,7 @@ void setup()
   noStroke();
   noFill();
   frameRate(FRAMES); //frames per second
+  
   if(modelName==null)
   {
     if(foldSelection!=null)
@@ -65,12 +67,12 @@ void setup()
     else
       selectInput("Select a file to process:", "fileSelected");
     do{ delay(100);} while(modelName==null);
+    frame.setTitle(foldSelectorF.getName());
   }
   
   if(modelName==null || modelName=="") //Jak się nie uda pliku znakeźć
           exit();
-  
-  frame.setTitle(foldSelectorF.getName());
+   
   int lines=readModel(island,modelName); // inicjalizacja modelu z pliku
   
   initStats();

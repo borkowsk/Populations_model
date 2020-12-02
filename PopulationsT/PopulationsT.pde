@@ -28,7 +28,7 @@
 import java.util.Map;
 
 //Parametry wizualizacji
-final boolean GENERATEMOVIE=true;//Czy wogóle tworzyć film?
+final boolean GENERATEMOVIE=false;//Czy wogóle tworzyć film?
       int STEPperFRAME=20; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=50;
 final int VFRAMES=10;//Co ile klatek obrazu zapisujemy klatke filmu

@@ -10,10 +10,15 @@ import java.net.UnknownHostException;
 //file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFx350000.0tq0.01dt2018.01.30.12.42.06.209.22000.txt
 //file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.010000.00000.txt
 //file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.001000.00000.txt
+//file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFx350000.0tq0.01dt2018.01.30.12.42.06.209.22000.txt
+//file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.010000.00000.txt
+//file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.001000.00000.txt
+//BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fH800fH400fH200fH0F0fH001x35000.0tq0.01dt2018.02.13.12.51.37.267.003851.45996.txt
+//BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fH800fH400fH200fH0F0fH001x35000.0tq0.01dt2018.02.13.12.51.37.267.21650.98047.txt
 
 String modelName=//"BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFx350000.0tq0.01dt2018.01.30.12.42.06.209.22000.txt";
-                 "BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.010000.00000.txt";
-String altModel= "BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.001000.00000.txt";
+                 "../nets/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.010000.00000.txt";
+String altModel= "../nets/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.001000.00000.txt";
 
 //Parametry dynamiki
 int MASK=0xff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów każdej charakterystyki
@@ -41,6 +46,8 @@ boolean FORCEMINSTART=false;//Czy zbyt małe populacje mogą mutować czy po pro
 //Czysto techniczne - prosta optymalizacja rozmiaru sieci
 final boolean CLEAN=true;    //Czy czyścić sieć z martwych populacji? 
 static String name;
+boolean VISALLTRANSF=false;//Czy tylko wybranego węzła czy wszystkie
+final int BACKGROUND=255;
 
   
 String nameOfModel()

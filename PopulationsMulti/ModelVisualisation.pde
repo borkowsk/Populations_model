@@ -1,5 +1,6 @@
 //IMPLEMENTACJA WIZUALIZACJI  I ROBIENIA FILMU
 /////////////////////////////////////////////////////////////////////
+/*
 void drawArea(anArea is,int startX,int startY,int size)
 {
   noStroke();
@@ -79,7 +80,8 @@ void drawArea(anArea is,int startX,int startY,int size)
     }
   }
 }
-
+*/
+/*
 void drawTransfers(anArea is,int startX,int startY,int size)
 {
   //println(is.trophNet.size());
@@ -124,7 +126,7 @@ void drawTransfers(anArea is,int startX,int startY,int size)
       }
   }
 }
-
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////
 //  https://www.researchgate.net/profile/WOJCIECH_BORKOWSKI
 ///////////////////////////////////////////////////////////////////////////////////////////

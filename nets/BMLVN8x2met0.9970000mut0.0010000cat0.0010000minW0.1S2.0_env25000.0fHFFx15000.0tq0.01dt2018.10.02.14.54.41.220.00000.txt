@@ -1,0 +1,15 @@
+BMLVN	8	x2
+metabolism	0.9970000
+mutations	0.0010000
+catastrofic	0.0010000
+minWeight	0.1
+start biomas	2.0	_
+env.size	25000.0
+feedSourceH	FF
+feed port max	15000.0
+timeQuant	0.01
+
+key	suscepBits	activeBits	maxsize	popBiomas	currincome	currloss
+FF:00	255	0	1	5962.66760530971	16.371023178100586	0.08611301349788308	
+FF:FF	255	255	1	150.92755316361732	0.08611301349788308	0.0	
+
