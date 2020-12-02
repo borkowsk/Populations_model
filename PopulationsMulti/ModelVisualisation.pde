@@ -2,13 +2,6 @@
 /////////////////////////////////////////////////////////////////////
 void drawArea(anArea is,int startX,int startY,int size)
 {
-  if(Clicked)//Żądanie zmiany wybranego
-  {
-     minDist2Selec=MAX_INT;
-     maxTransSelec=-MAX_INT;
-     println("  Looking for ",searchedX,searchedY);
-     Clicked=false;
-  }
   noStroke();
   for(aPopulation popul: is.populations)
   {
@@ -56,7 +49,7 @@ void drawArea(anArea is,int startX,int startY,int size)
       
       if(searchedX>0 && searchedY>0)
       {
-        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY));//Szukanie print(dist2,", ");
+        double dist2=Math.sqrt( sqr(x-searchedX) + sqr(y-searchedY) );//Szukanie print(dist2,", ");
         if(dist2 < minDist2Selec)
         {
           minDist2Selec=dist2;        //print(" ? ");
@@ -85,10 +78,6 @@ void drawArea(anArea is,int startX,int startY,int size)
       noStroke();
     }
   }
-  
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
-  searchedX=-1;
-  searchedY=-1;
 }
 
 void drawTransfers(anArea is,int startX,int startY,int size)

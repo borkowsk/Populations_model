@@ -226,11 +226,17 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   }
     
   //Podsumowanie interakcji 
+  float FeedPortion=FEEDPORTION;
   for(aPopulation popul: self.populations)
   {
     if(popul.species.activeBits==0)//ZRODŁO
-      popul.currincome=random(FEEDPORTION);//Samo się doda za chwilę
-      
+    {
+      float inc=random(FEEDPORTION);
+      popul.currincome=inc;//Samo się doda za chwilę
+      if(LIMITFEEDS) 
+            FeedPortion-=inc;//coraz mniej
+    }
+    
     if(popul.biomas>0)//jeszcze jest to istotna populacja
     { //TIMEQUANT!
       popul.biomas+=popul.currincome;
