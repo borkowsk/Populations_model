@@ -16,6 +16,7 @@ void mouseClicked()
 
 void keyPressed() 
 {
+  print("--> Command '"+key+"' ");
   switch(key)
   {
   case '1': STEPperFRAME=1;text("StPerF: "+STEPperFRAME,1,16);break;
@@ -39,7 +40,7 @@ void keyPressed()
   case '.': VDENSITY+=10;if(VDENSITY>255) VDENSITY=255;break;
   case '>': DENSITYDIV++;break;
   case '<': DENSITYDIV--;if(DENSITYDIV<2) DENSITYDIV=2;break;
-  default:println("Command '"+key+"' unknown");break;
+  default:println(" unknown!!!");break;
   }
   
   if (key == ESC) 
