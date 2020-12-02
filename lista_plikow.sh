@@ -646,47 +646,57 @@
 #exit
 
 
-cp	../Population0Reader/ModelImplement.pde	        ./PopulationReader		#	2018-10-09	14:09:01.655659746
-git commit -a -m "READER_Version_1.0_2018-10-09_14:09:01"
+#cp	../Population0Reader/ModelImplement.pde	        ./PopulationReader		#	2018-10-09	14:09:01.655659746
+#git commit -a -m "READER_Version_1.0_2018-10-09_14:09:01"
 
+#cp	../populationsMulti02BW/Model.pde	        ./PopulationsMulti		#	2018-10-09	14:19:26.019511609
+#git commit -a -m "MULTI_Version_0.2BW_2018-10-09_14:19:26"
 
-cp	../populationsMulti02BW/Model.pde	        ./PopulationsMulti		#	2018-10-09	14:19:26.019511609
-git commit -a -m "MULTI_Version_0.2BW_2018-10-09_14:19:26"
+#cp	../Population0Reader/ModelReadWrite.pde	        ./PopulationReader		#	2018-10-16	20:59:20.759465216
+#git commit -a -m "READER_Version_1.0_2018-10-16	20:59:20"
 
-cp	../Population0Reader/ModelReadWrite.pde	        ./PopulationReader		#	2018-10-16	20:59:20.759465216
-git commit -a -m "READER_Version_1.0_2018-10-16	20:59:20"
+#cp	../Population0Reader/Events.pde	                ./PopulationReader		#	2018-10-21	15:16:52.025315862
+#cp	../Population0Reader/ModelVisualisations.pde	./PopulationReader		#	2018-10-21	15:16:52.025315862
+#git commit -a -m "READER_Version_1.0_2018-10-21	15:16:52"
 
-cp	../Population0Reader/Events.pde	                ./PopulationReader		#	2018-10-21	15:16:52.025315862
-cp	../Population0Reader/ModelVisualisations.pde	./PopulationReader		#	2018-10-21	15:16:52.025315862
-git commit -a -m "READER_Version_1.0_2018-10-21	15:16:52"
+#cp	../populationsMulti02BW/Helpers.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.000000000
+#git commit -a -m "MULTI_Version_0.2BW_2018-10-21_15:34:46"
 
-
-cp	../populationsMulti02BW/Helpers.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.000000000
-git commit -a -m "MULTI_Version_0.2BW_2018-10-21_15:34:46"
-
-
-cp	../populationsMulti01A/Helpers.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.911054787
-cp	../populationsMulti01A/Model.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.911054787
-git commit -a -m "MULTI_Version_0.1A_2018-10-21_15:34:46"
-
-exit
+#cp	../populationsMulti01A/Helpers.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.911054787
+#cp	../populationsMulti01A/Model.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.911054787
+#git commit -a -m "MULTI_Version_0.1A_2018-10-21_15:34:46"
+#exit
 
 cp	../populationsMulti02BW/ModelVisualisationsSingle.pde	./PopulationsMulti		#	2018-10-21	15:45:21.000000000
+git add ./PopulationsMulti/*
+git commit -a -m "MULTI_Version_0.2BW_2018-10-21_15:45:21"
 
 cp	../populationsMulti01A/ModelVisualisationsSingle.pde	./PopulationsMulti		#	2018-10-21	15:45:21.305937324
+git commit -a -m "MULTI_Version_0.1A_2018-10-21_15:45:21"
 
-cp	../Population0Reader/Population0Reader.pde	./		#	2018-10-21	16:49:49.448148710
 
-cp	../PopulationsMulti00/ModelBaseParams.pde	./		#	2018-10-21	16:56:55.074796344
-cp	../PopulationsMulti00/PopulationsMulti00.pde	./		#	2018-10-21	16:56:55.074796344
+cp	../Population0Reader/Population0Reader.pde	        ./PopulationReader/PopulationReader.pde		#	2018-10-21	16:49:49.448148710
+git commit -a -m "READER_Version_1.0_2018-10-21_16:49:49"
 
-cp	../populationsMulti02BW/ModelBaseParams.pde	./		#	2018-10-21	17:06:55.344979427
-cp	../populationsMulti02BW/ModelReadWrite.pde	./		#	2018-10-21	17:15:20.595480812
-cp	../populationsMulti02BW/populationsMulti02BW.pde	./		#	2018-10-21	17:16:05.655347762
+cp	../PopulationsMulti00/ModelBaseParams.pde	        ./PopulationsMulti		#	2018-10-21	16:56:55.074796344
+cp	../PopulationsMulti00/PopulationsMulti00.pde	        ./PopulationsMulti/PopulationsMulti.pde		#	2018-10-21	16:56:55.074796344
+git add ./PopulationsMulti/*
+git commit -a -m "MULTI_Version_0.0?_2018-10-21_16:56:55"
 
-cp	../populationsMulti01A/Stats.pde	./		#	2018-10-21	18:54:24.458857629
-cp	../populationsMulti01A/populationsMulti01A.pde	./		#	2018-10-21	18:56:33.806613311
-cp	../populationsMulti01A/ModelImplement.pde	./		#	2018-10-21	19:01:30.334097775
-cp	../populationsMulti01A/ModelRun.pde	./		#	2018-10-21	19:01:30.334097775
-cp	../populationsMulti01A/ModelBaseParams.pde	./		#	2018-10-21	19:33:17.396891389
-cp	../populationsMulti01A/ModelReadWrite.pde	./		#	2018-10-21	19:33:17.400891386
+cp	../populationsMulti02BW/ModelBaseParams.pde	        ./PopulationsMulti		#	2018-10-21	17:06:55.344979427
+cp	../populationsMulti02BW/ModelReadWrite.pde	        ./PopulationsMulti		#	2018-10-21	17:15:20.595480812
+cp	../populationsMulti02BW/populationsMulti02BW.pde	./PopulationsMulti/PopulationsMulti.pde		#	2018-10-21	17:16:05.655347762
+git commit -a -m "MULTI_Version_0.2BW_2018-10-21_17:16:05"
+
+cp	../populationsMulti01A/Stats.pde	                ./PopulationsMulti		#	2018-10-21	18:54:24.458857629
+cp	../populationsMulti01A/populationsMulti01A.pde	        ./PopulationsMulti/PopulationsMulti.pde		#	2018-10-21	18:56:33.806613311
+git add ./PopulationsMulti/*
+git commit -a -m "MULTI_Version_1.0A_2018-10-21	18:56:33"
+
+cp	../populationsMulti01A/ModelImplement.pde	        ./PopulationsMulti		#	2018-10-21	19:01:30.334097775
+cp	../populationsMulti01A/ModelRun.pde	                ./PopulationsMulti		#	2018-10-21	19:01:30.334097775
+cp	../populationsMulti01A/ModelBaseParams.pde	        ./PopulationsMulti		#	2018-10-21	19:33:17.396891389
+cp	../populationsMulti01A/ModelReadWrite.pde	        ./PopulationsMulti		#	2018-10-21	19:33:17.400891386
+git add ./PopulationsMulti/*
+git commit -a -m "MULTI_Version_1.0A_2018-10-21_19:01:30-19:33:17"
+
