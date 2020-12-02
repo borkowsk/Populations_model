@@ -30,22 +30,25 @@ import java.util.Map;
 //Parametry wizualizacji
 final boolean GENERATEMOVIE=true;//Czy wogóle tworzyć film?
       int STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
-final int FRAMES=20;
-final int VFRAMES=10;//Co ile klatek obrazu zapisujemy klatke filmu
+final int FRAMES=100;
+final int VFRAMES=5;//Co ile klatek obrazu zapisujemy klatke filmu
 final int startX=100;
 final int startY=100;
 final float size=800;
-
 final boolean ORBVISUAL=true;//wizualizacja typu ORB (kule)
 final float  RANDSELECT=0.001;//Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
-float BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
-float      VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
+
+final int BACKGROUND=255;
+float BACKGROUNDDENSITY=250; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
+float      VDENSITY=200;//Maksymalna intensywność pojedynczej krawędzi
 float     DENSITYDIV=25;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+
 float   bubleRad=2;//Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
 boolean simulationRun=true;
 boolean mutantConnVis=false;
-boolean VISTRANSFERS=false;
+boolean VISTRANSFERS=true;//Czy w ogóle linie
+boolean VISALLTRANSF=true;//Czy tylko wybranego węzła czy wszystkie
 
 anArea island=new anArea(); //Pojemnik na zbiór populacji - na razie pojedynczy
 String modelName;
@@ -56,16 +59,14 @@ void setup()
   checkCommnadLine();//Ewentualne uzycie parametrów wywołania
   //noSmooth()
   size(1000,1000);
-  background(128); //Clear the window
+  background(BACKGROUND); //Clear the window
   noStroke();
   noFill();
   frameRate(FRAMES); //frames per second
   initializeModel(); // inicjalizacja modelu może się różnic w różnych sytuacjach mimo że model się nie zmienia
-
+  initStats();
   modelName=nameOfModel();
   println(modelName);
-  initStats();
-  
   //text(modelName,10,height-40);
   lastDescr=descriptionOfModel(':','\n','\n');
   text(lastDescr,10,32);
@@ -87,16 +88,19 @@ void draw()
   println(" Step: ",StepCounter, ": ");
   
   noStroke(); 
-  fill(128,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste
+  
+  fill(BACKGROUND,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste albo i nie
+  
   rect(0,0,width,height-20);
   
   if(StepCounter==0)
   {
       drawArea(island); println("first draw");
       doStatistics();
-      FirstVideoFrame();
+      if(GENERATEMOVIE)
+            FirstVideoFrame();
       write(island,modelName+".0START");//Startowy stan ekosystemu
-      fill(255,255,0);
+      fill(5);
       text("STPS:"+STEPperFRAME //Ile kroków symulacji pomiędzy wizualizacjami
           +" FRM:"+FRAMES  //Ile klatek na realną sekundę próbuje liczyć
           +" VID:"+VFRAMES //Co ile klatek obrazu zapisujemy klatke filmu
@@ -125,16 +129,16 @@ void draw()
   fill(255);
   rect(0,height-20,width,20);//STATUS LINE
   if(simulationRun)
-      fill(255,0,0);
+      fill(55);
   else
       fill(0);
   text(StepCounter+", NofSpec: "+speciesDictionary.size(),3,height-2);
-  fill(0,200,0);
+  fill(100);
   text("AlivePop:"+island.alivePopulations+" NofLinks: "+island.trophNet.size()+" MaxTr:"+maxTransfer,width/3,height-2);
-  fill(0,0,128);
+  fill(150);
   text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,700,height-2); 
   println();
-  if(frameCount % VFRAMES==0) 
+  if(GENERATEMOVIE && (frameCount % VFRAMES==0)) 
                   NextVideoFrame();
   //Tylko przy pełnych JEDNOSTKACH czasu
   //if(frameCount % STEPperFRAME==0  ) //???
@@ -161,6 +165,7 @@ void drawArea(anArea is)
      println("  Looking for ",searchedX,searchedY);
      Clicked=false;
   }
+  
   noStroke();
   for(aPopulation popul: is.populations)
   {
@@ -175,8 +180,11 @@ void drawArea(anArea is)
       float x=(float)(startX+size*fSusc/MASK+ofs);
       float y=(float)(startY+size*fActi/MASK+ofs); 
       float SINT=255.0*((float)popul.species.maxsize/MASK);
-      float XINT=255.0*(fSusc/MASK);
-      float YINT=255.0*(fActi/MASK);
+     // float XINT=255.0*(fSusc/MASK);
+     // float YINT=255.0*(fActi/MASK);
+      float SPEC=popul.species.countBits/float(MASKBITS*2);
+      print(SPEC,",");//Poziom omnipotencji genetycznej - im mniej tym mniej bitów czyli większa specjalizacja
+      SPEC*=255;
       
       float R;
       //R=(float)(1+Math.log(1.0+b)*bubleRad);
@@ -184,10 +192,11 @@ void drawArea(anArea is)
         R=(float)(Math.pow(b,0.33333333333)*bubleRad);
       else
         R=(float)(Math.sqrt(b)*bubleRad);
+        
       if(R<1){ R=1; print(',');}//Musi być choc slad
       
       stroke(SINT,0,0,VDENSITY);//Trzeci chromosom - marker
-      fill(SINT,XINT,YINT,VDENSITY);//"ciało"
+      fill(SPEC,VDENSITY);//"ciało"
       ellipse(x,y,R,R);
       
       if(ORBVISUAL && R>5)
@@ -198,9 +207,9 @@ void drawArea(anArea is)
       }
       
       if(popul.currincome>popul.currloss)
-        stroke(255,255,0);
+        stroke(0);
       else
-        stroke(255,0,0);
+        stroke(255);
       point(x,y);//"serce" 
       
       
@@ -216,11 +225,11 @@ void drawArea(anArea is)
       else //Jak już znalezione poprzednio
       if(popul==theSelected)
       {
-        noFill(); stroke(255);
+        noFill(); stroke(255);strokeWeight(3);
         ellipse(x,y,R+1,R+1);
-        fill(128); noStroke();
+        strokeWeight(1);fill(200); noStroke();
         rect(0,0,400,25);
-        fill(255);
+        fill(128);
         text(popul.species.Key()+" Bio: "+popul.biomas+" "+binary(popul.species.suscepBits,MASKBITS)+":"+binary(popul.species.activeBits,MASKBITS),1,20);
       }
     }
@@ -229,7 +238,7 @@ void drawArea(anArea is)
       float ofs=popul.species.sizelog;
       float x=startX+size*((float)popul.species.suscepBits/MASK)+ofs;
       float y=startY+size*((float)popul.species.activeBits/MASK)+ofs;
-      stroke(0,0,0);
+      stroke(0);
       point(x,y); //print(".");
       noStroke();
     }
@@ -257,29 +266,36 @@ void drawTransfers(anArea is)
         float of2=lnk.target.species.sizelog;
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
+        
         if(lnk.target==theSelected)//Trzeba (?) niestety powtórzyć sprawdzanie warunku
         {
           if(maxTransSelec<lnk.lasttransfer)
              maxTransSelec=lnk.lasttransfer;//Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
           int inten=(int)(255*(lnk.lasttransfer/maxTransSelec));
-          stroke(255,inten);
+          strokeWeight(2);
+          stroke(0,inten);
           line(x1,y1,x2,y2);
-          println("   ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
+          strokeWeight(1);
+          //println("   ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
         }
-        if(lnk.lasttransfer>=maxTransfer)
+        
+        if(VISALLTRANSF)
         {
-          intensity=255;
-          stroke(intensity,intensity,0);
-          println(" M ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
+          if(lnk.lasttransfer>=maxTransfer)
+          {
+            stroke(0);
+            //println(" M ",lnk.lasttransfer,lnk.target.species.Key(),"<-",lnk.source.species.Key() );
+          }
+          else
+          {
+            //intensity/=DENSITYDIV;//Czy to konieczne?
+            stroke(BACKGROUND/3,intensity);
+          }
+          
+          line(x1,y1,(x1+x2)/2,(y1+y2)/2);
+          stroke(BACKGROUND/2,intensity);
+          line(x2,y2,(x1+x2)/2,(y1+y2)/2);
         }
-        else
-        {
-          //intensity/=DENSITYDIV;//Czy to konieczne?
-          stroke(0,200,0,intensity);
-        }
-        line(x1,y1,x2,y2);
-        stroke(0,100,0,intensity);
-        line(x2,y2,(x1+x2)/2,(y1+y2)/2);
       }
   }
 }
