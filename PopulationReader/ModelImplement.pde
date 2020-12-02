@@ -191,7 +191,12 @@ class aPopLink
 
 double maxTransfer=0;
 void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
-{  /*
+{ 
+  //int fb=round(random(self.populations.size()));
+  //print(fb,' ');
+  //aPopulation p=self.populations.get(fb);
+  //makeConnections(self,p);
+ 
   for(aPopulation popul: self.populations)
   { //Zerowanie "buforów interakcji"
     popul.currincome=0;
@@ -214,10 +219,11 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
             maxTransfer=transfer;
     //println("Tr:",transfer,' ');
     lnk.lasttransfer=transfer;
-    lnk.target.currincome+=transfer;
-    lnk.source.currloss+=transfer;
+    //lnk.target.currincome+=transfer;
+    //lnk.source.currloss+=transfer;
   }
   
+   /*
   //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
   for(int fb=0;fb<=LASTSOURCE;fb++) //Wiele zrodel
   {  

@@ -634,31 +634,42 @@
 #git commit -a -m "MULTI_Version_0.2_2018-10-04_19:25:55"
 #exit
 
-cp	../Population0Reader/Model.pde	                ./PopulationReader		#	2018-10-04	19:28:08.851027397
-git mv   ./PopulationReader/Pomocnicze.pde              ./PopulationReader/Helpers.pde
-cp	../Population0Reader/Pomocnicze.pde	        ./PopulationReader/Helpers.pde	#	2018-10-04	19:28:08.855027358
-git commit -a -m "READER_Version_1.0_2018-10-04	19:28:08"
+#cp	../Population0Reader/Model.pde	                ./PopulationReader		#	2018-10-04	19:28:08.851027397
+#git mv   ./PopulationReader/Pomocnicze.pde              ./PopulationReader/Helpers.pde
+#cp	../Population0Reader/Pomocnicze.pde	        ./PopulationReader/Helpers.pde	#	2018-10-04	19:28:08.855027358
+#git commit -a -m "READER_Version_1.0_2018-10-04	19:28:08"
 
 
-git mv   ./PopulationsT/Pomocnicze.pde                  ./PopulationsT/Helpers.pde
-cp	../Population12bw/Pomocnicze.pde	        ./PopulationsT/Helpers.pde	#	2018-10-04	19:28:10.071015492
-git commit -a -m "Version_1.2bw_2018-10-04_19:28:10"
+#git mv -f   ./PopulationsT/Pomocnicze.pde                  ./PopulationsT/Helpers.pde
+#cp	../Population12bw/Pomocnicze.pde	        ./PopulationsT/Helpers.pde	#	2018-10-04	19:28:10.071015492
+#git commit -a -m "Version_1.2bw_2018-10-04_19:28:10b"
+#exit
 
-exit
+
 cp	../Population0Reader/ModelImplement.pde	        ./PopulationReader		#	2018-10-09	14:09:01.655659746
+git commit -a -m "READER_Version_1.0_2018-10-09_14:09:01"
+
 
 cp	../populationsMulti02BW/Model.pde	        ./PopulationsMulti		#	2018-10-09	14:19:26.019511609
+git commit -a -m "MULTI_Version_0.2BW_2018-10-09_14:19:26"
 
 cp	../Population0Reader/ModelReadWrite.pde	        ./PopulationReader		#	2018-10-16	20:59:20.759465216
-
+git commit -a -m "READER_Version_1.0_2018-10-16	20:59:20"
 
 cp	../Population0Reader/Events.pde	                ./PopulationReader		#	2018-10-21	15:16:52.025315862
 cp	../Population0Reader/ModelVisualisations.pde	./PopulationReader		#	2018-10-21	15:16:52.025315862
+git commit -a -m "READER_Version_1.0_2018-10-21	15:16:52"
+
 
 cp	../populationsMulti02BW/Helpers.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.000000000
+git commit -a -m "MULTI_Version_0.2BW_2018-10-21_15:34:46"
+
 
 cp	../populationsMulti01A/Helpers.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.911054787
 cp	../populationsMulti01A/Model.pde	        ./PopulationsMulti		#	2018-10-21	15:34:46.911054787
+git commit -a -m "MULTI_Version_0.1A_2018-10-21_15:34:46"
+
+exit
 
 cp	../populationsMulti02BW/ModelVisualisationsSingle.pde	./PopulationsMulti		#	2018-10-21	15:45:21.000000000
 
