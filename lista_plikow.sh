@@ -412,33 +412,43 @@
 #cp	../Population12AFFF/ModelBaseParams.pde	        ./PopulationsT		#	2018-02-13	12:51:25.000000000
 #git commit -a -m "Version_1.2AFFF_2018-02-13_12:51:25"
 #exit
-git commit -a -m "Moving_stage_2XII_15:11"
+#git commit -a -m "Moving_stage_2XII_15:11"
 
-cp	../populationsMulti01/Stats.pde	                ./PopulationsMulti		#	2018-02-13	13:16:31.000000000
-cp	../populationsMulti01/ModelRun.pde	        ./PopulationsMulti		#	2018-02-13	13:20:37.000000000
-cp	../populationsMulti01/ModelImplement.pde	./PopulationsMulti		#	2018-02-13	13:58:24.000000000
-cp	../populationsMulti01/ModelVisualisation.pde	./PopulationsMulti		#	2018-02-13	14:16:54.000000000
-cp	../populationsMulti01/populationsMulti01.pde	./PopulationsMulti		#	2018-02-14	13:35:49.000000000
+#cp	../populationsMulti01/Stats.pde	                ./PopulationsMulti		#	2018-02-13	13:16:31.000000000
+#cp	../populationsMulti01/ModelRun.pde	        ./PopulationsMulti		#	2018-02-13	13:20:37.000000000
+#cp	../populationsMulti01/ModelImplement.pde	./PopulationsMulti		#	2018-02-13	13:58:24.000000000
+#cp	../populationsMulti01/ModelVisualisation.pde	./PopulationsMulti		#	2018-02-13	14:16:54.000000000
+#cp	../populationsMulti01/populationsMulti01.pde	./PopulationsMulti		#	2018-02-14	13:35:49.000000000
+#git add ./PopulationsMulti/*.*
+#git commit -a -m "MULTI_version_0.1_2018-02-14_13:35:49"
+#exit
+
+cp	../Population0Reader/commandLine.pde	        ./PopulationReader		#	2018-02-14	13:40:33.000000000
+git commit -a -m "READER_Version_0.1_2018-02-14_13:40:33"
+
+
+cp	../populationsMulti02/commandLine.pde	        ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/Events.pde	        ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/Helpers.pde	        ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/Model.pde	                ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/ModelBaseParams.pde	./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/ModelImplement.pde	./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/ModelInit.pde	        ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/ModelReadWrite.pde	./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/ModelRun.pde	        ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/ModelVisualisation.pde	./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/Stats.pde	                ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
+cp	../populationsMulti02/Video.pde	                ./PopulationsMulti		#	2018-02-14	13:40:33.000000000
 git add ./PopulationsMulti/*.*
-git commit -a -m "MULTI_version_0.1_2018-02-14_13:35:49"
+git commit -a -m "MULTI_version_0.2_2018-02-14_13:40:33"
+
+cp	../populationsMulti01/ModelBaseParams.pde	./PopulationsMulti		#	2018-02-14	13:44:48.000000000
+git commit -a -m "MULTI_version_0.1_2018-02-14_13:44:48"
+
+cp	../populationsMulti02/populationsMulti02.pde	./PopulationsMulti/PopulationsMulti.pde		#	2018-02-14	13:54:33.000000000
+git add ./PopulationsMulti/*.*
+git commit -a -m "MULTI_version_0.2_2018-02-14_13:54:33"
 exit
-
-cp	../Population0Reader/commandLine.pde	./		#	2018-02-14	13:40:33.000000000
-
-cp	../populationsMulti02/commandLine.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/Events.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/Helpers.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/Model.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/ModelBaseParams.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/ModelImplement.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/ModelInit.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/ModelReadWrite.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/ModelRun.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/ModelVisualisation.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/Stats.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti02/Video.pde	./		#	2018-02-14	13:40:33.000000000
-cp	../populationsMulti01/ModelBaseParams.pde	./		#	2018-02-14	13:44:48.000000000
-cp	../populationsMulti02/populationsMulti02.pde	./		#	2018-02-14	13:54:33.000000000
 
 cp	../Population12FFFF/commandLine.pde	./		#	2018-02-14	14:36:08.000000000
 cp	../Population12FFFF/Events.pde	./		#	2018-02-14	14:36:08.000000000

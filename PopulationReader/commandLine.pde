@@ -5,6 +5,7 @@ void checkCommnadLine()
     if(args==null)
             return; //NIE!
     println("args length is " + args.length);
+    FIDBITS=new IntList(args.length);
     int count=0;
     for(int a=0;a<args.length;a++)
     {
@@ -17,6 +18,6 @@ void checkCommnadLine()
         count++;
       }
     }
-    LASTSOURCE=count-1;
-    FEEDPORTION=100000*TIMEQUANT*(LASTSOURCE+1);//Aktualizacja
+    LASTSOURCED=count-1;
+    FEEDPORTION=100000*TIMEQUANT*(LASTSOURCED+1);//Aktualizacja
 }
