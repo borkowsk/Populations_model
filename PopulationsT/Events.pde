@@ -28,14 +28,13 @@ void keyPressed()
   case '8': STEPperFRAME=150;text("StPerF: "+STEPperFRAME,1,16);break;
   case '9': STEPperFRAME=200;text("StPerF: "+STEPperFRAME,1,16);break;
   case '0': STEPperFRAME=10;text("StPerF: "+STEPperFRAME,1,16);break;
-  case ' ': save(modelName+"."+nf((float)StepCounter,6,5)+".PNG");
-            write(island,modelName+"."+nf((float)StepCounter,6,5));//Aktualny stan ekosystemu
-            break;
+  case ' ': save(modelName+"."+nf((float)StepCounter,5,5)+".PNG");break;
   case 's': simulationRun=false; break;
   case 'r': simulationRun=true; break;
   case 'm': mutantConnVis=!mutantConnVis; break;
   case 'M': mutantConnVis=false; break;
   case '\n': VISTRANSFERS=!VISTRANSFERS; break;
+  case 'a': VISALLTRANSF=!VISALLTRANSF; break;
   case ',': VDENSITY/=2;if(VDENSITY<10) VDENSITY=10;break;
   case '.': VDENSITY+=10;if(VDENSITY>255) VDENSITY=255;break;
   case '>': DENSITYDIV++;break;
@@ -56,8 +55,8 @@ void exit() //it is called whenever a window is closed.
   CloseVideo();    //Finalise of Video export
   delay(100);      // it is possible to close window when draw() is still working!
   write(island,modelName+"."+nf((float)StepCounter,5,5));//Koncowy stan ekosystemu
-  outstat.flush();  // Writes the remaining data to the file
-  outstat.close();  // Finishes the file
+  //output.flush();  // Writes the remaining data to the file
+  //output.close();  // Finishes the file
   println("Thank You");
   super.exit(); //What library superclass have to do at exit
 } 
