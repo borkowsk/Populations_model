@@ -66,9 +66,9 @@ void tryToSetVariable(String[] pieces)
     TIMEQUANT=float(pieces[1]);
     if(TIMEQUANT>0)
     {
-     FEEDPORTION*=TIMEQUANT;
+     FEEDPORTION  *=TIMEQUANT;
      CATACLISMRATE*=TIMEQUANT;
-     MUTATIONRATE*=TIMEQUANT;
+     MUTATIONRATE *=TIMEQUANT;
     }
   }
   else if(pieces[0].equals("feedSourceH"))
@@ -171,7 +171,7 @@ int readModel(anArea self,String Filename)
          aPopulation CPop = new aPopulation(Curr,Biomas);
          CPop.currincome = float(pieces[5]);
          CPop.currloss = float(pieces[6]);
-         println(CPop,"-->",self);
+         
          self.addPopulation(CPop,false);
          popCounter++;
        }

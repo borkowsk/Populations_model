@@ -1,6 +1,7 @@
 aPopulation randImportant(anArea self)
 {
   float allBiomas=0;
+  if(self==null) return null;
   for(aPopulation popul: self.populations)
     allBiomas+=popul.biomas;
   float where=random(allBiomas);
@@ -16,6 +17,7 @@ aPopulation randImportant(anArea self)
 
 void trytokillspecies(anArea self)
 {
+  if(self==null) return;
   for(aPopulation popul:self.populations)
   {
     if(VIRTENVSIZE>1)
@@ -42,6 +44,7 @@ void trytokillspecies(anArea self)
 
 void createnewspecies(anArea self)
 { //println("Who of us is able to mutate?");
+  if(self==null) return;
   for(int i=1;i<self.populations.size();i++)//Musi być taka pętla bo mutacje modyfikują tablice populacji
   {
     aPopulation popul=self.populations.get(i);//Kolejna
@@ -200,6 +203,7 @@ class aPopLink
 double maxTransfer=100;
 void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
 {  
+  if(self==null) return;
   for(aPopulation popul: self.populations)
   { //Zerowanie "buforów interakcji"
     popul.currincome=0;
@@ -226,17 +230,11 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   }
     
   //Podsumowanie interakcji 
-  float FeedPortion=FEEDPORTION;
   for(aPopulation popul: self.populations)
   {
     if(popul.species.activeBits==0)//ZRODŁO
-    {
-      float inc=random(FEEDPORTION);
-      popul.currincome=inc;//Samo się doda za chwilę
-      if(LIMITFEEDS) 
-            FeedPortion-=inc;//coraz mniej
-    }
-    
+      popul.currincome=random(FEEDPORTION);//Samo się doda za chwilę
+      
     if(popul.biomas>0)//jeszcze jest to istotna populacja
     { //TIMEQUANT!
       popul.biomas+=popul.currincome;
