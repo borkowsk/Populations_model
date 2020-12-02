@@ -36,7 +36,7 @@ void tryToSetVariable(String[] pieces)
   }
   else if(pieces[0].equals("mutations"))
   {
-    MUTATIONRATE=float(pieces[1])*TIMEQUANT;
+    MUTATIONRATE=float(pieces[1])*TIMEQUANT*0.01;//1/100 bo chcemy obserwować dynamikę ekologiczną a nie ewolucyjną
   }
   else if(pieces[0].equals("catastrofic"))
   {
@@ -101,7 +101,9 @@ int readModel(anArea self,String Filename)
   boolean beforeKey=true;
   BufferedReader reader=createReader(Filename); 
   println(Filename+" :  ");//+reader.ready() );
+  
   TIMEQUANT=1;//Jest neutralny
+  
   do{
   try 
   {
