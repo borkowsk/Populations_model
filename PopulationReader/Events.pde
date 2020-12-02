@@ -16,16 +16,17 @@ void mouseClicked()
 
 void keyPressed() 
 {
-  print("KEY:","'",key,"'",(int)key,"\t");
   switch(key)
   {
+  case 'm': mutantConnVis=!mutantConnVis; break;
+  case 'M': mutantConnVis=false; break;
   case '\n': VISTRANSFERS=!VISTRANSFERS; break;
   case ',': VDENSITY/=2;if(VDENSITY<10) VDENSITY=10;break;
   case '.': VDENSITY+=10;if(VDENSITY>255) VDENSITY=255;break;
   case '>': DENSITYDIV++;break;
-  case '<': DENSITYDIV--;if(DENSITYDIV<2) DENSITYDIV=2;
-          break;
-  //default:println("Command '"+key+"' unknown");break;
+  case '<': DENSITYDIV--;if(DENSITYDIV<2) DENSITYDIV=2;break;
+  case ' ': save(modelName+"BW.PNG");break;
+  default:println("Command '"+key+"' unknown");break;
   }
   
   if (key == ESC) 
@@ -40,7 +41,7 @@ void exit() //it is called whenever a window is closed.
   noLoop();      //For to be sure...
   CloseVideo();    //Finalise of Video export
   delay(100);      // it is possible to close window when draw() is still working!
-  write(island,modelName+".INPECTION"+nf(frameCount,10));//Koncowy zapis filmu
+  //write(island,modelName+".INPECTION"+nf(frameCount,10));//Koncowy zapis filmu ??? write to jest zapis pliku z danymi sieci!
   //output.flush();  // Writes the remaining data to the file
   //output.close();  // Finishes the file
   println("Thank You");
