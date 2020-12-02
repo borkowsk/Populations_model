@@ -16,7 +16,7 @@ final float  TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływ
 /*PARAM*/int[] FIDBITS={0x8000,0x4000,0x2000,0x0F00,0x010};//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
          int    LASTSOURCE=FIDBITS.length-1;//Tylko jedno zródło o indeksie 0        
 final float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
-      float   FEEDPORTION=15000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane) 
+      float   FEEDPORTION=11000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane) 
 final float CATACLISMRATE=0.001*TIMEQUANT;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
 final float MUTATIONRATE=0.001*TIMEQUANT;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
 
