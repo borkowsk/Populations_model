@@ -612,14 +612,16 @@
 #exit
 
 
-cp	../Population12bw/ModelBaseParams.pde	        ./PopulationsT		#	2018-10-03	13:15:46.000000000
-cp	../Population12bw/Events.pde	                ./PopulationsT		#	2018-10-04	18:02:32.000000000
-cp	../Population12bw/Population12bw.pde	        ./PopulationsT/PopulationsT.pde			#	2018-10-04	18:02:32.000000000
-git add ./PopulationsT/*
-git commit -a -m "Version_1.2bw_2018-10-04_18:02:32"
-exit
+#cp	../Population12bw/ModelBaseParams.pde	        ./PopulationsT		#	2018-10-03	13:15:46.000000000
+#cp	../Population12bw/Events.pde	                ./PopulationsT		#	2018-10-04	18:02:32.000000000
+#cp	../Population12bw/Population12bw.pde	        ./PopulationsT/PopulationsT.pde			#	2018-10-04	18:02:32.000000000
+#git add ./PopulationsT/*
+#git commit -a -m "Version_1.2bw_2018-10-04_18:02:32"
+#exit
 
 cp	../Population0Reader/ModelBaseParams.pde	./PopulationReader		#	2018-10-04	18:40:02.950209141
+git add ./PopulationReader/*
+git commit -a -m "READER_Version_1.0_2018-10-04_18:40:02"
 
 cp	../populationsMulti02BW/Events.pde	        ./PopulationsMulti		#	2018-10-04	19:25:55.716455347
 cp	../populationsMulti02BW/ModelImplement.pde	./PopulationsMulti		#	2018-10-04	19:25:55.716455347
@@ -628,9 +630,11 @@ cp	../populationsMulti02BW/commandLine.pde	        ./PopulationsMulti		#	2018-10
 cp	../populationsMulti02BW/ModelRun.pde	        ./PopulationsMulti		#	2018-10-04	19:25:55.720455300
 cp	../populationsMulti02BW/Stats.pde	        ./PopulationsMulti		#	2018-10-04	19:25:55.720455300
 cp	../populationsMulti02BW/Video.pde	        ./PopulationsMulti		#	2018-10-04	19:25:55.720455300
-
+git add ./PopulationsMulti/*
+git commit -a -m "MULTI_Version_0.2_2018-10-04_19:25:55"
 
 exit
+
 cp	../Population0Reader/Model.pde	                ./PopulationReader		#	2018-10-04	19:28:08.851027397
 cp	../Population0Reader/Pomocnicze.pde	        ./PopulationReader		#	2018-10-04	19:28:08.855027358
 
