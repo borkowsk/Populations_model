@@ -30,8 +30,10 @@ import java.util.Map;
 
 //Parametry wizualizacji
 final boolean GENERATEMOVIE=false;//Czy wogóle tworzyć film?
+final boolean COLOR=false;   
+
       int STEPperFRAME=1; //Ile kroków symulacji pomiędzy wizualizacjami
-final int FRAMES=10;
+final int FRAMES=25;
 final int VFRAMES=1;//Co ile klatek obrazu zapisujemy klatke filmu
 final int INSMARGINS=100;
 final int EXTMARGINS=50;
@@ -40,13 +42,17 @@ final float STATUS=20;
 
 final boolean ORBVISUAL=true;//wizualizacja typu ORB (kule)
 final float  RANDSELECT=0.001;//Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
+final int BACKGROUND=255;//Tło 
 float BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
 float      VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
 float     DENSITYDIV=15;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
 float   bubleRad=1;//Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
-boolean simulationRun=true;
-boolean VISTRANSFERS=true;
+boolean simulationRun=false;
+
+boolean mutantConnVis=false;
+boolean VISTRANSFERS=true;//Czy w ogóle linie
+boolean VISALLTRANSF=true;//Czy tylko wybranego węzła czy wszystkie
 
 String lastDescr;
 
@@ -57,8 +63,8 @@ void setup()
 {
   checkCommnadLine();//Ewentualne uzycie parametrów wywołania
   //noSmooth()
-  size(900,920);
-  background(128); //Clear the window
+  size(900,340);
+  background(BACKGROUND); //Clear the window
   noStroke();
   noFill();
   frameRate(FRAMES); //frames per second
@@ -71,15 +77,28 @@ void setup()
     do{ delay(100);} while(modelName==null);
   }
   
-  for(int i=0;i<NofISLAND;i++)
-      islands[i]=new anArea();
+  if(false)//CHILDINTERVAL==0)//TMP
+  {
+    for(int i=0;i<NofISLAND;i++)
+        islands[i]=new anArea();
+  }
+  else
+  {
+    islands[0]=new anArea();
+    islands[1]=new anArea();
+    islands[2]=new anArea();
+  }
   
   size=(size-INSMARGINS)/sqrt(NofISLAND);
   
-  int lines=readModel(islands[3],altModel); // inicjalizacja modelu z pliku
-      lines=readModel(islands[5],altModel); // inicjalizacja modelu z pliku      
+  int lines=readModel(islands[0],altModel); // inicjalizacja modelu z pliku
+  println("Potwierdzono wczytanie ",lines," lini pliku ", altModel);
+      lines=readModel(islands[2],modelName); // inicjalizacja modelu z pliku      
+  println("Potwierdzono wczytanie ",lines," lini pliku ", modelName);    
 
   initializeModel(); // inicjalizacja modelu może się różnic w różnych sytuacjach mimo że model się nie zmienia
+  modelName=nameOfModel();
+  frame.setTitle(modelName);
   initStats();
   
   //text(modelName,10,height-40);
@@ -100,8 +119,135 @@ void draw()
   println(" Step: ",StepCounter, ": ");
   
   noStroke(); 
+  fill(BACKGROUND,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste
+  rect(0,0,width,height-20);
+  
+  int n=int(sqrt(NofISLAND));
+  for(int j=0;j<NofISLAND;j++)
+  {
+    //print(NofISLAND,j);
+    int a=j%n;
+    int b=j/n;
+    //println(" ",a,b);
+    if(VISTRANSFERS && islands[j]!=null) 
+    {
+      if(COLOR)
+        drawTransfers(islands[j],int(a*(size+INSMARGINS/2)+EXTMARGINS),int(b*(size+INSMARGINS/2)+EXTMARGINS),int(size));
+      else
+        drawTransfersBW(islands[j],int(a*(size+INSMARGINS/2)+EXTMARGINS),int(b*(size+INSMARGINS/2)+EXTMARGINS),int(size));
+    }
+        
+    //Główna wizualizacja zawsze    
+    if(islands[j]!=null)
+    if(COLOR)
+      drawArea(islands[j],int(a*(size+INSMARGINS/2)+EXTMARGINS),int(b*(size+INSMARGINS/2)+EXTMARGINS),int(size));
+    else
+      drawAreaBW(islands[j],int(a*(size+INSMARGINS/2)+EXTMARGINS),int(b*(size+INSMARGINS/2)+EXTMARGINS),int(size));
+  }
+ 
+  fill(BACKGROUND/2);noStroke();
+  rect(0,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4,width,-16);
+  rect(0,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,width,-16);
+  rect(0,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,width,-16);
+  
+  if(COLOR)
+    fill(255);
+  else
+    fill(0);
+  if(islands[0]!=null) text(" AlivePop:"+islands[0].alivePopulations+" NofLinks: "+islands[0].trophNet.size(),0      ,   size+INSMARGINS/2+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[3]!=null) text(" AlivePop:"+islands[3].alivePopulations+" NofLinks: "+islands[3].trophNet.size(),0      ,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[6]!=null) text(" AlivePop:"+islands[6].alivePopulations+" NofLinks: "+islands[6].trophNet.size(),0      ,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[1]!=null) text(" AlivePop:"+islands[1].alivePopulations+" NofLinks: "+islands[1].trophNet.size(),1*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,   size+INSMARGINS/2+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[4]!=null) text(" AlivePop:"+islands[4].alivePopulations+" NofLinks: "+islands[4].trophNet.size(),1*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[7]!=null) text(" AlivePop:"+islands[7].alivePopulations+" NofLinks: "+islands[7].trophNet.size(),1*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[2]!=null) text(" AlivePop:"+islands[2].alivePopulations+" NofLinks: "+islands[2].trophNet.size(),2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,   size+INSMARGINS/2+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[5]!=null) text(" AlivePop:"+islands[5].alivePopulations+" NofLinks: "+islands[5].trophNet.size(),2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS*0.29);
+  if(islands[8]!=null) text(" AlivePop:"+islands[8].alivePopulations+" NofLinks: "+islands[8].trophNet.size(),2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS*0.29);
+  
+  stroke(255-BACKGROUND);
+  line(0,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4,width,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4);
+  line(0,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,width,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
+  line(size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4,0,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4,height-STATUS);
+  line(2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,0,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,height-STATUS);
+  
+  if(StepCounter==0)
+  {
+      doStatistics();
+      FirstVideoFrame();
+      //write(islands[0],modelName+".0START");//Startowy stan ekosystemu
+      if(!COLOR) 
+        fill(128);
+      else
+        fill(255,255,0);
+      text("STPS:"+STEPperFRAME //Ile kroków symulacji pomiędzy wizualizacjami
+          +" FRM:"+FRAMES  //Ile klatek na realną sekundę próbuje liczyć
+          +" VID:"+VFRAMES //Co ile klatek obrazu zapisujemy klatke filmu
+          +(ORBVISUAL?" ORB VIS.":"") //Czy wizualizacja kulami?
+          ,1,16);
+  }
+    
+  if(simulationRun)
+  {
+      runSteps(STEPperFRAME);// Tu mogą być różne rzeczy w zależności od potrzeb
+      doStatistics();
+  }
+    
+  println();  
+  noStroke();
+  fill(255);
+  rect(0,height-20,width,20);//STATUS LINE
+  
+  if(simulationRun)
+  {
+   if(!COLOR) 
+      fill(0);
+      else
+      fill(255,0,0);
+  }
+  else
+      fill(128);
+      
+  text(StepCounter+", NofSpec: "+speciesDictionary.size(),3,height-2);
+  if(!COLOR) fill(128);
+  else fill(0,200,0);
+  text(" MaxTr:"+maxTransfer,width/3,height-2);
+  if(!COLOR) fill(128);
+  else fill(0,0,128);
+  text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,700,height-2); 
+  println();
+  
+  if(frameCount % VFRAMES==0) 
+                  NextVideoFrame();
+  //Tylko przy pełnych JEDNOSTKACH czasu
+  //if(frameCount % STEPperFRAME==0  ) //???
+  if( -(StepCounter-Math.ceil(StepCounter)) <= TIMEQUANT*STEPperFRAME ) // <-- to nie działa jeśli zmieniany jest STEPperFRAME
+  {
+    println(" ---------------------------------------------------------------->complete next unit of time "+(StepCounter-Math.ceil(StepCounter)));
+    int SC=(int)(StepCounter);
+    if(SC%1000==0)
+    {
+      //println(" -------------------------------------------------------------->writing populations");
+      //write(islands[0],modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      save(modelName+"."+nf((float)StepCounter,6,5)+".PNG");
+    }
+  }
+}
+
+void draw0()
+{
+  println(" Step: ",StepCounter, ": ");
+  
+  noStroke(); 
   fill(128,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste
   rect(0,0,width,height-20);
+  
+  if(Clicked)//Żądanie zmiany wybranego
+  {
+     minDist2Selec=MAX_INT;
+     maxTransSelec=-MAX_INT;
+     println("  Looking for ",searchedX,searchedY);
+     Clicked=false;
+  }
   
   int n=int(sqrt(NofISLAND));
   for(int j=0;j<NofISLAND;j++)
@@ -120,6 +266,26 @@ void draw()
       drawArea(islands[j],int(a*(size+INSMARGINS/2)+EXTMARGINS),int(b*(size+INSMARGINS/2)+EXTMARGINS),int(size));
   }
  
+    
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  searchedX=-1;
+  searchedY=-1;
+  
+  fill(128);noStroke();
+  rect(0,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4,width,-16);
+  rect(0,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,width,-16);
+  rect(0,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,width,-16);
+  fill(255);
+  
+  if(islands[0]!=null) text("AlivePop:"+islands[0].alivePopulations+" NofLinks: "+islands[0].trophNet.size(),0      ,   size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4);
+  if(islands[3]!=null) text("AlivePop:"+islands[3].alivePopulations+" NofLinks: "+islands[3].trophNet.size(),0      ,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
+  if(islands[6]!=null) text("AlivePop:"+islands[6].alivePopulations+" NofLinks: "+islands[6].trophNet.size(),0      ,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
+  if(islands[1]!=null) text("AlivePop:"+islands[1].alivePopulations+" NofLinks: "+islands[1].trophNet.size(),1*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,   size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4);
+  if(islands[4]!=null) text("AlivePop:"+islands[4].alivePopulations+" NofLinks: "+islands[4].trophNet.size(),1*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
+  if(islands[7]!=null) text("AlivePop:"+islands[7].alivePopulations+" NofLinks: "+islands[7].trophNet.size(),1*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
+  if(islands[2]!=null) text("AlivePop:"+islands[2].alivePopulations+" NofLinks: "+islands[2].trophNet.size(),2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,   size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4);
+  if(islands[5]!=null) text("AlivePop:"+islands[5].alivePopulations+" NofLinks: "+islands[5].trophNet.size(),2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
+  if(islands[8]!=null) text("AlivePop:"+islands[8].alivePopulations+" NofLinks: "+islands[8].trophNet.size(),2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,3*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
   stroke(255);
   line(0,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4,width,size+INSMARGINS/2+EXTMARGINS-INSMARGINS/4);
   line(0,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4,width,2*(size+INSMARGINS/2)+EXTMARGINS-INSMARGINS/4);
@@ -130,7 +296,7 @@ void draw()
   {
       doStatistics();
       FirstVideoFrame();
-      write(islands[0],modelName+".0START");//Startowy stan ekosystemu
+      //write(islands[0],modelName+".0START");//Startowy stan ekosystemu
       fill(255,255,0);
       text("STPS:"+STEPperFRAME //Ile kroków symulacji pomiędzy wizualizacjami
           +" FRM:"+FRAMES  //Ile klatek na realną sekundę próbuje liczyć
@@ -155,9 +321,9 @@ void draw()
       fill(0);
   text(StepCounter+", NofSpec: "+speciesDictionary.size(),3,height-2);
   fill(0,200,0);
-  text("AlivePop:"+islands[0].alivePopulations+" NofLinks: "+islands[0].trophNet.size()+" MaxTr:"+maxTransfer,width/3,height-2);
+  text(" MaxTr:"+maxTransfer,width/3,height-2);
   fill(0,0,128);
-  text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,700,height-2); 
+  text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,width/2,height-2); 
   println();
   if(frameCount % VFRAMES==0) 
                   NextVideoFrame();
@@ -169,8 +335,16 @@ void draw()
     int SC=(int)(StepCounter);
     if(SC%1000==0)
     {
-      println(" -------------------------------------------------------------->writing populations");
-      write(islands[0],modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      //println(" -------------------------------------------------------------->writing populations");
+      //write(islands[0],modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      save(modelName+"."+nf((float)StepCounter,6,5)+".PNG");
+    }
+    
+    if(CHILDINTERVAL!=0 && SC%CHILDINTERVAL==0)
+    {
+      int c=int(random(NofISLAND));
+      if(islands[c]==null)
+          islands[c]=new anArea();
     }
   }
 }

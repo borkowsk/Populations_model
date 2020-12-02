@@ -171,7 +171,7 @@ int readModel(anArea self,String Filename)
          aPopulation CPop = new aPopulation(Curr,Biomas);
          CPop.currincome = float(pieces[5]);
          CPop.currloss = float(pieces[6]);
-         
+         println(CPop,"-->",self);
          self.addPopulation(CPop,false);
          popCounter++;
        }
