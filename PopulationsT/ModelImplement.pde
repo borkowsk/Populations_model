@@ -1,25 +1,25 @@
-PrintWriter output;//For writing statistics into disk drive
 
 void write(anArea self,String Filename)
 //Zapis populacji do pliku
 {
-  output = createWriter(Filename+".txt"); // Create a new file in the sketch directory
+  PrintWriter outpop;//For writing statistics into disk drive
+  outpop = createWriter(Filename+".txt"); // Create a new file in the sketch directory
   String desc=descriptionOfModel('\t','\n','\n');
-  output.println(desc);
-  output.println("key\tsuscepBits\tactiveBits\tmaxsize\tpopBiomas\tcurrincome\tcurrloss");
+  outpop.println(desc);
+  outpop.println("key\tsuscepBits\tactiveBits\tmaxsize\tpopBiomas\tcurrincome\tcurrloss");
   for(aPopulation popul:self.populations)
   {
-    output.print(popul.species.Key()+"\t");
-    output.print(popul.species.suscepBits+"\t");
-    output.print(popul.species.activeBits+"\t");
-    output.print(popul.species.maxsize+"\t");
-    output.print(popul.biomas+"\t");
-    output.print(popul.currincome+"\t");
-    output.print(popul.currloss+"\t");
-    output.println();
+    outpop.print(popul.species.Key()+"\t");
+    outpop.print(popul.species.suscepBits+"\t");
+    outpop.print(popul.species.activeBits+"\t");
+    outpop.print(popul.species.maxsize+"\t");
+    outpop.print(popul.biomas+"\t");
+    outpop.print(popul.currincome+"\t");
+    outpop.print(popul.currloss+"\t");
+    outpop.println();
   }
-  output.println();
-  output.close();
+  outpop.println();
+  outpop.close();
 }
 
 void trytokillspecies(anArea self)

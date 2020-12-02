@@ -28,7 +28,7 @@
 import java.util.Map;
 
 //Parametry wizualizacji
-final boolean GENERATEMOVIE=true;//Czy wogóle tworzyć film?
+final boolean GENERATEMOVIE=false;//Czy wogóle tworzyć film?
       int STEPperFRAME=10; //Ile kroków symulacji pomiędzy wizualizacjami
 final int FRAMES=20;
 final int VFRAMES=10;//Co ile klatek obrazu zapisujemy klatke filmu
@@ -61,9 +61,11 @@ void setup()
   noFill();
   frameRate(FRAMES); //frames per second
   initializeModel(); // inicjalizacja modelu może się różnic w różnych sytuacjach mimo że model się nie zmienia
-  initStats();
+
   modelName=nameOfModel();
   println(modelName);
+  initStats();
+  
   //text(modelName,10,height-40);
   lastDescr=descriptionOfModel(':','\n','\n');
   text(lastDescr,10,32);
