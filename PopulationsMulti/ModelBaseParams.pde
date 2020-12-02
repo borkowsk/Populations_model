@@ -12,7 +12,7 @@ boolean allowSizeSyn=false;//Czy dopuszczamy mutowanie bitów "rozmiaru" czyli s
 boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
 double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 float  TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
-float  CHILDINTERVAL=0;//Czy dzieci wszystkie na raz czy co jakiś czas?
+float  CHILDINTERVAL=10;//Czy dzieci wszystkie na raz czy co jakiś czas?
 
 ///*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11};//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
 IntList FIDBITS=new IntList(0xFF,0xc7,0xb5,0x23,0x11); //*MAX_INT & MASK*/ Jakie bity mają ustawione niesmiertelne źródła pokarmu ("kominy hydrotermalne")
