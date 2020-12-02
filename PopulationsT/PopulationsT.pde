@@ -128,14 +128,12 @@ void draw()
       fill(255,0,0);
   else
       fill(0);
-      
   text(StepCounter+", NofSpec: "+speciesDictionary.size(),3,height-2);
   fill(0,200,0);
   text("AlivePop:"+island.alivePopulations+" NofLinks: "+island.trophNet.size()+" MaxTr:"+maxTransfer,width/3,height-2);
   fill(0,0,128);
   text((VISTRANSFERS?"Dens:"+VDENSITY+" Div"+DENSITYDIV:" ")+" Mask:"+hex(MASK)+" FR:"+frameRate,700,height-2); 
   println();
-  
   if(frameCount % VFRAMES==0) 
                   NextVideoFrame();
   //Tylko przy pełnych JEDNOSTKACH czasu
@@ -147,8 +145,7 @@ void draw()
     if(SC%1000==0)
     {
       println(" -------------------------------------------------------------->writing populations");
-      write(island,modelName+"."+nf(SC,6,5));//Aktualny stan ekosystemu
-      save(modelName+"."+nf(SC,6,5)+".PNG");
+      write(island,modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
     }
   }
 }
@@ -189,14 +186,8 @@ void drawArea(anArea is)
         R=(float)(Math.sqrt(b)*bubleRad);
       if(R<1){ R=1; print(',');}//Musi być choc slad
       
-      if(popul.currincome>popul.currloss)
-        stroke(255,255,0);
-      else
-        stroke(255,0,0);
-      point(x,y);//"serce" populacji (CENTRUM)
-      
       stroke(SINT,0,0,VDENSITY);//Trzeci chromosom - marker
-      fill(SINT,XINT,YINT,VDENSITY);//"ciało" - zalezne od biomasy
+      fill(SINT,XINT,YINT,VDENSITY);//"ciało"
       ellipse(x,y,R,R);
       
       if(ORBVISUAL && R>5)
@@ -205,7 +196,14 @@ void drawArea(anArea is)
         fill(255,VDENSITY/3);
         ellipse(x,y-R/2+R/8,R/4,R/8);
       }
-            
+      
+      if(popul.currincome>popul.currloss)
+        stroke(255,255,0);
+      else
+        stroke(255,0,0);
+      point(x,y);//"serce" 
+      
+      
       if(searchedX>0 && searchedY>0)
       {
         double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY));//Szukanie print(dist2,", ");
