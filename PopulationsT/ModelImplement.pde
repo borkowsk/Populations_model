@@ -1,5 +1,4 @@
 PrintWriter output;//For writing statistics into disk drive
-
 void write(anArea self,String Filename)
 //Zapis populacji do pliku
 {
@@ -95,10 +94,13 @@ void createnewspecies(anArea self)
       return;
     }
     
+    //MUTACJA AKCEPTOWALNA. Trzeba wyliczyć jej specjalizacje.
+    newSpec.countBits=countbits(newSpec.suscepBits)+countbits(newSpec.activeBits);  
+    
     //WSTAWIANIE NOWEJ POPULACJI
     //popul.currloss+=MINSTART;//Czy to będzie efektywne? TODO NIE!!!
     popul.biomas-=MINSTART; //KOSZT POTOMNEJ POPULACJI
-      
+    
     String newKey=newSpec.Key();
     aSpecies test=speciesDictionary.get(newKey);//Czy już jest ten "gatunek"?
     if(test==null)
