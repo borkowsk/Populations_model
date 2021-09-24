@@ -1,0 +1,69 @@
+void write(anArea self,String Filename)
+//Zapis populacji do pliku
+{
+  PrintWriter  output = createWriter(Filename+".txt"); // Create a new file in the sketch directory
+  String desc=descriptionOfModel('\t','\n','\n');
+  output.println(desc);
+  output.println("key\tsuscepBits\tactiveBits\tmaxsize\tpopBiomas\tcurrincome\tcurrloss");
+  for(aPopulation popul:self.populations)
+  {
+    output.print(popul.species.Key()+"\t");
+    output.print(popul.species.suscepBits+"\t");
+    output.print(popul.species.activeBits+"\t");
+    output.print(popul.species.maxsize+"\t");
+    output.print(popul.biomas+"\t");
+    output.print(popul.currincome+"\t");
+    output.print(popul.currloss+"\t");
+    output.println();
+  }
+  output.println();
+  output.close();
+}
+
+int readModel(anArea self,String Filename)
+// inicjalizacja modelu z pliku
+{
+  BufferedReader reader=createReader(Filename); 
+  String line;
+  int lcounter=0;
+  println(Filename+" :  ");//+reader.ready() );
+  try 
+  {
+    line = reader.readLine();
+  } catch (IOException e) 
+  {
+    e.printStackTrace();
+    line = null;
+  }
+  
+  if (line == null) 
+  {
+    // Stop reading because of an error or file is empty
+    //reader.close();
+    return lcounter;
+  } 
+  else 
+  {
+    lcounter++;
+    String[] pieces = split(line, TAB);
+    for(String pic: pieces)
+      print(pic+'\t');
+    println();
+    /*
+    int suscepBits=int(pieces[1]);
+    int activeBits=int(pieces[2]);  
+    int maxsize=int(pieces[3]);    
+    aSpecies Curr = new aSpecies( suscepBits, activeBits ,maxsize);
+    float Biomas=float(pieces[4]);
+    aPopulation CPop = new aPopulation(Curr,Biomas);
+    CPop.currincome = float(pieces[5]);
+    CPop.currloss = float(pieces[6]);
+    self.addPopulation(CPop,false);
+    */
+  }
+  return -lcounter;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+//  https://www.researchgate.net/profile/WOJCIECH_BORKOWSKI
+///////////////////////////////////////////////////////////////////////////////////////
