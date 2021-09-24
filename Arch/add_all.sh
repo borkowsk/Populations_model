@@ -1,4 +1,6 @@
-#git remote to all subdirectories
+#!/bin/bash
+#Add & commit SEQUENCIONALLY all subdirectories to git 
+#Version 1.0
 #https://stackoverflow.com/questions/3497123/run-git-pull-over-all-subdirectories/40601481
 #https://unix.stackexchange.com/questions/50692/executing-user-defined-function-in-a-find-exec-call
 
@@ -19,7 +21,7 @@ LST=`ls -D | sort`
 
 for d in $LST; do
  if [ -d $d ]; then
-        ~/.worklog/wlog.sh "GIT\tAdding whole directory" $d
+        ~/.worklog/wlog.sh "GIT\tAdding whole directory\t$d"
         git_job "./$d"
  fi
 done
