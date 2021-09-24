@@ -8,8 +8,8 @@ DIRNAME=`basename $1`
 pushd $DIRNAME > /dev/null
 MESSG=`date -r $DIRNAME.pde`
 MESSG="\"$MESSG $DIRNAME.pde\"" 
-/usr/bin/git add --dry-run *.*
-/usr/bin/git commit --dry-run *.* -m "$MESSG" 
+/usr/bin/git add *.*
+/usr/bin/git commit *.* -m "$MESSG" 
 #echo $MESSG
 popd > /dev/null
 echo 
