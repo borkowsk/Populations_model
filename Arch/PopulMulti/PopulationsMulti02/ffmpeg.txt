@@ -1,0 +1,28 @@
+libGL error: unable to load driver: i965_dri.so
+libGL error: driver pointer missing
+libGL error: failed to load driver: i965
+libGL error: unable to load driver: i965_dri.so
+libGL error: driver pointer missing
+libGL error: failed to load driver: i965
+libGL error: unable to load driver: swrast_dri.so
+libGL error: failed to load driver: swrast
+X Error:  GLXBadContext
+  Request Major code 155 (GLX)
+  Request Minor code 6 ()
+  Error Serial #55
+  Current Serial #54
+ffmpeg version n4.0.2 Copyright (c) 2000-2018 the FFmpeg developers
+  built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.10) 20160609
+  configuration: --prefix= --prefix=/usr --disable-debug --disable-doc --disable-static --enable-avisynth --enable-cuda --enable-cuvid --enable-libdrm --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfontconfig --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libv4l2 --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libxcb --enable-nonfree --enable-nvenc --enable-omx --enable-runtime-cpudetect --enable-shared --enable-vaapi --enable-vdpau --enable-version3 --enable-xlib
+  libavutil      56. 14.100 / 56. 14.100
+  libavcodec     58. 18.100 / 58. 18.100
+  libavformat    58. 12.100 / 58. 12.100
+  libavdevice    58.  3.100 / 58.  3.100
+  libavfilter     7. 16.100 /  7. 16.100
+  libswscale      5.  1.100 /  5.  1.100
+  libswresample   3.  1.100 /  3.  1.100
+  libpostproc    55.  1.100 / 55.  1.100
+Input #0, rawvideo, from 'pipe:':
+  Duration: N/A, start: 0.000000, bitrate: 367200 kb/s
+    Stream #0:0: Video: rawvideo (RGB[24] / 0x18424752), rgb24, 900x340, 367200 kb/s, 50 tbr, 50 tbn, 50 tbc
+/data/wb/SCC/PROCESSING/Populations/populationsMulti02/BMLVN12x2MULTImet0.9970000mut0.0000100cat0.0010000minW0.1S2.0_env25000.0fH0FFfH0C7fH0B5fH023fH011x50000.0limtq0.01dt2018.10.21.16.51.50.462.mp4: No such file or directory
