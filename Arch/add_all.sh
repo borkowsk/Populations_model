@@ -19,7 +19,7 @@ LST=`ls -D | sort`
 
 for d in $LST; do
  if [ -d $d ]; then
-        echo $d
+        ~/.worklog/wlog.sh "GIT\tAdding whole directory" $d
         git_job "./$d"
  fi
 done
