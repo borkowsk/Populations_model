@@ -1,0 +1,12 @@
+BMLVN	0	x2
+metabolism	0.0000000
+mutations	�
+catastrofic	�
+minWeight	0.1
+start biomas	2.0	_
+env.size	0.0
+feedSourceH		feed port max	NaN
+timeQuant	0.0
+
+key	suscepBits	activeBits	maxsize	popBiomas	currincome	currloss
+
