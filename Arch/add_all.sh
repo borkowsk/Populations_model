@@ -3,17 +3,25 @@
 #https://unix.stackexchange.com/questions/50692/executing-user-defined-function-in-a-find-exec-call
 
 git_job(){
-DIRNAME=`basename $0`
+DIRNAME=`basename $1`
 #echo $DIRNAME
 pushd $DIRNAME > /dev/null
 MESSG=`date -r $DIRNAME.pde`
 MESSG="\"$MESSG $DIRNAME.pde\"" 
 /usr/bin/git add --dry-run *.*
 /usr/bin/git commit --dry-run *.* -m "$MESSG" 
+#echo $MESSG
 popd > /dev/null
 echo 
 }
 
-export -f git_job
+LST=`ls -D | sort`
 
-find . -type d -maxdepth 1 -print -exec /bin/bash -c 'git_job "$0"' {}  \;
+for d in $LST; do
+ if [ -d $d ]; then
+        echo $d
+        git_job "./$d"
+ fi
+done
+
+
