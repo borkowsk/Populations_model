@@ -19,12 +19,12 @@ void initializeModel()
   
   //Przodek czyli LUA. Nie może mieć żadnego zera
   //////////////////////////////////////////////////////
-  aSpecies LUA=//new aSpecies( int(1+random(MAX_INT & MASK)) & MASK,int(1+random(MAX_INT & MASK)) & MASK,1);//random LUA
-                new aSpecies( MASK, MASK ,1);//Full autotrophic LUA
+  aSpecies LUA=//new aSpecies( int(1+random(MAX_INT & MASK)) & MASK,int(1+random(MAX_INT & MASK)) & MASK,1); //random LUA
+                new aSpecies( MASK, MASK ,1); //Full autotrophic LUA
   String luaKey=LUA.Key();
   println("LUA is ",luaKey," ofs:",LUA.sizelog);
   speciesDictionary.put(luaKey,LUA);
-  island.addPopulation(new aPopulation(LUA,MINSTART*100),false);//Dużo żeby zawsze wystartował, potem jak jest więcej populacji to nie taki problem
+  island.addPopulation(new aPopulation(LUA,MINSTART*100),false); //Dużo żeby zawsze wystartował, potem jak jest więcej populacji to nie taki problem
   island.alivePopulations=2;
 }
 

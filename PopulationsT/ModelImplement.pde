@@ -1,4 +1,4 @@
-PrintWriter output;//For writing statistics into disk drive
+PrintWriter output; //For writing statistics into disk drive
 
 void write(anArea self,String Filename)
 //Zapis populacji do pliku
@@ -28,7 +28,7 @@ void trytokillspecies(anArea self)
   {
     if(VIRTENVSIZE>1)
     {
-      if(random((float)(popul.biomas/VIRTENVSIZE)) > CATACLISMRATE )//Liczba osobników w populacji zmniejsza szanse wymarcia
+      if(random((float)(popul.biomas/VIRTENVSIZE)) > CATACLISMRATE ) //Liczba osobników w populacji zmniejsza szanse wymarcia
       {
         //println("Skipedd");
            continue;
@@ -43,16 +43,16 @@ void trytokillspecies(anArea self)
       }
     }
     //print(" CATASTR.: ",popul.biomas);
-    popul.biomas*=1-random(1)*random(1)*random(1);//*random(1)*random(1)*random(1);//Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
+    popul.biomas*=1-random(1)*random(1)*random(1); //*random(1)*random(1)*random(1); //Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
     //if(popul.biomas<1) println(" --> ",popul.biomas,"   !!!");  
   }
 }
 
 void createnewspecies(anArea self)
 { //println("Who of us is able to mutate?");
-  for(int i=1;i<self.populations.size();i++)//Musi być taka pętla bo mutacje modyfikują tablice populacji
+  for(int i=1;i<self.populations.size();i++) //Musi być taka pętla bo mutacje modyfikują tablice populacji
   {
-    aPopulation popul=self.populations.get(i);//Kolejna
+    aPopulation popul=self.populations.get(i); //Kolejna
     
     if((popul.biomas<=MINSTART && FORCEMINSTART) //Zbyt małe populacje nie mutują jeśli chcemy to zabezpieczyć
     || popul.species.suscepBits==0 
@@ -77,13 +77,13 @@ void createnewspecies(anArea self)
       if(newSpec.suscepBits==0) return; //KONSTRUKT ZABRONIONY
     }
     else
-    if(bitpos<MASKBITS*2)// int activeBits;
+    if(bitpos<MASKBITS*2) // int activeBits;
     {
       newSpec.activeBits=swithbit(newSpec.activeBits,bitpos-MASKBITS);
       if(newSpec.activeBits==0) return; //KONSTRUKT ZABRONIONY
     }
     else
-    if(bitpos<MASKBITS*3)// int maxsize;
+    if(bitpos<MASKBITS*3) // int maxsize;
     {
       newSpec.maxsize=swithbit(newSpec.maxsize,bitpos-MASKBITS*2);
       if(newSpec.maxsize==0) return; //KONSTRUKT ZABRONIONY
@@ -99,18 +99,18 @@ void createnewspecies(anArea self)
     newSpec.countBits=countbits(newSpec.suscepBits)+countbits(newSpec.activeBits);  
     
     //WSTAWIANIE NOWEJ POPULACJI
-    //popul.currloss+=MINSTART;//Czy to będzie efektywne? TODO NIE!!!
+    //popul.currloss+=MINSTART; //Czy to będzie efektywne? TODO NIE!!!
     popul.biomas-=MINSTART; //KOSZT POTOMNEJ POPULACJI
     
     String newKey=newSpec.Key();
-    aSpecies test=speciesDictionary.get(newKey);//Czy już jest ten "gatunek"?
+    aSpecies test=speciesDictionary.get(newKey); //Czy już jest ten "gatunek"?
     if(test==null)
     {
       speciesDictionary.put(newKey,newSpec);
       if(console>1) println("+"+newKey+" "+newSpec.sizelog+' ');
       else 
       if(console>=0) print("+");
-      self.addPopulation(new aPopulation(newSpec,MINSTART),false);//już sprawdziliśmy że jest to nowy gatunek
+      self.addPopulation(new aPopulation(newSpec,MINSTART),false); //już sprawdziliśmy że jest to nowy gatunek
     }
     else
     {
@@ -124,12 +124,12 @@ void createnewspecies(anArea self)
         }
         else
           if(console>1) print("|");
-        tmp.biomas+=MINSTART;//Dodajemy biomasy do istniejącej populacji (lub martwej)
+        tmp.biomas+=MINSTART; //Dodajemy biomasy do istniejącej populacji (lub martwej)
         if(console>0) println(' '+newKey+" o!");
       }
       else
       {
-        self.addPopulation(new aPopulation(test,MINSTART),false);//Dodajemy (ponownie) populacje do tego obszaru/wyspy
+        self.addPopulation(new aPopulation(test,MINSTART),false); //Dodajemy (ponownie) populacje do tego obszaru/wyspy
         if(console>1) println("->Recreaction of population!!!");
         else
         if(console>=0) print('R');
@@ -164,15 +164,15 @@ void makeConnections(anArea self,aPopulation what)
   if(console>1) print(what.species.Key()," Bio:",what.biomas,' ');
   aSpecies mySpec=what.species;
   
-  int susceptibility=mySpec.suscepBits & MASK;//Dla pewności ;-)
+  int susceptibility=mySpec.suscepBits & MASK; //Dla pewności ;-)
   int activity=      mySpec.activeBits & MASK;
   float ofs=what.species.sizelog;
   
   aSpecies othSpec;
   for(aPopulation popul: self.populations)
-  if((othSpec=popul.species)!=mySpec)//Interakcje populacji samej ze sobą są bez sensu merytorycznego
+  if((othSpec=popul.species)!=mySpec) //Interakcje populacji samej ze sobą są bez sensu merytorycznego
   {
-      int othsusceptibility=othSpec.suscepBits & MASK;//MASK dla pewności ;-)
+      int othsusceptibility=othSpec.suscepBits & MASK; //MASK dla pewności ;-)
       int othactivity=      othSpec.activeBits & MASK;
       //Waga związku danej populacji do nowej (what)
       double Wd=((othsusceptibility & activity)/((double)activity))*((othsusceptibility & activity)/((double)othsusceptibility));
@@ -182,19 +182,19 @@ void makeConnections(anArea self,aPopulation what)
       {
           //if(othsusceptibility == activity)
           //  println("!!!Add ",Wd,mySpec.Key(),"->",popul.species.Key(),binary(othsusceptibility,MASKBITS)," exp.by ",binary(activity,MASKBITS));
-          self.trophNet.add(  new aPopLink(popul,what,Wd) );//związek danej populacji do nowej (what)
+          self.trophNet.add(  new aPopLink(popul,what,Wd) ); //związek danej populacji do nowej (what)
       }
       if(Wr>LINKMINWEIGHT) 
       {
           //if(susceptibility == othactivity)
           //  println("!!!Add ",Wr,mySpec.Key(),"<-",popul.species.Key() ,binary(susceptibility,MASKBITS)," exp.by ",binary(othactivity,MASKBITS) );
-          self.trophNet.add(  new aPopLink(what,popul,Wr) );//związek nowej populacji do danej
+          self.trophNet.add(  new aPopLink(what,popul,Wr) ); //związek nowej populacji do danej
       }
       //New mutant relations visualisation
       if(mutantConnVis
       && popul.biomas>0)
       {
-        if(Wd>LINKMINWEIGHT || Wr>LINKMINWEIGHT)//Wstępny test do rysowania
+        if(Wd>LINKMINWEIGHT || Wr>LINKMINWEIGHT) //Wstępny test do rysowania
         {
           float x1=startX+(float)(size*float(susceptibility)/MASK+ofs);
           float y1=startY+(float)(size*float(activity)/MASK+ofs);
@@ -203,7 +203,7 @@ void makeConnections(anArea self,aPopulation what)
           float y2=startY+(float)(size*float(othactivity)/MASK+ofo);
           //String mark=(Wd>Wr*10?">>":(Wr>Wd*10?"<<":"~~"));
           //println(x1,y1,x2,y2,Wd,mark,Wr);
-          if(Wd*VDENSITY>VDENSITY/DENSITYDIV)//Sterowanie dokładnościa prezentacji linków
+          if(Wd*VDENSITY>VDENSITY/DENSITYDIV) //Sterowanie dokładnościa prezentacji linków
           {
             stroke(255,0,0,(float)(Wd*VDENSITY));
             line(x1,y1,x2,y2);
@@ -227,9 +227,9 @@ void makeConnections(anArea self,aPopulation what)
 /*
 class aPopLink
 {
-  aPopulation source;//Kto jest eksploatowany
-  aPopulation target;//Kto jest ekspluatującym
-  double      weight;//Siła związku eksploatacji
+  aPopulation source; //Kto jest eksploatowany
+  aPopulation target; //Kto jest ekspluatującym
+  double      weight; //Siła związku eksploatacji
   aPopLink(aPopulation so,aPopulation ta,double w)
   {
     source=so;target=ta;weight=w;
@@ -247,9 +247,9 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   }
   
   maxTransfer=0;
-  for(aPopLink lnk:self.trophNet)//Obliczenie wszystkich interakcji
+  for(aPopLink lnk:self.trophNet) //Obliczenie wszystkich interakcji
   if(lnk.source.biomas>0
-  && lnk.target.biomas>0 )//link jest istotny
+  && lnk.target.biomas>0 ) //link jest istotny
   { //TIMEQUANT!
     double transfer=lnk.weight*lnk.source.biomas*TIMEQUANT;
     if(VIRTENVSIZE>1) //Jeśli istotny jest współczynnik kontaktu populacji ze sobą
@@ -269,13 +269,13 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
   for(int fb=0;fb<=LASTSOURCE;fb++) //Wiele zrodel
   {  
-    self.populations.get(fb).currincome=random(FEEDPORTION);//Samo się doda za chwilę
-    if(console>1) print(self.populations.get(fb).currincome);//Jak z wykożystaniem pokarmu
+    self.populations.get(fb).currincome=random(FEEDPORTION); //Samo się doda za chwilę
+    if(console>1) print(self.populations.get(fb).currincome); //Jak z wykożystaniem pokarmu
   }
   
   //Podsumowanie interakcji 
   for(aPopulation popul: self.populations)
-  if(popul.biomas>0)//jeszcze jest to istotna populacja
+  if(popul.biomas>0) //jeszcze jest to istotna populacja
   { //TIMEQUANT!
     popul.biomas+=popul.currincome;
     popul.biomas-=popul.currloss;
@@ -292,7 +292,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   //...i upływu czasu
   self.alivePopulations=0;
   for(aPopulation popul: self.populations)
-  if(popul.biomas>0)//nadal jeszcze jest istotny
+  if(popul.biomas>0) //nadal jeszcze jest istotny
   {
     popul.biomas=popul.biomas*TIMEDUMP;
     if(popul.biomas>=1) 
@@ -306,8 +306,8 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
       popul.biomas=VIRTENVSIZE;
   }
   
-  if(CLEAN)//Mniejsza lub równa zero!?
-  for(int i=LASTSOURCE+1;i<self.populations.size();i++)//POMIJAMY ŹRÓDŁA POKARMU!
+  if(CLEAN) //Mniejsza lub równa zero!?
+  for(int i=LASTSOURCE+1;i<self.populations.size();i++) //POMIJAMY ŹRÓDŁA POKARMU!
   {
     if(self.populations.get(i).biomas<=0
     && self.delPopulation(i) )

@@ -29,10 +29,10 @@
 import java.util.Map;
 
 //Parametry wizualizacji
-final boolean GENERATEMOVIE=false;//Czy wogóle tworzyć film?
+final boolean GENERATEMOVIE=false; //Czy wogóle tworzyć film?
       int     STEPperFRAME=1; //Ile kroków symulacji pomiędzy wizualizacjami
 final int     FRAMES=125;
-final int     VFRAMES=1;//Co ile klatek obrazu zapisujemy klatke filmu
+final int     VFRAMES=1; //Co ile klatek obrazu zapisujemy klatke filmu
 final int     INSMARGINS=100;
 final int     EXTMARGINS=50;
       float   size=800;
@@ -42,10 +42,10 @@ final boolean AUTOSTART=true; //Samoczynnie odpala proces symulacji po 200 ramka
 final boolean ORBVISUAL=true; //wizualizacja typu ORB (kule)
 final float   RANDSELECT=0.001; //Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
 float         BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
-float         VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
-float         DENSITYDIV=15;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+float         VDENSITY=20; //Maksymalna intensywność pojedynczej krawędzi
+float         DENSITYDIV=15; //Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
 
-float   bubleRad=1;//Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
+float   bubleRad=1; //Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
 boolean simulationRun=false;
 boolean VISTRANSFERS=true;
@@ -121,10 +121,10 @@ void draw()
   }
   
   noStroke(); 
-  fill(128,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste
+  fill(128,BACKGROUNDDENSITY); //TŁO mocno półprzejrzyste
   rect(0,0,width,height-20);
   
-  if(Clicked)//Żądanie zmiany wybranego
+  if(Clicked) //Żądanie zmiany wybranego
   {
      minDist2Selec=MAX_INT;
      maxTransSelec=-MAX_INT;
@@ -179,7 +179,7 @@ void draw()
   {
       doStatistics();
       FirstVideoFrame();
-      //write(islands[0],modelName+".0START");//Startowy stan ekosystemu
+      //write(islands[0],modelName+".0START"); //Startowy stan ekosystemu
       fill(255,255,0);
       text("STPS:"+STEPperFRAME //Ile kroków symulacji pomiędzy wizualizacjami
           +" FRM:"+FRAMES  //Ile klatek na realną sekundę próbuje liczyć
@@ -190,14 +190,14 @@ void draw()
     
   if(simulationRun)
   {
-      runSteps(STEPperFRAME);// Tu mogą być różne rzeczy w zależności od potrzeb
+      runSteps(STEPperFRAME); // Tu mogą być różne rzeczy w zależności od potrzeb
       doStatistics();
   }
     
   println();  
   noStroke();
   fill(255);
-  rect(0,height-20,width,20);//STATUS LINE
+  rect(0,height-20,width,20); //STATUS LINE
   if(simulationRun)
       fill(255,0,0);
   else
@@ -219,7 +219,7 @@ void draw()
     if(SC%1000==0)
     {
       //println(" -------------------------------------------------------------->writing populations");
-      //write(islands[0],modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      //write(islands[0],modelName+"."+nf(SC,5)); //Aktualny stan ekosystemu
       save(modelName+"."+nf((float)StepCounter,6,5)+".PNG");
     }
     

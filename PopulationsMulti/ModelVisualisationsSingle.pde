@@ -3,7 +3,7 @@
 
 void drawAreaCO(anArea is,int startX,int startY,int size)
 {
-  if(Clicked)//Żądanie zmiany wybranego
+  if(Clicked) //Żądanie zmiany wybranego
   {
      minDist2Selec=MAX_INT;
      maxTransSelec=-MAX_INT;
@@ -35,8 +35,8 @@ void drawAreaCO(anArea is,int startX,int startY,int size)
         R=(float)(Math.sqrt(b)*bubleRad);
       if(R<1){ R=1; print(',');}//Musi być choc slad
       
-      stroke(SINT,0,0,VDENSITY);//Trzeci chromosom - marker
-      fill(SINT,XINT,YINT,VDENSITY);//"ciało"
+      stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
+      fill(SINT,XINT,YINT,VDENSITY); //"ciało"
       ellipse(x,y,R,R);
       
       if(ORBVISUAL && R>5)
@@ -50,12 +50,12 @@ void drawAreaCO(anArea is,int startX,int startY,int size)
         stroke(255,255,0);
       else
         stroke(255,0,0);
-      point(x,y);//"serce" 
+      point(x,y); //"serce" 
       
       
       if(searchedX>0 && searchedY>0)
       {
-        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY));//Szukanie print(dist2,", ");
+        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY)); //Szukanie print(dist2,", ");
         if(dist2 < minDist2Selec)
         {
           minDist2Selec=dist2;        //print(" ? ");
@@ -91,14 +91,14 @@ void drawAreaCO(anArea is,int startX,int startY,int size)
 
 void drawTransfersCO(anArea is,int startX,int startY,int size)
 {
-  for(aPopLink lnk:is.trophNet)//Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
   if(lnk.source.biomas>0
-  && lnk.target.biomas>0 )//link jest istotny
+  && lnk.target.biomas>0 ) //link jest istotny
   {
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
       if(lnk.target==theSelected
       || intensity>VDENSITY/DENSITYDIV )
-      //&& intensity/DENSITYDIV>0)//Jak za dużo jest 
+      //&& intensity/DENSITYDIV>0) //Jak za dużo jest 
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -106,10 +106,10 @@ void drawTransfersCO(anArea is,int startX,int startY,int size)
         float of2=lnk.target.species.sizelog;
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
-        if(lnk.target==theSelected)//Trzeba (?) niestety powtórzyć sprawdzanie warunku
+        if(lnk.target==theSelected) //Trzeba (?) niestety powtórzyć sprawdzanie warunku
         {
           if(maxTransSelec<lnk.lasttransfer)
-             maxTransSelec=lnk.lasttransfer;//Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
+             maxTransSelec=lnk.lasttransfer; //Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
           int inten=(int)(255*(lnk.lasttransfer/maxTransSelec));
           stroke(255,inten);
           line(x1,y1,x2,y2);
@@ -123,7 +123,7 @@ void drawTransfersCO(anArea is,int startX,int startY,int size)
         }
         else
         {
-          //intensity/=DENSITYDIV;//Czy to konieczne?
+          //intensity/=DENSITYDIV; //Czy to konieczne?
           stroke(0,200,0,intensity);
         }
         line(x1,y1,x2,y2);
@@ -135,7 +135,7 @@ void drawTransfersCO(anArea is,int startX,int startY,int size)
 
 void drawAreaBW(anArea is,int startX,int startY,int size)
 {
-  if(Clicked)//Żądanie zmiany wybranego
+  if(Clicked) //Żądanie zmiany wybranego
   {
      minDist2Selec=MAX_INT;
      maxTransSelec=-MAX_INT;
@@ -160,7 +160,7 @@ void drawAreaBW(anArea is,int startX,int startY,int size)
      // float XINT=255.0*(fSusc/MASK);
      // float YINT=255.0*(fActi/MASK);
       float SPEC=popul.species.countBits/float(MASKBITS*2);
-      //print(SPEC,",");//Poziom omnipotencji genetycznej - im mniej tym mniej bitów czyli większa specjalizacja
+      //print(SPEC,","); //Poziom omnipotencji genetycznej - im mniej tym mniej bitów czyli większa specjalizacja
       SPEC*=255;
       
       float R;
@@ -172,8 +172,8 @@ void drawAreaBW(anArea is,int startX,int startY,int size)
         
       if(R<1){ R=1; print(',');}//Musi być choc slad
       
-      stroke(SINT,0,0,VDENSITY);//Trzeci chromosom - marker
-      fill(SPEC,VDENSITY);//"ciało"
+      stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
+      fill(SPEC,VDENSITY); //"ciało"
       ellipse(x,y,R,R);
       
       if(ORBVISUAL && R>5)
@@ -187,12 +187,12 @@ void drawAreaBW(anArea is,int startX,int startY,int size)
         stroke(0);
       else
         stroke(255);
-      point(x,y);//"serce" 
+      point(x,y); //"serce" 
       
       
       if(searchedX>0 && searchedY>0)
       {
-        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY));//Szukanie print(dist2,", ");
+        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY)); //Szukanie print(dist2,", ");
         if(dist2 < minDist2Selec)
         {
           minDist2Selec=dist2;        //print(" ? ");
@@ -228,14 +228,14 @@ void drawAreaBW(anArea is,int startX,int startY,int size)
 
 void drawTransfersBW(anArea is,int startX,int startY,int size)
 {
-  for(aPopLink lnk:is.trophNet)//Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
   if(lnk.source.biomas>0
-  && lnk.target.biomas>0 )//link jest istotny
+  && lnk.target.biomas>0 ) //link jest istotny
   {
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
       if(lnk.target==theSelected
       || intensity>VDENSITY/DENSITYDIV )
-      //&& intensity/DENSITYDIV>0)//Jak za dużo jest 
+      //&& intensity/DENSITYDIV>0) //Jak za dużo jest 
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -244,10 +244,10 @@ void drawTransfersBW(anArea is,int startX,int startY,int size)
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
         
-        if(lnk.target==theSelected)//Trzeba (?) niestety powtórzyć sprawdzanie warunku
+        if(lnk.target==theSelected) //Trzeba (?) niestety powtórzyć sprawdzanie warunku
         {
           if(maxTransSelec<lnk.lasttransfer)
-             maxTransSelec=lnk.lasttransfer;//Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
+             maxTransSelec=lnk.lasttransfer; //Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
           int inten=(int)(255*(lnk.lasttransfer/maxTransSelec));
           strokeWeight(2);
           stroke(0,inten);
@@ -265,7 +265,7 @@ void drawTransfersBW(anArea is,int startX,int startY,int size)
           }
           else
           {
-            //intensity/=DENSITYDIV;//Czy to konieczne?
+            //intensity/=DENSITYDIV; //Czy to konieczne?
             stroke(BACKGROUND/3,intensity);
           }
           

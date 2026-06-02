@@ -21,26 +21,26 @@ String modelName=//"BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env
 String altModel= "../nets/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.001000.00000.txt";
 
 //Parametry dynamiki
-int     MASK=0xff;//0xfff//0xff;//0x3f//0xf;  //Maska znaczących bitów każdej charakterystyki
-int     MASKBITS=8;//12//8;//6//4; //Ile bitów kazdej charakterystyki jest znaczących
-boolean allowSizeSyn=false;//Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
+int     MASK=0xff; //0xfff//0xff; //0x3f//0xf;  //Maska znaczących bitów każdej charakterystyki
+int     MASKBITS=8; //12//8; //6//4; //Ile bitów kazdej charakterystyki jest znaczących
+boolean allowSizeSyn=false; //Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
 boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
-double  VIRTENVSIZE=25000;//1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
+double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
 float   TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
-float   CHILDINTERVAL=3;//Czy dzieci wszystkie na raz czy co jakiś czas?
+float   CHILDINTERVAL=3; //Czy dzieci wszystkie na raz czy co jakiś czas?
 
-///*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11};//*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
+///*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11}; //*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
 IntList FIDBITS=new IntList(); //*MAX_INT & MASK*/ Jakie bity mają ustawione niesmiertelne źródła pokarmu ("kominy hydrotermalne")
-int     LASTSOURCED=-1;//FIDBITS.size()-1;//Ile źródeł?    
+int     LASTSOURCED=-1; //FIDBITS.size()-1; //Ile źródeł?    
          
 float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
-float   FEEDPORTION=0;//15000*TIMEQUANT*(LASTSOURCED+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu - wynika z plików
-float   CATACLISMRATE=0.001*TIMEQUANT;//Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
-float   MUTATIONRATE=0.001*TIMEQUANT;//Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
+float   FEEDPORTION=0; //15000*TIMEQUANT*(LASTSOURCED+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu - wynika z plików
+float   CATACLISMRATE=0.001*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
+float   MUTATIONRATE=0.001*TIMEQUANT; //Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
 
-float   LINKMINWEIGHT=0.1;//Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
+float   LINKMINWEIGHT=0.1; //Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
 float   MINSTART=2; //Startowy zasób "biomasy" populacji mutanta. Pierwsza populacja pewnie musi być większa bo zdechnie
-boolean FORCEMINSTART=false;//Czy zbyt małe populacje mogą mutować czy po prostu zmieniają się całe
+boolean FORCEMINSTART=false; //Czy zbyt małe populacje mogą mutować czy po prostu zmieniają się całe
 
 
 //Czysto techniczne - prosta optymalizacja rozmiaru sieci

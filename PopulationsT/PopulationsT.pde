@@ -78,7 +78,7 @@ void setup()
   {
     videoExportEnabled=true;
     println("Start video export");
-    initVideoExport(this,modelName+".mp4",FRAMES*2);//x2 przyśpieszone
+    initVideoExport(this,modelName+".mp4",FRAMES*2); //x2 przyśpieszone
   }
   else videoExportEnabled=false;
 }
@@ -152,7 +152,7 @@ void draw()
     if(WRITENETS && SC%1000==0)
     {
       println(" -------------------------------------------------------------->writing populations");
-      write(island,modelName+"."+nf(SC,5));//Aktualny stan ekosystemu
+      write(island,modelName+"."+nf(SC,5)); //Aktualny stan ekosystemu
     }
   }
 }
@@ -162,7 +162,7 @@ void draw()
 
 void drawArea(anArea is)
 {
-  if(Clicked)//Żądanie zmiany wybranego
+  if(Clicked) //Żądanie zmiany wybranego
   {
      minDist2Selec=MAX_INT;
      maxTransSelec=-MAX_INT;
@@ -214,7 +214,7 @@ void drawArea(anArea is)
         stroke(0);
       else
         stroke(255);
-      point(x,y);//"serce" 
+      point(x,y); //"serce" 
       
       
       if(searchedX>0 && searchedY>0)
@@ -262,7 +262,7 @@ void drawTransfers(anArea is)
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
       if(lnk.target==theSelected
       || intensity>VDENSITY/DENSITYDIV )
-      //&& intensity/DENSITYDIV>0)//Jak za dużo jest 
+      //&& intensity/DENSITYDIV>0) //Jak za dużo jest 
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -292,7 +292,7 @@ void drawTransfers(anArea is)
           }
           else
           {
-            //intensity/=DENSITYDIV;//Czy to konieczne?
+            //intensity/=DENSITYDIV; //Czy to konieczne?
             stroke(BACKGROUND/3,intensity);
           }
           

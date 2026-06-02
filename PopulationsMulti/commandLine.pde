@@ -20,7 +20,7 @@ void checkCommnadLine()
       }
     }
     LASTSOURCED=count-1;
-    FEEDPORTION=100000*TIMEQUANT*(LASTSOURCED+1);//Aktualizacja
+    FEEDPORTION=100000*TIMEQUANT*(LASTSOURCED+1); //Aktualizacja
 }
 
 //-/////////////////////////////////////////////////////////////////////////////////////////

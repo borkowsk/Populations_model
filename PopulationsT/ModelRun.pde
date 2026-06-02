@@ -3,7 +3,7 @@
 double StepCounter=0;
 void runSteps(int NofS)
 {
-  for(int sc=0;sc<NofS;sc++)//odlicza kroki symulacji
+  for(int sc=0;sc<NofS;sc++) //odlicza kroki symulacji
   {
     StepCounter+=TIMEQUANT;
     if(CATACLISMRATE>0) trytokillspecies(island);  

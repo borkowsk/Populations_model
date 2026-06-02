@@ -15,7 +15,7 @@
 
 void tryToSetVariable(String[] pieces)
 {
-  println(pieces[0]);//pieces[1]);//,pieces[2]);
+  println(pieces[0]); //pieces[1]); //,pieces[2]);
   if(pieces[0].equals("BMLVN"))
   {
     MASKBITS=int(pieces[1]);
@@ -26,7 +26,7 @@ void tryToSetVariable(String[] pieces)
     MASK=0; int JEDEN=1;
     for(int i=0;i<MASKBITS;i++)
     {
-      MASK|=JEDEN;//print(hex(JEDEN)," ");
+      MASK|=JEDEN; //print(hex(JEDEN)," ");
       JEDEN<<=1;
     }
     println("MASK",hex(MASK));
@@ -37,7 +37,7 @@ void tryToSetVariable(String[] pieces)
   }
   else if(pieces[0].equals("mutations"))
   {
-    MUTATIONRATE=float(pieces[1])*TIMEQUANT*0.01;//1/100 bo chcemy obserwować dynamikę ekologiczną a nie ewolucyjną
+    MUTATIONRATE=float(pieces[1])*TIMEQUANT*0.01; //1/100 bo chcemy obserwować dynamikę ekologiczną a nie ewolucyjną
   }
   else if(pieces[0].equals("catastrofic"))
   {
@@ -59,7 +59,7 @@ void tryToSetVariable(String[] pieces)
   }
   else if(pieces[0].equals("feed port max"))
   {
-    println(pieces[1]);//,pieces[2]);//,pieces[2]);
+    println(pieces[1]); //,pieces[2]); //,pieces[2]);
     FEEDPORTION=float(pieces[1])*TIMEQUANT;
   }
   else if(pieces[0].equals("timeQuant"))
@@ -100,9 +100,9 @@ int readModel(anArea self,String Filename)
   int popCounter=0;
   boolean beforeKey=true;
   BufferedReader reader=createReader(Filename); 
-  println(Filename+" :  ");//+reader.ready() );
+  println(Filename+" :  "); //+reader.ready() );
   
-  TIMEQUANT=1;//Jest neutralny
+  TIMEQUANT=1; //Jest neutralny
   
   do{
   try 
@@ -120,7 +120,7 @@ int readModel(anArea self,String Filename)
   {
     // Stop reading because of an error or file is empty
     try{
-    //reader.close();//???? IDE Exception!?!?
+    //reader.close(); //???? IDE Exception!?!?
     } 
     finally
     {
@@ -141,7 +141,7 @@ int readModel(anArea self,String Filename)
       if(pieces[0].length()>=3 
       && pieces[0].charAt(0)=='k' 
       && pieces[0].charAt(1)=='e' 
-      && pieces[0].charAt(2)=='y')//Moze być jeszcze $ na koncu ale nie musi!
+      && pieces[0].charAt(2)=='y') //Moze być jeszcze $ na koncu ale nie musi!
       {
         beforeKey=false;
         continue;
@@ -161,18 +161,18 @@ int readModel(anArea self,String Filename)
          aSpecies Curr = new aSpecies( suscepBits, activeBits ,maxsize);
          
          String currKey=Curr.Key();
-         aSpecies test=speciesDictionary.get(currKey);//Czy już jest ten "gatunek"?
+         aSpecies test=speciesDictionary.get(currKey); //Czy już jest ten "gatunek"?
          if(test==null)
            speciesDictionary.put(currKey,Curr);
          else
-           Curr=test;//używamy już istniejącego
+           Curr=test; //używamy już istniejącego
          
          float Biomas=float(pieces[4]);
          aPopulation CPop = new aPopulation(Curr,Biomas);
          CPop.currincome = float(pieces[5]);
          CPop.currloss = float(pieces[6]);
          
-         self.addPopulation(CPop,false);// makeConnections(self,CPop);?
+         self.addPopulation(CPop,false); // makeConnections(self,CPop);?
          popCounter++;
        }
        else println(" Invalid line #"+lcounter);

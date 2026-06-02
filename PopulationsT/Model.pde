@@ -84,7 +84,7 @@ class anArea //Obszar z wieloma populacjami
      if(populations.get(i).species==what) //To samo
       return i;
    
-    return -1;//Nie ma
+    return -1; //Nie ma
   }
   
   void addPopulation(aPopulation what,boolean test)
@@ -112,9 +112,9 @@ class anArea //Obszar z wieloma populacjami
       if(console>0) println("Removing ",what.species.Key());
       removeConnections(this,what);
       populations.remove(iwhat);
-      return true;//SUKCES
+      return true; //SUKCES
     }
-    return false;//FAIL
+    return false; //FAIL
   }
   
   //"Friends":

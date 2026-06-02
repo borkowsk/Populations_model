@@ -5,7 +5,7 @@ double StepCounter=0;
 
 void runSteps(int NofS)
 {
-  for(int sc=0;sc<NofS;sc++)//odlicza kroki symulacji
+  for(int sc=0;sc<NofS;sc++) //odlicza kroki symulacji
   {
       maxTransfer=0;
       //Lokalna dymanika
@@ -18,7 +18,7 @@ void runSteps(int NofS)
       //MIGRACJE
       for(int i=0;i<NofISLAND;i++) //Odlicza kolejne wyspy
       {
-        int j=int(random(NofISLAND));//Z której wyspy?
+        int j=int(random(NofISLAND)); //Z której wyspy?
         if(islands[j]==null) continue;
         
         aPopulation what=randImportant(islands[j]);

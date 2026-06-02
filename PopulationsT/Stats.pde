@@ -1,4 +1,4 @@
-/*PrintWriter outtxt;//For writing ecosystem state into disk drive
+/*PrintWriter outtxt; //For writing ecosystem state into disk drive
 
 void writePopul(anArea self,String Filename)
 //Zapis populacji do pliku

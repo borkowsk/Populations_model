@@ -19,5 +19,5 @@ void checkCommnadLine()
       }
     }
     LASTSOURCE=count-1;
-    FEEDPORTION=100000*TIMEQUANT*(LASTSOURCE+1);//Aktualizacja
+    FEEDPORTION=100000*TIMEQUANT*(LASTSOURCE+1); //Aktualizacja
 }

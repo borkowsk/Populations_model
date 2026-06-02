@@ -6,7 +6,7 @@ double sqr(double a)
 }
 
 //Funkcja do mutowania bitów integera
-int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
+int swithbit(int sou,int pos) //flip-flopuje bit na pozycji
 {
   if(pos>=MASKBITS)
   {
@@ -16,7 +16,7 @@ int swithbit(int sou,int pos)//flip-flopuje bit na pozycji
   //Jest poprawny
   int bit=0x1<<pos;
   //if(console>3) print(":"+bit+" ");
-  return sou^bit;//xor should do the job?
+  return sou^bit; //xor should do the job?
 }
 
 int countbits(int u)
