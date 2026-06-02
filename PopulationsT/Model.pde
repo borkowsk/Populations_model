@@ -1,7 +1,7 @@
 // BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
-//////////////////////////////////////////////////////////////////////////////////////////////////
+//-////////////////////////////////////////////////////////////////////////////////////////////////
 // Definicje klas modelu
-//////////////////////////////////////////////////////////////////////////////////////////////////
+//-////////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.Map;
 
 //Słownik gatunków jest globalny - ponad obszarami (anArea), których może być różna liczba
@@ -9,11 +9,11 @@ HashMap<String,aSpecies> speciesDictionary=new HashMap<String,aSpecies>();
 
 class aSpecies //Informacja o gatunku
 {
-  int suscepBits;//susceptibility bits (maska "obrony")
-  int activeBits;//activity bits (maska "ataku")
+  int suscepBits; //susceptibility bits (maska "obrony")
+  int activeBits; //activity bits (maska "ataku")
   int maxsize;
-  int countBits;//Suma bitów - czyli poziom specjalizacji
-  float sizelog;//logarytm z maxsize przydatny do wizualizacji
+  int countBits; //Suma bitów - czyli poziom specjalizacji
+  float sizelog; //logarytm z maxsize przydatny do wizualizacji
   String _key=null;
   
   aSpecies(int tB,int sB,int ms)
@@ -41,22 +41,25 @@ class aSpecies //Informacja o gatunku
 class aPopulation //Informacja o populacji jakiegoś gatunku
 {
   double biomas;
-  double currincome;//wpływy troficzne w aktualnym kroku
-  double currloss;//straty troficzne w aktualnym kroku
+  double currincome; //wpływy troficzne w aktualnym kroku
+  double currloss; //straty troficzne w aktualnym kroku
   
   aSpecies species; 
+  
   aPopulation(aSpecies sp,float bim)
   { species=sp; biomas=bim;}
+  
   aPopulation()
   { biomas=0; }
 }
 
 class aPopLink
 {
-  aPopulation source;//Kto jest eksploatowany
-  aPopulation target;//Kto jest ekspluatującym
-  double      weight;//Siła związku eksploatacji
-  double   lasttransfer;//Do celów statystycznych
+  aPopulation source; //Kto jest eksploatowany
+  aPopulation target; //Kto jest ekspluatującym
+  double      weight; //Siła związku eksploatacji
+  double   lasttransfer; //Do celów statystycznych
+  
   aPopLink(aPopulation so,aPopulation ta,double w)
   {
     source=so;target=ta;weight=w;lasttransfer=0;
@@ -68,34 +71,39 @@ class anArea //Obszar z wieloma populacjami
   ArrayList<aPopulation> populations;
   ArrayList<aPopLink>    trophNet;
   int alivePopulations=0;
+  
   anArea()
   {
     populations=new ArrayList<aPopulation>(0);
     trophNet=new ArrayList<aPopLink>(0);
   }
-  int findPopulOf(aSpecies what)//Znajduje populację danego gatunku
+  
+  int findPopulOf(aSpecies what) //Znajduje populację danego gatunku
   {
     for(int i=0;i<populations.size();i++)
-     if(populations.get(i).species==what)//To samo
+     if(populations.get(i).species==what) //To samo
       return i;
    
     return -1;//Nie ma
   }
+  
   void addPopulation(aPopulation what,boolean test)
   {
     if(test
     && findPopulOf(what.species)>=0) //już jest
-    return;//NIC NIE ROBIĆ!
+    return; //NIC NIE ROBIĆ!
     
-    populations.add(what);//Dodajemy nową.
-    makeConnections(this,what);//Funkcja tworząca połączenia troficzne dla nowej populacji 
+    populations.add(what); //Dodajemy nową.
+    makeConnections(this,what); //Funkcja tworząca połączenia troficzne dla nowej populacji 
   }
+  
   boolean delPopulation(aPopulation what)
   {
     if(console>0) println("Removing ",what.species.Key());
     removeConnections(this,what);
-    return populations.remove(what);//SUKCES or FAIL TODO CHECK
+    return populations.remove(what); //SUKCES or FAIL TODO CHECK
   }
+  
   boolean delPopulation(int iwhat)
   {
     aPopulation what=populations.get(iwhat);
@@ -108,18 +116,15 @@ class anArea //Obszar z wieloma populacjami
     }
     return false;//FAIL
   }
-  //"Friends"
+  
+  //"Friends":
   //void makeConnections(anArea self,aPopulation what);
   //void removeConnections(anArea self,aPopulation what);
-  //void createnewspecies(anArea self);//Powstawanie populacji przez mutację któregoś z bitów
-  //void timeStep(anArea self) //Upływ czasy dla obszaru z populacjami
-  //void write(anArea self,String Filename);//Zapis populacji do pliku
+  //void createnewspecies(anArea self);      //Powstawanie populacji przez mutację któregoś z bitów
+  //void timeStep(anArea self);              //Upływ czasy dla obszaru z populacjami
+  //void write(anArea self,String Filename); //Zapis populacji do pliku
 }
 
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
+//-/////////////////////////////////////////////////////////////////////////////////////////
 //  https://www.researchgate.net/profile/WOJCIECH_BORKOWSKI
-///////////////////////////////////////////////////////////////////////////////////////////
+//-/////////////////////////////////////////////////////////////////////////////////////////

@@ -27,7 +27,7 @@ PrintWriter outstat;
 void initStats()
 {
   outstat=createWriter(modelName+".out");
-  outstat.println("$STEP\tPopulationN\tConnectionN\tSpeciesSum\tmaxTransfer");
+  outstat.println("$STEP\tPopulationN\tConnectionN\tSpeciesSum\tmaxTransfer"); //<>//
 }
 
 void doStatistics()

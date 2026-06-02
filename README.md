@@ -6,7 +6,7 @@ Homo sapiens' civilization is a complex adaptive system. Although it is similar 
 
 - https://www.researchgate.net/publication/331833269_Mozg_umysl_kultura_-_memetyczny_system_adaptacyjny
 
-Cellular Automaton bacground model, named COEVO is described in the following publications:
+Cellular Automaton background model, named COEVO is described in the following publications:
 
 - https://www.researchgate.net/publication/222619951_Simple_lattice_model_of_macroevolution
 

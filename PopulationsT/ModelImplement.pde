@@ -1,4 +1,5 @@
 PrintWriter output;//For writing statistics into disk drive
+
 void write(anArea self,String Filename)
 //Zapis populacji do pliku
 {
@@ -18,7 +19,7 @@ void write(anArea self,String Filename)
     output.println();
   }
   output.println();
-  output.close();
+  output.close(); //<>//
 }
 
 void trytokillspecies(anArea self)
@@ -44,7 +45,7 @@ void trytokillspecies(anArea self)
     //print(" CATASTR.: ",popul.biomas);
     popul.biomas*=1-random(1)*random(1)*random(1);//*random(1)*random(1)*random(1);//Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
     //if(popul.biomas<1) println(" --> ",popul.biomas,"   !!!");  
-}
+  }
 }
 
 void createnewspecies(anArea self)

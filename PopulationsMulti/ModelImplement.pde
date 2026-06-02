@@ -39,7 +39,7 @@ void trytokillspecies(anArea self)
     //print(" CATASTR.: ",popul.biomas);
     popul.biomas*=1-random(1)*random(1)*random(1);//*random(1)*random(1)*random(1);//Zmniejsza się trochę lub bardziej, ale rozkład jest "pareto" - "bardziej" jest rzadkie
     //if(popul.biomas<1) println(" --> ",popul.biomas,"   !!!");  
-}
+  }
 }
 
 void createnewspecies(anArea self)
@@ -284,7 +284,6 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     print('|'); 
 }
 
-
-///////////////////////////////////////////////////////////////////////////////////////////
+//-/////////////////////////////////////////////////////////////////////////////////////////
 //  https://www.researchgate.net/profile/WOJCIECH_BORKOWSKI
-///////////////////////////////////////////////////////////////////////////////////////
+//-/////////////////////////////////////////////////////////////////////////////////////////

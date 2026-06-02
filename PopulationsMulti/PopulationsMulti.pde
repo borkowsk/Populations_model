@@ -29,20 +29,22 @@
 import java.util.Map;
 
 //Parametry wizualizacji
-final boolean GENERATEMOVIE=true;//Czy wogóle tworzyć film?
-      int STEPperFRAME=1; //Ile kroków symulacji pomiędzy wizualizacjami
-final int FRAMES=25;
-final int VFRAMES=1;//Co ile klatek obrazu zapisujemy klatke filmu
-final int INSMARGINS=100;
-final int EXTMARGINS=50;
-      float size=800;
-final float STATUS=20;
+final boolean GENERATEMOVIE=false;//Czy wogóle tworzyć film?
+      int     STEPperFRAME=1; //Ile kroków symulacji pomiędzy wizualizacjami
+final int     FRAMES=125;
+final int     VFRAMES=1;//Co ile klatek obrazu zapisujemy klatke filmu
+final int     INSMARGINS=100;
+final int     EXTMARGINS=50;
+      float   size=800;
+final float   STATUS=20;
 
-final boolean ORBVISUAL=true;//wizualizacja typu ORB (kule)
-final float  RANDSELECT=0.001;//Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
-float BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
-float      VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
-float     DENSITYDIV=15;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+final boolean AUTOSTART=true; //Samoczynnie odpala proces symulacji po 200 ramkach wizualizacji.
+final boolean ORBVISUAL=true; //wizualizacja typu ORB (kule)
+final float   RANDSELECT=0.001; //Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
+float         BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
+float         VDENSITY=20;//Maksymalna intensywność pojedynczej krawędzi
+float         DENSITYDIV=15;//Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+
 float   bubleRad=1;//Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
 boolean simulationRun=false;
@@ -59,7 +61,7 @@ anArea[] islands=new anArea[NofISLAND]; //Pojemnik na zbiór populacji
 
 void setup()
 {
-  checkCommnadLine();//Ewentualne uzycie parametrów wywołania
+  checkCommnadLine(); //Ewentualne uzycie parametrów wywołania
   //noSmooth()
   size(900,920);
   background(128); //Clear the window
@@ -105,7 +107,7 @@ void setup()
   {
     videoExportEnabled=true;
     println("Start video export");
-    initVideoExport(this,modelName+".mp4",FRAMES*2);//x2 przyśpieszone
+    initVideoExport(this,modelName+".mp4",FRAMES*2); //x2 przyśpieszone
   }
   else videoExportEnabled=false;
 }
@@ -113,6 +115,10 @@ void setup()
 void draw()
 {
   println(" Step: ",StepCounter, ": ");
+  if(AUTOSTART && frameCount == 200)
+  {
+    simulationRun=true;
+  }
   
   noStroke(); 
   fill(128,BACKGROUNDDENSITY);//TŁO mocno półprzejrzyste
@@ -236,6 +242,6 @@ void fileSelected(File selection)
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//-/////////////////////////////////////////////////////////////////////////////////////////
 //  https://www.researchgate.net/profile/WOJCIECH_BORKOWSKI
-///////////////////////////////////////////////////////////////////////////////////////////
+//-/////////////////////////////////////////////////////////////////////////////////////////
