@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////
+//-////////////////////////////////////////////////////
 // To musi być w setup() żeby było Video:
 //
 //  initVideoExport(this,FileName,int Frames)); //Klasa VideoExport musi mieć dostep do obiektu aplikacji Processingu
