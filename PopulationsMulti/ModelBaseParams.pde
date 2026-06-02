@@ -1,4 +1,4 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // parametry modelu są w osobnym pliku żeby je było łatwo znaleźć
 // a także dlatego że są tu procedury pomocnicze dla ich zapisu oraz tworzenia skrótowej nazwy modelu 
@@ -6,7 +6,7 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-//Z JAKICH PLIKÓW BIEŻEMY "RODZICÓW"
+//Z JAKICH PLIKÓW BIERZEMY "RODZICÓW"
 //file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFx350000.0tq0.01dt2018.01.30.12.42.06.209.22000.txt
 //file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.010000.00000.txt
 //file:///home/borkowsk/ProcessingSkeches/PopulationsMulti00/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2.0_env25000.0fHFFFfH0FFfH00FfH777fH555x50000.0tq0.01dt2018.02.06.11.21.24.276.001000.00000.txt
@@ -22,21 +22,21 @@ String altModel= "../nets/BMLVN12x2met0.9970000mut0.0010000cat0.0010000minW0.1S2
 
 //Parametry dynamiki
 int     MASK=0xff; //0xfff//0xff; //0x3f//0xf;  //Maska znaczących bitów każdej charakterystyki
-int     MASKBITS=8; //12//8; //6//4; //Ile bitów kazdej charakterystyki jest znaczących
+int     MASKBITS=8; //12//8; //6//4; //Ile bitów każdej charakterystyki jest znaczących
 boolean allowSizeSyn=false; //Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
-boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
-double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
+boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nią przestrzeni?
+double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) mieści się maksymalnie w środowisku
 float   TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
 float   CHILDINTERVAL=3; //Czy dzieci wszystkie na raz czy co jakiś czas?
 
-///*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11}; //*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-IntList FIDBITS=new IntList(); //*MAX_INT & MASK*/ Jakie bity mają ustawione niesmiertelne źródła pokarmu ("kominy hydrotermalne")
+///*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11}; //*MAX_INT & MASK*/ Jakie bity ma ustawione nieśmiertelne źródło pokarmu ("komin hydrotermalny")
+IntList FIDBITS=new IntList(); //*MAX_INT & MASK*/ Jakie bity mają ustawione nieśmiertelne źródła pokarmu ("kominy hydrotermalne")
 int     LASTSOURCED=-1; //FIDBITS.size()-1; //Ile źródeł?    
          
 float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
-float   FEEDPORTION=0; //15000*TIMEQUANT*(LASTSOURCED+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu - wynika z plików
-float   CATACLISMRATE=0.001*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
-float   MUTATIONRATE=0.001*TIMEQUANT; //Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
+float   FEEDPORTION=0; //15000*TIMEQUANT*(LASTSOURCED+1); //Ile biomasy źródeł maksymalnie przypływa na jednostkę czasu - wynika z plików
+float   CATACLISMRATE=0.001*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zależna odwrotnie proporcjonalnie od rozmiaru
+float   MUTATIONRATE=0.001*TIMEQUANT; //Jak często na krok powstaje mutant w populacji - może być zależna proporcjonalnie od rozmiaru
 
 float   LINKMINWEIGHT=0.1; //Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
 float   MINSTART=2; //Startowy zasób "biomasy" populacji mutanta. Pierwsza populacja pewnie musi być większa bo zdechnie
@@ -62,7 +62,7 @@ String nameOfModel()
     name+="x"+(FEEDPORTION/TIMEQUANT);
     name+="tq"+TIMEQUANT;
     name+="dt"+year()+'.'+nf(month(),2)+'.'+nf(day(),2)+'.'+nf(hour(),2)+'.'+nf(minute(),2)+'.'+nf(second(),2)+'.'+millis();
-    //Nazwa hosta na koncu nazwy populacji
+    //Nazwa hosta na końcu nazwy populacji
     //localHost hN=new localHost();
     //hN.run();
     //name+=+'.'+hN.canonicalHostName+"."+hN.hostName;

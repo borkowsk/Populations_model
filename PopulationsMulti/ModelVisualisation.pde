@@ -28,7 +28,7 @@ void drawArea(anArea is,int startX,int startY,int size)
         R=(float)(Math.pow(b,0.33333333333)*bubleRad);
       else
         R=(float)(Math.sqrt(b)*bubleRad);
-      if(R<1){ R=1; print(',');}//Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
       fill(SINT,XINT,YINT,VDENSITY); //"ciało"
@@ -85,7 +85,7 @@ void drawArea(anArea is,int startX,int startY,int size)
 void drawTransfers(anArea is,int startX,int startY,int size)
 {
   //println(is.trophNet.size());
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {

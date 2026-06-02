@@ -1,4 +1,4 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // v12 - to już chyba finał :-D
 // v11 - umożliwienie istnienia wielu źródeł sygnału/pokarmu jednocześnie i ewentualnie losowe zmiany obserwowanego
@@ -6,11 +6,11 @@
 //       bo bez niej małe klasy są nadmiernie preferowane
 //     - wizualizacja ORB
 //     - sterowanie szybkościa symulacji z klawiszy 1-0
-// v9 - Szansa mutacji jest zawsze zalezna od liczebności populacji (niezaleznie od VIRTSIZE)
-//    - \n do przelączania widocznosci transferów (linków) a SPC do zrzutów ekranu
-//    - 9b zródła nie odzyskują "życia" od razu tylko muszą spłacić deficyt
-//    - QUADRATICINTERACTIONS - czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
-// v8 - zapis filmu tylko co iles klatek
+// v9 - Szansa mutacji jest zawsze zależna od liczebności populacji (niezależnie od VIRTSIZE)
+//    - \n do przelączania widoczności transferów (linków) a SPC do zrzutów ekranu
+//    - 9b źródła nie odzyskują "życia" od razu tylko muszą spłacić deficyt
+//    - QUADRATICINTERACTIONS - czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nią przestrzeni?
+// v8 - zapis filmu tylko co ileś klatek
 //    - parametr wywołania
 // v7 - podział aplikacji na pliki
 //    - zaopatrzenie w zapis wideo
@@ -24,12 +24,12 @@
 //    - wizualizacja wybranego węzła i jego połączeń wchodzących
 // v4 - poprawione kolorowanie i rozmiarowanie blobów
 //    - wprowadzone wyłączanie czerwonej składowej (synonimiczne ekologicznie)
-//    - POCZĄTEK wprowadzania zalezności od pojemności środowiska
+//    - POCZĄTEK wprowadzania zależności od pojemności środowiska
 import java.util.Map;
 
 //Parametry wizualizacji:
 final boolean GENERATEMOVIE=false; //Czy wogóle tworzyć film?
-final int     VFRAMES=10; //Co ile klatek obrazu zapisujemy klatke filmu
+final int     VFRAMES=10; //Co ile klatek obrazu zapisujemy klatkę filmu
 
       int     STEPperFRAME=20; //Ile kroków symulacji pomiędzy wizualizacjami
 final int     FRAMES=50; //Ile klatek na sekundę próbuje liczyć.
@@ -40,9 +40,9 @@ final boolean ORBVISUAL=true; //wizualizacja typu ORB (kule)
 final float   RANDSELECT=0.001; //Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
 
 final int BACKGROUND=255;
-float     BACKGROUNDDENSITY=250; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
+float     BACKGROUNDDENSITY=250; //Im większa wartość tym szybciej znika stara zawartość rysunku
 float     VDENSITY=200; //Maksymalna intensywność pojedynczej krawędzi
-float     DENSITYDIV=25; //Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+float     DENSITYDIV=25; //Poniżej jakiej całkiem intensywności rezygnujemy z wyświetlania < VDENSITY/DENSITYDIV
 
 float   bubleRad=2; //Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
@@ -59,7 +59,7 @@ String lastDescr;
 
 void setup()
 {
-  checkCommnadLine(); //Ewentualne uzycie parametrów wywołania
+  checkCommnadLine(); //Ewentualne użycie parametrów wywołania
   //noSmooth()
   size(1000,1000);
   background(BACKGROUND); //Clear the window
@@ -86,7 +86,7 @@ void setup()
 void draw()
 {
   if(island.alivePopulations<2) 
-      return; //Model się skończył przedwczesnie.
+      return; //Model się skończył przedwcześnie.
       
   println(" Step: ",StepCounter, ": ");
   
@@ -106,7 +106,7 @@ void draw()
       fill(5);
       text("STPS:"+STEPperFRAME //Ile kroków symulacji pomiędzy wizualizacjami
           +" FRM:"+FRAMES       //Ile klatek na realną sekundę próbuje liczyć
-          +" VID:"+VFRAMES      //Co ile klatek obrazu zapisujemy klatke filmu
+          +" VID:"+VFRAMES      //Co ile klatek obrazu zapisujemy klatkę filmu
           +(ORBVISUAL?" ORB VIS.":"") //Czy wizualizacja kulami?
           ,1,16);
   }
@@ -197,7 +197,7 @@ void drawArea(anArea is)
       else
         R=(float)(Math.sqrt(b)*bubleRad);
         
-      if(R<1){ R=1; print(',');} //Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
       fill(SPEC,VDENSITY); //"ciało"
@@ -248,14 +248,14 @@ void drawArea(anArea is)
     }
   }
   
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
 }
 
 void drawTransfers(anArea is)
 {
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {

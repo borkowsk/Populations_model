@@ -81,7 +81,7 @@ void tryToSetVariable(String[] pieces)
       FIDBITS.append(pom);
     }
   }
-  else if(pieces[0].length()>0) //Albo HEXy albo smiecie 
+  else if(pieces[0].length()>0) // Albo HEX-y, albo śmiecie.
   {
     int pom=unhex(pieces[0]);
     if(pom>0)
@@ -141,7 +141,7 @@ int readModel(anArea self,String Filename)
       if(pieces[0].length()>=3 
       && pieces[0].charAt(0)=='k' 
       && pieces[0].charAt(1)=='e' 
-      && pieces[0].charAt(2)=='y') //Moze być jeszcze $ na koncu ale nie musi!
+      && pieces[0].charAt(2)=='y') //Może być jeszcze $ na końcu ale nie musi!
       {
         beforeKey=false;
         continue;

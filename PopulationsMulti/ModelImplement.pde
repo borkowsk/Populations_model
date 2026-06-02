@@ -28,7 +28,7 @@ void trytokillspecies(anArea self)
            continue;
       }
     }
-    else //w przeciwnym wypadku ignorujemy wielkośc populacji
+    else //w przeciwnym wypadku ignorujemy wielkość populacji
     {
       if(random(1.0)>CATACLISMRATE)
       {
@@ -191,7 +191,7 @@ void makeConnections(anArea self,aPopulation what)
 class aPopLink
 {
   aPopulation source; //Kto jest eksploatowany
-  aPopulation target; //Kto jest ekspluatującym
+  aPopulation target; //Kto jest eksploatującym
   double      weight; //Siła związku eksploatacji
   aPopLink(aPopulation so,aPopulation ta,double w)
   {
@@ -232,7 +232,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   //Podsumowanie interakcji 
   for(aPopulation popul: self.populations)
   {
-    if(popul.species.activeBits==0) //ZRODŁO
+    if(popul.species.activeBits==0) //ŹRÓDŁO
       popul.currincome=random(FEEDPORTION); //Samo się doda za chwilę
       
     if(popul.biomas>0) //jeszcze jest to istotna populacja
@@ -242,7 +242,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     }
   }
   
-  for(int fb=0;fb<=self.LastSource;fb++)  //Jeśli zródła zewnetrzne spadną poniżej zera nie giną tylko moga się odbudowac
+  for(int fb=0;fb<=self.LastSource;fb++)  //Jeśli źródła zewnętrzne spadną poniżej zera nie giną tylko mogą się odbudować
   if(self.populations.get(fb).biomas<=0)
   {
     aPopulation popul=self.populations.get(fb);

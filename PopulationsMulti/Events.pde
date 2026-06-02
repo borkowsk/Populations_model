@@ -55,7 +55,7 @@ void exit() //it is called whenever a window is closed.
   noLoop();      //For to be sure...
   CloseVideo();    //Finalise of Video export
   delay(100);      // it is possible to close window when draw() is still working!
-  write(islands[0],modelName+"."+nf((float)StepCounter,5,5)); //Koncowy stan ekosystemu
+  write(islands[0],modelName+"."+nf((float)StepCounter,5,5)); //Końcowy stan ekosystemu
   outstat.flush();  // Writes the remaining data to the file
   outstat.close();  // Finishes the file
   println("Thank You");

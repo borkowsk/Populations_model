@@ -33,7 +33,7 @@ void drawAreaCO(anArea is,int startX,int startY,int size)
         R=(float)(Math.pow(b,0.33333333333)*bubleRad);
       else
         R=(float)(Math.sqrt(b)*bubleRad);
-      if(R<1){ R=1; print(',');}//Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
       fill(SINT,XINT,YINT,VDENSITY); //"ciało"
@@ -84,14 +84,14 @@ void drawAreaCO(anArea is,int startX,int startY,int size)
     }
   }
   
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
 }
 
 void drawTransfersCO(anArea is,int startX,int startY,int size)
 {
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {
@@ -170,7 +170,7 @@ void drawAreaBW(anArea is,int startX,int startY,int size)
       else
         R=(float)(Math.sqrt(b)*bubleRad);
         
-      if(R<1){ R=1; print(',');}//Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
       fill(SPEC,VDENSITY); //"ciało"
@@ -221,14 +221,14 @@ void drawAreaBW(anArea is,int startX,int startY,int size)
     }
   }
   
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
 }
 
 void drawTransfersBW(anArea is,int startX,int startY,int size)
 {
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {

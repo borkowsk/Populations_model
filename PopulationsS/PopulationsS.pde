@@ -9,19 +9,19 @@
 //    - wizualizacja wybranego węzła i jego połączeń wchodzących
 // v4 - poprawione kolorowanie i rozmiarowanie blobów
 //    - wprowadzone wyłączanie czerwonej składowej (synonimiczne ekologicznie)
-//    - POCZĄTEK wprowadzania zalezności od pojemności środowiska
+//    - POCZĄTEK wprowadzania zależności od pojemności środowiska
 import java.util.Map;
-final int     MASK=0xff; //0xfff//0xff; //0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
-final int     MASKBITS=8; //12//8; //6//4; //Ile bitów kazdej charakterystyki jest znaczących
+final int     MASK=0xff; //0xfff//0xff; //0x3f//0xf;  //Maska znaczących bitów każdej charakterystyki
+final int     MASKBITS=8; //12//8; //6//4; //Ile bitów każdej charakterystyki jest znaczących
 final boolean allowSizeSyn=false; //Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
 
-final int     FIDBITS=0x81; //*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-final float   FEEDPORTION=5000; //Ile biomasy zródła maksyymalnie przypływa na jednostkę czasu (jest randomizowane) 
-final double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
+final int     FIDBITS=0x81; //*MAX_INT & MASK*/ Jakie bity ma ustawione nieśmiertelne źródło pokarmu ("komin hydrotermalny")
+final float   FEEDPORTION=5000; //Ile biomasy źródła maksymalnie przypływa na jednostkę czasu (jest randomizowane)
+final double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) mieści się maksymalnie w środowisku
 
 final float  TIMEQUANT=0.01; //Ile czasu modelu upływa w każdym kroku. Przede wszystkim decyduje o przepływach.
-final float  CATACLISMRATE=0.00002*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
-final float  MUTATIONRATE=0.01*TIMEQUANT; //Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
+final float  CATACLISMRATE=0.00002*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zależna odwrotnie proporcjonalnie od rozmiaru
+final float  MUTATIONRATE=0.01*TIMEQUANT; //Jak często na krok powstaje mutant w populacji - może być zależna proporcjonalnie od rozmiaru
 final float  TIMEDUMP=0.999; //Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
 
 final float   LINKMINWEIGHT=0.05; //Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
@@ -36,9 +36,9 @@ final int   startX=100;
 final int   startY=100;
 final float size=800;
 
-float      BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
+float      BACKGROUNDDENSITY=10; //Im większa wartość tym szybciej znika stara zawartość rysunku
 float      VDENSITY=20; //Maksymalna intensywność pojedynczej krawędzi
-float      DENSITYDIV=5; //Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+float      DENSITYDIV=5; //Poniżej jakiej całkiem intensywności rezygnujemy z wyświetlania < VDENSITY/DENSITYDIV
 float      bubleRad=2; //Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 
 int        console=0;
@@ -50,7 +50,7 @@ class aSpecies //Informacja o gatunku
 {
   int   suscepBits; //susceptibility bits (maska "obrony")
   int   activeBits; //activity bits (maska "ataku")
-  int      maxsize; //ograniczenie gorne na masę osobnika. Ważne gdy mogą tez mutować rozmiary (allowSizeSyn).
+  int      maxsize; //ograniczenie górne na masę osobnika. Ważne gdy mogą tez mutować rozmiary (allowSizeSyn).
   float    sizelog; //logarytm z maxsize przydatny do wizualizacji
   String _key=null; //Klucz się nie zmienia, gdy raz wyliczony!
   
@@ -94,7 +94,7 @@ class aPopulation //Informacja o populacji jakiegoś gatunku
 class aPopLink
 {
   aPopulation source; //Kto jest eksploatowany
-  aPopulation target; //Kto jest ekspluatującym
+  aPopulation target; //Kto jest eksploatującym
   double      weight; //Siła związku eksploatacji
   double   lasttransfer; //Do celów statystycznych
   aPopLink(aPopulation so,aPopulation ta,double w)
@@ -206,7 +206,7 @@ void keyPressed()
 
 void draw()
 {
-  if(island.alivePopulations<2) return; //Model się skończył przedwczesnie
+  if(island.alivePopulations<2) return; //Model się skończył przedwcześnie
   println(" Step: ",StepCounter, ": ");
   
   noStroke(); 
@@ -287,7 +287,7 @@ void drawArea(anArea is)
       
        //float R=(float)(1+Math.log(1.0+b)*bubleRad);
       float R=(float)(Math.sqrt(b)*bubleRad);
-      if(R<1){ R=1; print(',');}//Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
       fill(SINT,XINT,YINT,VDENSITY); //"ciało"
@@ -330,14 +330,14 @@ void drawArea(anArea is)
     }
   }
   
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
 }
 
 void drawTransfers(anArea is)
 {
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {
@@ -403,7 +403,7 @@ void trytokillspecies(anArea self)
            continue;
       }
     }
-    else //w przeciwnym wypadku ignorujemy wielkośc populacji
+    else //w przeciwnym wypadku ignorujemy wielkość populacji
     {
       if(random(1.0)>CATACLISMRATE)
       {
@@ -437,7 +437,7 @@ void createnewspecies(anArea self)
            continue;
       }
     }
-    else //w przeciwnym wypadku ignorujemy wielkośc populacji
+    else //w przeciwnym wypadku ignorujemy wielkość populacji
     {
       if(random(1.0)>MUTATIONRATE)
       {
@@ -449,7 +449,7 @@ void createnewspecies(anArea self)
     
     aSpecies newSpec=new aSpecies(popul.species);
     
-    //JAK OKREŚLAMY GDZIE JEST MUTACJA? "allowSizeSyn" okresla czy rozmiar gatunku też może mutować. 
+    //JAK OKREŚLAMY GDZIE JEST MUTACJA? "allowSizeSyn" określa czy rozmiar gatunku też może mutować.
     int bitpos=(allowSizeSyn?int(random(3*MASKBITS)):int(random(2*MASKBITS)));
     
     if(bitpos<MASKBITS) // int suscepBits;
@@ -581,7 +581,7 @@ void makeConnections(anArea self,aPopulation what)
           float y2=startY+(float)(size*float(othactivity)/MASK+ofo);
           //String mark=(Wd>Wr*10?">>":(Wr>Wd*10?"<<":"~~"));
           //println(x1,y1,x2,y2,Wd,mark,Wr);
-          if(Wd*VDENSITY>VDENSITY/DENSITYDIV) //Sterowanie dokładnościa prezentacji linków
+          if(Wd*VDENSITY>VDENSITY/DENSITYDIV) //Sterowanie dokładnością prezentacji linków
           {
             stroke(255,0,0,(float)(Wd*VDENSITY));
             line(x1,y1,x2,y2);
@@ -606,7 +606,7 @@ void makeConnections(anArea self,aPopulation what)
 class aPopLink
 {
   aPopulation source; //Kto jest eksploatowany
-  aPopulation target; //Kto jest ekspluatującym
+  aPopulation target; //Kto jest eksploatującym
   double      weight; //Siła związku eksploatacji
   aPopLink(aPopulation so,aPopulation ta,double w)
   {
@@ -628,7 +628,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   for(aPopLink lnk:self.trophNet) //Obliczenie wszystkich interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
-  { //Realny transfer biomasy zalezy od TIMEQUANT!
+  { //Realny transfer biomasy zależy od TIMEQUANT!
     double transfer=lnk.weight*lnk.source.biomas*TIMEQUANT;
     
     if(VIRTENVSIZE>1) //Jeśli istotny jest współczynnik kontaktu populacji ze sobą
@@ -646,10 +646,10 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
   //Najprostrza wersja - jedno źródło podstawowe
   self.populations.get(0).currincome=random(FEEDPORTION)*TIMEQUANT; //Samo się doda za chwilę
-  if(console>1) print(self.populations.get(0).currloss,self.populations.get(0).currincome); //Jak z wykożystaniem pokarmu
+  if(console>1) print(self.populations.get(0).currloss,self.populations.get(0).currincome); //Jak z wykorzystaniem pokarmu
   if(self.populations.get(0).biomas<=0)
   {
-    self.populations.get(0).biomas=1; //Zrodlo zewnetrzne jest niesmiertelne!
+    self.populations.get(0).biomas=1; //Źródło zewnętrzne jest nieśmiertelne!
     if(console>0) print(" !!! ");
   }
   

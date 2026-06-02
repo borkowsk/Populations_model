@@ -5,7 +5,7 @@ double sqr(double a)
   return a*a;
 }
 
-//Funkcja do mutowania bitów integera
+//Funkcja do mutowania bitów integer-a
 int swithbit(int sou,int pos) //flip-flopuje bit na pozycji
 {
   if(pos>=MASKBITS)
@@ -13,7 +13,7 @@ int swithbit(int sou,int pos) //flip-flopuje bit na pozycji
     println("!!! Mutation autside BITMASK");
     return sou;
   }
-  //Jest poprawny
+  //Jest poprawny.
   int bit=0x1<<pos;
   //if(console>3) print(":"+bit+" ");
   return sou^bit; //xor should do the job?

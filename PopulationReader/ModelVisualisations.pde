@@ -33,7 +33,7 @@ void drawAreaCO(anArea is)
         R=(float)(Math.pow(b,0.33333333333)*bubleRad);
       else
         R=(float)(Math.sqrt(b)*bubleRad);
-      if(R<1){ R=1; print(',');}//Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
       fill(SINT,XINT,YINT,VDENSITY); //"ciało"
@@ -55,7 +55,7 @@ void drawAreaCO(anArea is)
       
       if(searchedX>0 && searchedY>0)
       {
-        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY)); //Szukanie print(dist2,", ");
+        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY)); // Szukanie... `print(dist2,", ");`
         if(dist2 < minDist2Selec)
         {
           minDist2Selec=dist2;        //print(" ? ");
@@ -84,21 +84,21 @@ void drawAreaCO(anArea is)
     }
   }
   
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
 }
 
 void drawTransfersCO(anArea is)
 {
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
       if(lnk.target==theSelected
       || intensity>VDENSITY/DENSITYDIV )
-      //&& intensity/DENSITYDIV>0) //Jak za dużo jest 
+      //&& intensity/DENSITYDIV>0) // Jak za dużo jest
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -106,7 +106,7 @@ void drawTransfersCO(anArea is)
         float of2=lnk.target.species.sizelog;
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
-        if(lnk.target==theSelected) //Trzeba (?) niestety powtórzyć sprawdzanie warunku
+        if(lnk.target==theSelected) // Trzeba (?) niestety powtórzyć sprawdzanie warunku.
         {
           if(maxTransSelec<lnk.lasttransfer)
              maxTransSelec=lnk.lasttransfer; //Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach
@@ -170,10 +170,10 @@ void drawAreaBW(anArea is)
       else
         R=(float)(Math.sqrt(b)*bubleRad);
         
-      if(R<1){ R=1; print(',');}//Musi być choc slad
+      if(R<1){ R=1; print(',');} //Musi być choć ślad
       
       stroke(SINT,0,0,VDENSITY); //Trzeci chromosom - marker
-      fill(SPEC,VDENSITY); //"ciało"
+      fill(SPEC,VDENSITY); // "ciało"...
       ellipse(x,y,R,R);
       
       if(ORBVISUAL && R>5)
@@ -192,7 +192,7 @@ void drawAreaBW(anArea is)
       
       if(searchedX>0 && searchedY>0)
       {
-        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY)); //Szukanie print(dist2,", ");
+        double dist2=Math.sqrt(sqr(x-searchedX)+sqr(y-searchedY)); // Szukanie... `print(dist2,", ");`
         if(dist2 < minDist2Selec)
         {
           minDist2Selec=dist2;        //print(" ? ");
@@ -221,21 +221,21 @@ void drawAreaBW(anArea is)
     }
   }
   
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
 }
 
 void drawTransfersBW(anArea is)
 {
-  for(aPopLink lnk:is.trophNet) //Wizualizacja intereackji
+  for(aPopLink lnk:is.trophNet) //Wizualizacja interakcji
   if(lnk.source.biomas>0
   && lnk.target.biomas>0 ) //link jest istotny
   {
       float intensity=(float)(VDENSITY*(lnk.lasttransfer/maxTransfer));  
       if(lnk.target==theSelected
       || intensity>VDENSITY/DENSITYDIV )
-      //&& intensity/DENSITYDIV>0) //Jak za dużo jest 
+      //&& intensity/DENSITYDIV>0) // Jak za dużo jest
       {
         float of1=lnk.source.species.sizelog;
         float x1=startX+(float)(size*float(lnk.source.species.suscepBits)/MASK+of1);
@@ -244,7 +244,7 @@ void drawTransfersBW(anArea is)
         float x2=startX+(float)(size*float(lnk.target.species.suscepBits)/MASK+of2);
         float y2=startY+(float)(size*float(lnk.target.species.activeBits)/MASK+of2);
         
-        if(lnk.target==theSelected) //Trzeba (?) niestety powtórzyć sprawdzanie warunku
+        if(lnk.target==theSelected) // Trzeba (?) niestety powtórzyć sprawdzanie warunku
         {
           if(maxTransSelec<lnk.lasttransfer)
              maxTransSelec=lnk.lasttransfer; //Na początku może być trochę kiepsko ale się naprawi w kolejnych wizualizacjach

@@ -1,24 +1,24 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // v12 - to już chyba finał :-D
 
 import java.util.Map;
 
 //Parametry wizualizacji
-final boolean GENERATEMOVIE=false; //Czy wogóle tworzyć film?
+final boolean GENERATEMOVIE=false; // Czy w ogóle tworzyć film?
 final boolean COLOR=false;      
 
 final int   FRAMES=5;
-final int   VFRAMES=100; //Co ile klatek obrazu zapisujemy klatke filmu
+final int   VFRAMES=100; //Co ile klatek obrazu zapisujemy klatkę filmu
 final int   startX=100;
 final int   startY=100;
 final float size=800;
 
-final boolean ORBVISUAL=true; //wizualizacja typu ORB (kule)
-final int     BACKGROUND=255; //Tło 
-float         BACKGROUNDDENSITY=200; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
+final boolean ORBVISUAL=true; // Wizualizacja typu ORB (kule).
+final int     BACKGROUND=255; // Tło...
+float         BACKGROUNDDENSITY=200; //Im większa wartość tym szybciej znika stara zawartość rysunku
 float         VDENSITY=255; //Maksymalna intensywność pojedynczej krawędzi
-float         DENSITYDIV=200; //Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+float         DENSITYDIV=200; //Poniżej jakiej całkiem intensywności rezygnujemy z wyświetlania < VDENSITY/DENSITYDIV
 float         bubleRad=2; //Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int           console=0;
 
@@ -48,7 +48,7 @@ String lastDescr;
 
 void setup()
 {
-  checkCommnadLine(); //Ewentualne uzycie parametrów wywołania
+  checkCommnadLine(); //Ewentualne użycie parametrów wywołania
   //noSmooth()
   size(1000,1000);
   background(128); //Clear the window
@@ -74,7 +74,7 @@ void setup()
     //frame.setTitle(foldSelectorF.getName()); //NOT in Processing 4 ?
   }
   
-  if(modelName==null || modelName=="") //Jak się nie uda pliku znakeźć
+  if(modelName==null || modelName=="") //Jak się nie uda pliku znaleźć
           exit();
    
   int lines=readModel(island,modelName); // inicjalizacja modelu z pliku
@@ -89,7 +89,7 @@ void setup()
   {
     videoExportEnabled=true;
     println("Start video export");
-    initVideoExport(this,modelName+".mp4",FRAMES*2); //x2 przyśpieszone
+    initVideoExport(this,modelName+".mp4",FRAMES*2); //"x2" przyśpieszone...
   }
   else videoExportEnabled=false;
 }
@@ -98,7 +98,7 @@ void setup()
 void draw()
 {
   if(island.alivePopulations<2) 
-      return; //Model się skończył przedwczesnie
+      return; //Model się skończył przedwcześnie
       
   noStroke(); 
   fill(BACKGROUND,BACKGROUNDDENSITY); //TŁO mocno półprzejrzyste

@@ -155,7 +155,7 @@ void makeConnections(anArea self,aPopulation what)
           float y2=startY+(float)(size*float(othactivity)/MASK+ofo);
           //String mark=(Wd>Wr*10?">>":(Wr>Wd*10?"<<":"~~"));
           //println(x1,y1,x2,y2,Wd,mark,Wr);
-          if(Wd*VDENSITY>VDENSITY/DENSITYDIV) //Sterowanie dokładnościa prezentacji linków
+          if(Wd*VDENSITY>VDENSITY/DENSITYDIV) //Sterowanie dokładnością prezentacji linków
           {
             stroke(255,0,0,(float)(Wd*VDENSITY));
             line(x1,y1,x2,y2);
@@ -180,7 +180,7 @@ void makeConnections(anArea self,aPopulation what)
 class aPopLink
 {
   aPopulation source; //Kto jest eksploatowany
-  aPopulation target; //Kto jest ekspluatującym
+  aPopulation target; //Kto jest eksploatującym
   double      weight; //Siła związku eksploatacji
   aPopLink(aPopulation so,aPopulation ta,double w)
   {
@@ -225,10 +225,10 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
   
    /*
   //Karmienie zewnętrznym zasobem o parametrach ustalonych (ważne parametry modelu) 
-  for(int fb=0;fb<=LASTSOURCE;fb++) //Wiele zrodel
+  for(int fb=0;fb<=LASTSOURCE;fb++) //Wiele źródeł
   {  
     self.populations.get(fb).currincome=random(FEEDPORTION); //Samo się doda za chwilę
-    if(console>1) print(self.populations.get(fb).currincome); //Jak z wykożystaniem pokarmu
+    if(console>1) print(self.populations.get(fb).currincome); //Jak z wykorzystaniem pokarmu?
   }
   
   //Podsumowanie interakcji 
@@ -239,7 +239,7 @@ void timeStep(anArea self) //Upływ czasu dla obszaru z populacjami
     popul.biomas-=popul.currloss;
   }
   
-  for(int fb=0;fb<=LASTSOURCE;fb++)  //Jeśli zródła zewnetrzne spadną poniżej zera nie giną tylko moga się odbudowac
+  for(int fb=0;fb<=LASTSOURCE;fb++)  //Jeśli źródła zewnętrzne spadną poniżej zera nie giną tylko mogą się odbudować
   if(self.populations.get(fb).biomas<=0)
   {
     aPopulation popul=self.populations.get(fb);

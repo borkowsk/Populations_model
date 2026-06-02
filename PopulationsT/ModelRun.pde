@@ -1,4 +1,4 @@
-// Tu mogą być różne rzeczy w zalezności od potrzeb
+// Tu mogą być różne rzeczy w zależności od potrzeb
 //-////////////////////////////////////////////////////////////////////////////////////////
 double StepCounter=0;
 void runSteps(int NofS)

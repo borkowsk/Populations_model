@@ -1,4 +1,4 @@
-// Tu mogą być różne rzeczy w zalezności od potrzeb
+// Tu mogą być różne rzeczy w zależności od potrzeb
 //-////////////////////////////////////////////////////////////////////////////////////////
 
 double StepCounter=0;
@@ -8,7 +8,7 @@ void runSteps(int NofS)
   for(int sc=0;sc<NofS;sc++) //odlicza kroki symulacji
   {
       maxTransfer=0;
-      //Lokalna dymanika
+      //Lokalna dynamika
       for(int j=0;j<NofISLAND;j++) //Odlicza kolejne wyspy
       {
         if(CATACLISMRATE>0) trytokillspecies(islands[j]);  

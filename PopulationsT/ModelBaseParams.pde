@@ -1,4 +1,4 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // parametry modelu są w osobnym pliku żeby je było łatwo znaleźć
 // a także dlatego że są tu procedury pomocnicze dla ich zapisu oraz tworzenia skrótowej nazwy modelu 
@@ -6,19 +6,19 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-final int MASK=0xff; //0xfff//0xff; //0x3f//0xf;  //Maska znaczących bitów kazdej charakterystyki
-final int MASKBITS=8; //12//8; //6//4; //Ile bitów kazdej charakterystyki jest znaczących
+final int MASK=0xff; //0xfff//0xff; //0x3f//0xf;  //Maska znaczących bitów każdej charakterystyki
+final int MASKBITS=8; //12//8; //6//4; //Ile bitów każdej charakterystyki jest znaczących
 final boolean allowSizeSyn=false; //Czy dopuszczamy mutowanie bitów "rozmiaru" czyli synonimiczne ekologicznie gatunki (czerwona składowa)
-final boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
-final double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) miesci się maksymalnie w środowisku
+final boolean QUADRATICINTERACTIONS=true; //czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nią przestrzeni?
+final double  VIRTENVSIZE=25000; //1024*1024?; //Ile "biomasy" jednego gatunku(?) mieści się maksymalnie w środowisku
 final float  TIMEQUANT=0.01; //Rozdzielczość czasowa - Ile czasu modelu upływa w każdym kroku
 
-/*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11}; //*MAX_INT & MASK*/ Jakie bity ma ustawione niesmiertelne źródło pokarmu ("komin hydrotermalny")
-         int    LASTSOURCE=FIDBITS.length-1; //Tylko jedno zródło o indeksie 0        
+/*PARAM*/int[] FIDBITS={0xFF,0xc7,0xb5,0x23,0x11}; //*MAX_INT & MASK*/ Jakie bity ma ustawione nieśmiertelne źródło pokarmu ("komin hydrotermalny")
+         int    LASTSOURCE=FIDBITS.length-1; //Tylko jedno źródło o indeksie 0
 final float   TIMEDUMP=0.997; //Koszty metaboliczne - Ile zasobów zostaje na skutek zużycia czasowego w każdym kwancie czasu
-      float   FEEDPORTION=10000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy zródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane) 
-final float CATACLISMRATE=0.001*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zalezna odwrotnie proporcjonalnie od rozmiaru  
-final float MUTATIONRATE=0.001*TIMEQUANT; //Jak czesto na krok powstaje mutant w populacji - może być zalezna proporcjonalnie od rozmiaru
+      float   FEEDPORTION=10000*TIMEQUANT*(LASTSOURCE+1); //Ile biomasy źródeł maksymalnie przypływa na jednostkę czasu (jest randomizowane)
+final float CATACLISMRATE=0.001*TIMEQUANT; //Jak często następuje losowa katastrofa populacji - może być zależna odwrotnie proporcjonalnie od rozmiaru
+final float MUTATIONRATE=0.001*TIMEQUANT; //Jak często na krok powstaje mutant w populacji - może być zależna proporcjonalnie od rozmiaru
 
 final float LINKMINWEIGHT=0.1; //Jakie najsłabsze linki uznajemy za istniejące przy łączeniu populacji
 final float MINSTART=2; //Startowy zasób "biomasy" populacji mutanta. Pierwsza populacja pewnie musi być większa bo zdechnie
@@ -41,7 +41,7 @@ String nameOfModel()
     name+="x"+(FEEDPORTION/TIMEQUANT);
     name+="tq"+TIMEQUANT;
     name+="dt"+year()+'.'+nf(month(),2)+'.'+nf(day(),2)+'.'+nf(hour(),2)+'.'+nf(minute(),2)+'.'+nf(second(),2)+'.'+millis();
-    //Nazwa hosta na koncu nazwy populacji
+    //Nazwa hosta na końcu nazwy populacji
     //localHost hN=new localHost();
     //hN.run();
     //name+=+'.'+hN.canonicalHostName+"."+hN.hostName;

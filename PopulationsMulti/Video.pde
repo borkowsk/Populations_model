@@ -1,8 +1,8 @@
 //-////////////////////////////////////////////////////
 // To musi być w setup() żeby było Video:
 //
-//  initVideoExport(this,FileName,int Frames)); //Klasa VideoExport musi mieć dostep do obiektu aplikacji Processingu
-//                         //Najlepiej wywołać na koncu setupu. Okno musi mieć PARZYSTE rozmiary
+//  initVideoExport(this,FileName,int Frames)); //Klasa VideoExport musi mieć dostęp do obiektu aplikacji Processingu
+//                         //Najlepiej wywołać na końcu setupu. Okno musi mieć PARZYSTE rozmiary
 //  
 //a to dla każdej klatki
 //  NextVideoFrame(); //Video frame
@@ -23,7 +23,7 @@ void initVideoExport(processing.core.PApplet parent, String Name,int Frames)
   videoFramesFreq=Frames;
   if(videoExportEnabled)
   {
-     videoExport = new VideoExport(parent,Name); //Klasa VideoExport musi mieć dostep do obiektu aplikacji Processingu
+     videoExport = new VideoExport(parent,Name); //Klasa VideoExport musi mieć dostęp do obiektu aplikacji Processingu
      videoExport.setFrameRate(Frames); //Nie za szybko
      videoExport.startMovie();
      text(Name,1,20);

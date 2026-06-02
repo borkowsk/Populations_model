@@ -1,4 +1,4 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // Multi00 - uruchomienie wersji kilkuwyspowej - wpływ kultur.
 // v12 - to już chyba finał :-D
@@ -7,10 +7,10 @@
 //       bo bez niej małe klasy są nadmiernie preferowane
 //     - wizualizacja ORB
 //     - sterowanie szybkościa symulacji z klawiszy 1-0
-// v9 - Szansa mutacji jest zawsze zalezna od liczebności populacji (niezaleznie od VIRTSIZE)
-//    - \n do przelączania widocznosci transferów (linków) a SPC do zrzutów ekranu
-//    - 9b zródła nie odzyskują "życia" od razu tylko muszą spłacić deficyt
-//    - QUADRATICINTERACTIONS - czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nia przestrzeni?
+// v9 - Szansa mutacji jest zawsze zależna od liczebności populacji (niezależnie od VIRTSIZE)
+//    - \n do przelączania widoczności transferów (linków) a SPC do zrzutów ekranu
+//    - 9b źródła nie odzyskują "życia" od razu tylko muszą spłacić deficyt
+//    - QUADRATICINTERACTIONS - czy w małej chwili czasu wzrost biomasy targetowej populacji jest zależny wypełnienia przez nią przestrzeni?
 // v8 - zapis filmu tylko co iles klatek
 //    - parametr wywołania
 // v7 - podział aplikacji na pliki
@@ -25,14 +25,14 @@
 //    - wizualizacja wybranego węzła i jego połączeń wchodzących
 // v4 - poprawione kolorowanie i rozmiarowanie blobów
 //    - wprowadzone wyłączanie czerwonej składowej (synonimiczne ekologicznie)
-//    - POCZĄTEK wprowadzania zalezności od pojemności środowiska
+//    - POCZĄTEK wprowadzania zależności od pojemności środowiska
 import java.util.Map;
 
 //Parametry wizualizacji
 final boolean GENERATEMOVIE=false; //Czy wogóle tworzyć film?
       int     STEPperFRAME=1; //Ile kroków symulacji pomiędzy wizualizacjami
 final int     FRAMES=125;
-final int     VFRAMES=1; //Co ile klatek obrazu zapisujemy klatke filmu
+final int     VFRAMES=1; //Co ile klatek obrazu zapisujemy klatkę filmu
 final int     INSMARGINS=100;
 final int     EXTMARGINS=50;
       float   size=800;
@@ -41,9 +41,9 @@ final float   STATUS=20;
 final boolean AUTOSTART=true; //Samoczynnie odpala proces symulacji po 200 ramkach wizualizacji.
 final boolean ORBVISUAL=true; //wizualizacja typu ORB (kule)
 final float   RANDSELECT=0.001; //Prawdopodobieństwo spontanicznej zmiany obserwowanego obiektu
-float         BACKGROUNDDENSITY=10; //Im większa wartośc tym szybciej znika stara zawartośc rysunku 
+float         BACKGROUNDDENSITY=10; //Im większa wartość tym szybciej znika stara zawartość rysunku
 float         VDENSITY=20; //Maksymalna intensywność pojedynczej krawędzi
-float         DENSITYDIV=15; //Ponizej jakiej całkiem intensywności rezygnujemy z wświetlania < VDENSITY/DENSITYDIV
+float         DENSITYDIV=15; //Poniżej jakiej całkiem intensywności rezygnujemy z wyświetlania < VDENSITY/DENSITYDIV
 
 float   bubleRad=1; //Współczynnik proporcjonalności promienia bloba do pierwiastka z biomasy populacji
 int     console=0;
@@ -61,7 +61,7 @@ anArea[] islands=new anArea[NofISLAND]; //Pojemnik na zbiór populacji
 
 void setup()
 {
-  checkCommnadLine(); //Ewentualne uzycie parametrów wywołania
+  checkCommnadLine(); //Ewentualne użycie parametrów wywołania
   //noSmooth()
   size(900,920);
   background(128); //Clear the window
@@ -150,7 +150,7 @@ void draw()
   }
  
     
-  //NIE SZUKA DO NASTĘPNEGO KLIKNIECIA
+  //NIE SZUKA DO NASTĘPNEGO KLIKNIĘCIA
   searchedX=-1;
   searchedY=-1;
   
@@ -183,7 +183,7 @@ void draw()
       fill(255,255,0);
       text("STPS:"+STEPperFRAME //Ile kroków symulacji pomiędzy wizualizacjami
           +" FRM:"+FRAMES  //Ile klatek na realną sekundę próbuje liczyć
-          +" VID:"+VFRAMES //Co ile klatek obrazu zapisujemy klatke filmu
+          +" VID:"+VFRAMES //Co ile klatek obrazu zapisujemy klatkę filmu
           +(ORBVISUAL?" ORB VIS.":"") //Czy wizualizacja kulami?
           ,1,16);
   }

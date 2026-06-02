@@ -1,4 +1,4 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // Definicje klas modelu
 //-////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ class aPopulation //Informacja o populacji jakiegoś gatunku
 class aPopLink
 {
   aPopulation source; //Kto jest eksploatowany
-  aPopulation target; //Kto jest ekspluatującym
+  aPopulation target; //Kto jest eksploatującym
   double      weight; //Siła związku eksploatacji
   double   lasttransfer; //Do celów statystycznych
   
@@ -102,7 +102,7 @@ class anArea //Obszar z wieloma populacjami
   {
     if(console>0) println("Removing ",what.species.Key());
     removeConnections(this,what);
-    return populations.remove(what); //SUKCES or FAIL TODO CHECK
+    return populations.remove(what); //SUKCES czy FAIL? TODO CHECK
   }
   
   boolean delPopulation(int iwhat)
@@ -123,7 +123,7 @@ class anArea //Obszar z wieloma populacjami
     int iwhat=findPopulOf(what); //Znajduje populację danego gatunku
     if(what.activeBits==0
     && LastSource!=-1)
-          return; //Nie wolno dodawać zródeł ukształtowanym/dorosłym systemom
+          return; //Nie wolno dodawać źródeł ukształtowanym/dorosłym systemom
           
     if(iwhat>=0)
     {

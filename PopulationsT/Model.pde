@@ -1,4 +1,4 @@
-// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V moodels)
+// BMLVN - Binary Masks Lotka-Voltera Network (similar to GLVM - "generalized L-V models)
 //-////////////////////////////////////////////////////////////////////////////////////////////////
 // Definicje klas modelu
 //-////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ class aPopulation //Informacja o populacji jakiegoś gatunku
 class aPopLink
 {
   aPopulation source; //Kto jest eksploatowany
-  aPopulation target; //Kto jest ekspluatującym
+  aPopulation target; //Kto jest eksploatującym
   double      weight; //Siła związku eksploatacji
   double   lasttransfer; //Do celów statystycznych
   

@@ -43,7 +43,7 @@ void exit() //it is called whenever a window is closed.
   CloseVideo();    //Finalise of Video export
   delay(100);      // it is possible to close window when draw() is still working!
   
-  //write(island,modelName+".INPECTION"+nf(frameCount,10)); //Koncowy zapis filmu ??? write to jest zapis pliku z danymi sieci!
+  //write(island,modelName+".INPECTION"+nf(frameCount,10)); //Końcowy zapis filmu ??? "write" to jest zapis pliku z danymi sieci!
   //output.flush();  // Writes the remaining data to the file
   //output.close();  // Finishes the file
   
